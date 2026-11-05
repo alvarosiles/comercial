@@ -45,6 +45,13 @@ Gracias por su interés. A continuación le presento la propuesta para su **Tarj
 
 > *Borre o agregue las líneas según el plan elegido (ver detalle de planes al final).*
 
+**No incluye** *(se cotiza por separado)*:
+
+- Redacción de textos, sesiones de fotos o diseño de logotipo.
+- Funcionalidades no descritas en esta cotización.
+- Tarjetas físicas NFC, stickers u otros materiales impresos, salvo que figuren en el detalle de costos.
+- Gestión de redes sociales o publicidad pagada.
+
 ---
 
 ## Detalle de costos
