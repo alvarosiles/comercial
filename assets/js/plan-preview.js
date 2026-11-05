@@ -157,6 +157,31 @@
 
       renderBranches(p.branches);
 
+      // Íconos dinámicos (ej.: segundo canal de contacto: Instagram, Messenger, Telegram…)
+      if (p.icons) {
+        Object.keys(p.icons).forEach(function (k) {
+          toArray(root.querySelectorAll('[data-pv-icon="' + k + '"]')).forEach(function (u) {
+            u.setAttribute("href", "#i-" + p.icons[k]);
+          });
+        });
+      }
+
+      // Botones personalizados (portafolio web, GitHub, Figma, tienda online…)
+      var linksBox = root.querySelector("[data-pv-links]");
+      if (linksBox) {
+        linksBox.innerHTML = (p.links || []).map(function (l) {
+          var es = esc(l[1]), en = esc(l[2] || l[1]);
+          return '<span class="cp-linkbtn"><svg class="icon" aria-hidden="true"><use href="#i-' + l[0] + '"/></svg>' +
+            '<span data-es="' + es + '" data-en="' + en + '">' + (lang === "en" ? en : es) + "</span>" +
+            '<svg class="icon cp-go" aria-hidden="true"><use href="#i-arrow"/></svg></span>';
+        }).join("") + (p.links && p.links.length
+          ? '<span class="cp-linkbtn cp-add"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>' +
+            '<span data-es="Agrega tus propios enlaces" data-en="Add your own links">' +
+            (lang === "en" ? "Add your own links" : "Agrega tus propios enlaces") + "</span></span>"
+          : "");
+        linksBox.parentElement.hidden = !(p.links && p.links.length);
+      }
+
       // Redes sociales propias de cada perfil (ej.: TikTok para tiendas, GitHub para programadores)
       var socialRow = root.querySelector("[data-pv-social]");
       if (socialRow && Array.isArray(p.social)) {

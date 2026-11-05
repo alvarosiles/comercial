@@ -903,6 +903,19 @@ a.contact-item:hover { text-decoration: none; border-color: rgba(34,211,238,.4);
 }
 .cp-toast.show { opacity: 1; transform: translate(-50%, 0); }
 
+/* Botones personalizados (enlaces) */
+.cp-links { display: flex; flex-direction: column; gap: 6px; }
+.cp-linkbtn {
+  display: flex; align-items: center; gap: 9px; padding: 9px 10px; border-radius: 10px;
+  font-size: .76rem; font-weight: 600; color: var(--cp-text);
+  background: rgba(255,255,255,.03); border: 1px solid var(--cp-line);
+}
+.cp-linkbtn > .icon:first-child { width: 16px; height: 16px; color: var(--cp-accent); flex: none; }
+.cp-linkbtn > span { flex: 1; min-width: 0; }
+.cp-linkbtn .cp-go { width: 13px; height: 13px; color: var(--cp-muted); flex: none; }
+.cp-linkbtn.cp-add { justify-content: center; color: var(--cp-muted); background: transparent; border-style: dashed; font-weight: 500; }
+.cp-linkbtn.cp-add > span { flex: none; }
+
 /* Mapa con varias sucursales */
 .cp-map { position: relative; }
 .cp-map.multi { height: 112px; }
@@ -984,7 +997,9 @@ a.contact-item:hover { text-decoration: none; border-color: rgba(34,211,238,.4);
   font-family: var(--font-head); font-size: .62rem; font-weight: 700; color: #2b1d00;
   background: linear-gradient(145deg, #fff3b0, #f5c22e); border: 3px solid #fff;
 }
-.cp-foot { margin-top: 14px !important; font-size: .66rem; color: var(--cp-muted); }
+.cp-foot { margin-top: 14px !important; font-size: .66rem; color: var(--cp-muted); display: flex; align-items: center; justify-content: center; gap: 5px; }
+.cp-foot .icon { width: 12px; height: 12px; }
+.pv-device[data-level="3"] .cp-foot { color: var(--cp-accent); font-weight: 700; font-size: .74rem; }
 
 /* Logo cuadrado para empresas y comercios */
 .cp-phone.is-logo .cp-avatar { border-radius: 22px; }
