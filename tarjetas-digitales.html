@@ -78,18 +78,81 @@
             <a href="#planes" class="btn btn-ghost">Ver planes</a>
           </div>
         </div>
-        <div class="page-visual" aria-hidden="true">
-          <div class="mk-phone lg">
-            <div class="ph-notch"></div>
-            <div class="ph-avatar"></div>
-            <div class="ph-line w70"></div>
-            <div class="ph-line w50 dim"></div>
-            <div class="ph-badge">● Disponible</div>
-            <div class="ph-btns"><i></i><i></i><i></i><i></i></div>
-            <div class="ph-list"><i></i><i></i><i></i></div>
-            <div class="ph-cta"></div>
+        <!-- Prototipo interactivo: vista previa de la tarjeta según el plan -->
+        <div class="page-visual card-proto" id="vista-previa">
+          <div class="cp-switch" role="radiogroup" aria-label="Ver la tarjeta según el plan">
+            <button type="button" role="radio" aria-checked="true" class="tier-silver" data-level="1">Inicial</button>
+            <button type="button" role="radio" aria-checked="false" class="tier-bronze" data-level="2" tabindex="-1">Recomendado</button>
+            <button type="button" role="radio" aria-checked="false" class="tier-gold" data-level="3" tabindex="-1">Avanzado</button>
           </div>
-          <div class="mk-qr"></div>
+
+          <div class="cp-phone" data-level="1">
+            <div class="cp-notch" aria-hidden="true"></div>
+            <div class="cp-top">
+              <button type="button" class="cp-chip lv-3" data-cp-lang aria-label="Cambiar idioma">ES</button>
+              <button type="button" class="cp-chip lv-2" data-cp-theme aria-label="Cambiar a modo claro">
+                <svg class="icon"><use href="#i-moon"/></svg>
+              </button>
+            </div>
+            <div class="cp-screen" tabindex="0" aria-label="Vista previa de la tarjeta digital">
+
+              <div class="cp-cover"><span class="cp-brand lv-3">TU MARCA</span></div>
+              <div class="cp-avatar" aria-hidden="true">TN</div>
+              <p class="cp-name">Tu Nombre</p>
+              <p class="cp-role" data-es="Tu profesión · Tu empresa" data-en="Your role · Your company">Tu profesión · Tu empresa</p>
+              <span class="cp-status lv-2"><i></i><span data-es="Disponible" data-en="Available">Disponible</span></span>
+
+              <div class="cp-actions">
+                <span class="cp-act"><svg class="icon"><use href="#i-whatsapp"/></svg><small>WhatsApp</small></span>
+                <span class="cp-act"><svg class="icon"><use href="#i-call"/></svg><small data-es="Llamar" data-en="Call">Llamar</small></span>
+                <span class="cp-act"><svg class="icon"><use href="#i-mail"/></svg><small data-es="Correo" data-en="Email">Correo</small></span>
+                <span class="cp-act lv-2"><svg class="icon"><use href="#i-pin"/></svg><small data-es="Ubicación" data-en="Location">Ubicación</small></span>
+              </div>
+
+              <div class="cp-social" aria-label="Redes sociales">
+                <span><svg class="icon"><use href="#i-linkedin"/></svg></span>
+                <span><svg class="icon"><use href="#i-instagram"/></svg></span>
+                <span><svg class="icon"><use href="#i-facebook"/></svg></span>
+                <span><svg class="icon"><use href="#i-github"/></svg></span>
+              </div>
+
+              <div class="cp-block lv-2">
+                <span class="cp-btn"><svg class="icon"><use href="#i-calendar"/></svg><span data-es="Agendar reunión" data-en="Book a meeting">Agendar reunión</span></span>
+              </div>
+
+              <div class="cp-block lv-2">
+                <p class="cp-label" data-es="Ubicación" data-en="Location">Ubicación</p>
+                <div class="cp-map" aria-hidden="true"><svg class="icon"><use href="#i-pin"/></svg></div>
+                <span class="cp-link" data-es="Ver en Google Maps" data-en="Open in Google Maps">Ver en Google Maps</span>
+              </div>
+
+              <div class="cp-block lv-2">
+                <p class="cp-label" data-es="Proyectos" data-en="Projects">Proyectos</p>
+                <div class="cp-thumbs" aria-hidden="true"><i></i><i></i><i></i></div>
+              </div>
+
+              <div class="cp-block lv-3">
+                <p class="cp-label" data-es="Métodos de pago" data-en="Payment methods">Métodos de pago</p>
+                <div class="cp-pay">
+                  <span><svg class="icon"><use href="#i-qr"/></svg><span data-es="QR de pago" data-en="Payment QR">QR de pago</span></span>
+                  <span><svg class="icon"><use href="#i-card"/></svg><span data-es="Transferencia" data-en="Bank transfer">Transferencia</span></span>
+                  <span><svg class="icon"><use href="#i-heart"/></svg><span data-es="Apoyo" data-en="Support">Apoyo</span></span>
+                </div>
+              </div>
+
+              <div class="cp-block cp-share">
+                <div class="cp-qr" aria-hidden="true"><span class="cp-qr-logo lv-3">AS</span></div>
+                <p class="cp-label" data-es="Escanea para compartir" data-en="Scan to share">Escanea para compartir</p>
+              </div>
+              <p class="cp-foot">tunombre.com</p>
+            </div>
+          </div>
+
+          <div class="cp-caption" aria-live="polite">
+            <strong data-cp-title>Plan Inicial</strong>
+            <span data-cp-desc>Incluye foto, datos, WhatsApp, llamadas, correo, redes sociales y código QR.</span>
+            <small data-cp-hint>Desliza dentro del teléfono para ver toda la tarjeta.</small>
+          </div>
         </div>
       </div>
     </div>
@@ -203,6 +266,7 @@
             <li>Diseño responsive</li>
           </ul>
           <button type="button" class="btn plan-btn" data-wa="Tarjeta Digital de Presentación" data-plan="Plan Inicial">Elegir Plan Inicial</button>
+          <button type="button" class="plan-preview" data-preview-level="1">Ver vista previa de este plan</button>
         </article>
         <article class="plan tier-bronze featured reveal">
           <span class="plan-badge">Más elegido</span>
@@ -224,6 +288,7 @@
             <li>Modo claro y oscuro</li>
           </ul>
           <button type="button" class="btn plan-btn" data-wa="Tarjeta Digital de Presentación" data-plan="Paquete Recomendado">Elegir Paquete Recomendado</button>
+          <button type="button" class="plan-preview" data-preview-level="2">Ver vista previa de este plan</button>
         </article>
         <article class="plan tier-gold reveal">
           <div class="plan-head">
@@ -243,6 +308,7 @@
             <li>Diseño visual totalmente personalizado</li>
           </ul>
           <button type="button" class="btn plan-btn" data-wa="Tarjeta Digital de Presentación" data-plan="Paquete Avanzado">Elegir Paquete Avanzado</button>
+          <button type="button" class="plan-preview" data-preview-level="3">Ver vista previa de este plan</button>
         </article>
       </div>
       <p class="plans-note reveal">¿Necesitas algo intermedio? Cada plan puede ajustarse: agrega o quita funcionalidades y te envío una propuesta a medida.</p>
@@ -384,5 +450,6 @@
 
 <script src="assets/js/config.js"></script>
 <script src="assets/js/main.js" defer></script>
+<script src="assets/js/card-preview.js" defer></script>
 </body>
 </html>
