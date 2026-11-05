@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Política de privacidad · Alvaro Siles</title>
+  <meta name="description" content="Cómo se tratan los datos enviados a través del formulario de contacto.">
+  <meta name="theme-color" content="#071426">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header scrolled">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">AS</span>
+        <span class="brand-text"><strong data-text="name">Alvaro Siles</strong><small>Software &amp; Tech Solutions</small></span>
+      </a>
+      <a href="index.html#contacto" class="btn btn-ghost btn-sm">Volver al sitio</a>
+    </div>
+  </header>
+
+  <main class="legal">
+    <div class="container narrow">
+      <h1>Política de privacidad</h1>
+      <!-- TODO: revisar y adaptar este texto a la normativa de tu país -->
+      <p>Última actualización: <span data-year>2026</span>.</p>
+
+      <h2>Datos que se recopilan</h2>
+      <p>Al usar el formulario de contacto puedes compartir:</p>
+      <ul>
+        <li>Nombre.</li>
+        <li>Correo electrónico.</li>
+        <li>Empresa o negocio (opcional).</li>
+        <li>Producto de interés y descripción del proyecto.</li>
+      </ul>
+
+      <h2>Finalidad</h2>
+      <p>Estos datos se utilizan únicamente para responder tu consulta, preparar una cotización y mantener la comunicación relacionada con tu proyecto. No se venden ni se ceden a terceros con fines comerciales.</p>
+
+      <h2>Canales de envío</h2>
+      <p>Según la opción que elijas, la solicitud se envía por WhatsApp o por correo electrónico desde tu propio dispositivo, por lo que también aplican las políticas de privacidad de esos servicios.</p>
+
+      <h2>Conservación y derechos</h2>
+      <p>Puedes solicitar en cualquier momento el acceso, la corrección o la eliminación de tus datos escribiendo a <a data-link="email" href="index.html#contacto" data-text="email">contacto@tudominio.com</a>.</p>
+
+      <h2>Cookies</h2>
+      <p>Este sitio no utiliza cookies de seguimiento ni herramientas de analítica propias. Las fuentes tipográficas y algunos íconos se cargan desde servicios externos (Google Fonts y jsDelivr).</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="margin-top:0;border-top:0;padding-top:0">
+      <p>© <span data-year>2026</span> <span data-text="name">Alvaro Siles</span>. Todos los derechos reservados.</p>
+      <a href="index.html">Inicio</a>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script>
+    (function () {
+      var c = window.SITE_CONFIG || {};
+      document.querySelectorAll("[data-text]").forEach(function (el) {
+        var v = c[el.getAttribute("data-text")]; if (v) el.textContent = v;
+      });
+      document.querySelectorAll('[data-link="email"]').forEach(function (el) {
+        if (c.email) el.href = "mailto:" + c.email;
+      });
+      document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
+    })();
+  </script>
+</body>
+</html>
