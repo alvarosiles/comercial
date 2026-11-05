@@ -16,6 +16,8 @@
      [data-pv-go="id"] / [data-pv-page="id"] navegación entre secciones (mini-app)
      [data-pv-role]   cambio de rol; oculta [data-admin-only] con data-role="seller"
      [data-pv-branch] cambio de sucursal; textos con data-b1 / data-b2
+     [data-pv-persona] perfiles de ejemplo; datos en <script type="application/json" data-pv-personas>
+                      y campos marcados con [data-pv-field]
      .pv-qr           código QR decorativo
      [data-preview-level] (fuera del contenedor) enlaces "Ver vista previa"
    ========================================================= */
@@ -124,6 +126,163 @@
       b.addEventListener("click", function () { setBranch(b.getAttribute("data-pv-branch")); });
     });
 
+    /* ---------- Perfiles de ejemplo (rubro / tipo de cliente) ---------- */
+    var personaData = null;
+    var personaScript = root.querySelector("script[data-pv-personas]");
+    if (personaScript) {
+      try { personaData = JSON.parse(personaScript.textContent); } catch (e) { personaData = null; }
+    }
+    var personaBtns = toArray(document.querySelectorAll("[data-pv-persona]"));
+
+    function setPersona(key) {
+      var p = personaData && personaData[key];
+      if (!p) return;
+      device.style.setProperty("--pa", p.accent);
+      device.style.setProperty("--pa2", p.accent2);
+      device.classList.toggle("is-logo", Boolean(p.logo));
+      device.setAttribute("data-persona", key);
+      Object.keys(p).forEach(function (field) {
+        if (!Array.isArray(p[field])) return;
+        var es = p[field][0], en = p[field][1] || es;
+        toArray(root.querySelectorAll('[data-pv-field="' + field + '"]')).forEach(function (el) {
+          el.setAttribute("data-es", es);
+          el.setAttribute("data-en", en);
+          el.textContent = lang === "en" ? en : es;
+        });
+      });
+      // Ícono del botón principal (por defecto, calendario)
+      var ctaIcon = root.querySelector('[data-pv-field="cta"]');
+      ctaIcon = ctaIcon && ctaIcon.parentElement.querySelector("use");
+      if (ctaIcon) ctaIcon.setAttribute("href", "#i-" + (p.ctaIcon || "calendar"));
+
+      renderBranches(p.branches);
+
+      // Redes sociales propias de cada perfil (ej.: TikTok para tiendas, GitHub para programadores)
+      var socialRow = root.querySelector("[data-pv-social]");
+      if (socialRow && Array.isArray(p.social)) {
+        var NAMES = { linkedin: "LinkedIn", github: "GitHub", gitlab: "GitLab", figma: "Figma", instagram: "Instagram",
+          facebook: "Facebook", tiktok: "TikTok", youtube: "YouTube", x: "X", pinterest: "Pinterest", behance: "Behance" };
+        socialRow.innerHTML = p.social.map(function (k) {
+          var n = NAMES[k] || k;
+          return '<span title="' + n + '" role="img" aria-label="' + n + '"><svg class="icon" aria-hidden="true"><use href="#i-' + k + '"/></svg></span>';
+        }).join("");
+      }
+      personaBtns.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-pv-persona") === key)); });
+      if (screen) screen.scrollTo({ top: 0, behavior: "smooth" });
+      var avatar = root.querySelector(".cp-avatar");
+      if (avatar) { avatar.classList.remove("is-new"); void avatar.offsetWidth; avatar.classList.add("is-new"); }
+    }
+
+    /* ---------- «Guardar contacto»: descarga una vCard con los datos del perfil ---------- */
+    var vcardBtn = root.querySelector("[data-pv-vcard]");
+    var toast = root.querySelector("[data-pv-toast]");
+    var toastTimer = null;
+
+    function showToast(es, en) {
+      if (!toast) return;
+      toast.textContent = lang === "en" ? en : es;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 2600);
+    }
+
+    function fieldText(name) {
+      var el = root.querySelector('[data-pv-field="' + name + '"]');
+      return el ? el.textContent.trim() : "";
+    }
+
+    function vEsc(t) { return String(t).replace(/\\/g, "\\\\").replace(/([,;])/g, "\\$1"); }
+
+    if (vcardBtn) {
+      vcardBtn.addEventListener("click", function () {
+        var name = fieldText("name") || "Contacto";
+        var site = fieldText("site");
+        var vcf = [
+          "BEGIN:VCARD", "VERSION:3.0",
+          "FN:" + vEsc(name),
+          "N:" + vEsc(name) + ";;;;",
+          "TITLE:" + vEsc(fieldText("role")),
+          site ? "URL:https://" + site : "",
+          "NOTE:" + vEsc("Contacto de ejemplo generado por la vista previa de la tarjeta digital"),
+          "END:VCARD"
+        ].filter(Boolean).join("\r\n");
+        try {
+          var url = URL.createObjectURL(new Blob([vcf], { type: "text/vcard;charset=utf-8" }));
+          var a = document.createElement("a");
+          a.href = url;
+          a.download = "contacto-ejemplo.vcf";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+          showToast("✓ Contacto de ejemplo descargado", "✓ Sample contact downloaded");
+        } catch (e) {
+          showToast("No se pudo generar el contacto", "Could not create the contact");
+        }
+      });
+    }
+
+    /* ---------- Mapa con varias sucursales ---------- */
+    var mapBox = root.querySelector("[data-pv-map]");
+    var branchList = root.querySelector("[data-pv-branches]");
+    // Posiciones de los pines dentro del mapa (en %)
+    var PIN_POS = [[28, 38], [70, 30], [46, 72], [82, 74]];
+
+    function esc(t) {
+      return String(t).replace(/[&<>"]/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+      });
+    }
+
+    function selectBranch(i) {
+      if (!mapBox) return;
+      toArray(mapBox.querySelectorAll(".cp-pin")).forEach(function (pin, j) { pin.classList.toggle("active", j === i); });
+      toArray(branchList.querySelectorAll("[data-branch]")).forEach(function (b, j) {
+        b.setAttribute("aria-pressed", String(j === i));
+      });
+    }
+
+    function renderBranches(list) {
+      if (!mapBox || !branchList) return;
+      if (!Array.isArray(list) || !list.length) {
+        mapBox.classList.remove("multi");
+        mapBox.innerHTML = '<svg class="icon"><use href="#i-pin"/></svg>';
+        branchList.innerHTML = "";
+        branchList.hidden = true;
+        return;
+      }
+      mapBox.classList.add("multi");
+      mapBox.innerHTML = list.map(function (b, i) {
+        var pos = PIN_POS[i % PIN_POS.length];
+        return '<span class="cp-pin" style="left:' + pos[0] + "%;top:" + pos[1] + '%">' + (i + 1) + "</span>";
+      }).join("");
+      branchList.innerHTML = list.map(function (b, i) {
+        var es = esc(b[0]), en = esc(b[1] || b[0]);
+        return '<li><button type="button" data-branch="' + i + '" aria-pressed="false">' +
+          '<span class="cp-num">' + (i + 1) + "</span>" +
+          '<span class="cp-branch-txt"><b data-es="' + es + '" data-en="' + en + '">' + (lang === "en" ? en : es) + "</b>" +
+          "<small>" + esc(b[2] || "") + "</small></span></button></li>";
+      }).join("");
+      branchList.hidden = false;
+      selectBranch(0);
+    }
+
+    if (branchList) {
+      branchList.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-branch]");
+        if (btn) selectBranch(Number(btn.getAttribute("data-branch")));
+      });
+    }
+
+    personaBtns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        setPersona(b.getAttribute("data-pv-persona"));
+        // Si el prototipo no está a la vista (ej.: «Ver ejemplo» más abajo), llevar hasta él
+        var r = device.getBoundingClientRect();
+        if (r.top < 0 || r.bottom > window.innerHeight) device.scrollIntoView({ block: "center" });
+      });
+    });
+
     function closePanels() {
       toArray(root.querySelectorAll(".pv-panel.open")).forEach(function (p) { p.classList.remove("open"); });
     }
@@ -207,6 +366,10 @@
     });
 
     toArray(root.querySelectorAll(".pv-qr")).forEach(buildQR);
+
+    // Cargar el perfil marcado por defecto (redes, colores y textos coherentes desde el inicio)
+    var initialPersona = personaBtns.filter(function (b) { return b.getAttribute("aria-pressed") === "true"; })[0];
+    if (initialPersona) setPersona(initialPersona.getAttribute("data-pv-persona"));
 
     // Enlaces "Ver vista previa de este plan"
     toArray(document.querySelectorAll("[data-preview-level]")).forEach(function (btn) {

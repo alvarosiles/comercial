@@ -797,7 +797,8 @@ a.contact-item:hover { text-decoration: none; border-color: rgba(34,211,238,.4);
 /* Teléfono */
 .cp-phone {
   --cp-bg: #0a1830; --cp-card: rgba(255,255,255,.05); --cp-line: rgba(255,255,255,.08);
-  --cp-text: #eef4fc; --cp-muted: #8fa3bf; --cp-accent: var(--cyan);
+  --cp-text: #eef4fc; --cp-muted: #8fa3bf;
+  --pa: #22d3ee; --pa2: #2dd4bf; --cp-accent: var(--pa);
   width: 276px; padding: 12px; border-radius: 40px;
   background: #050c18; border: 1px solid var(--border-strong);
   box-shadow: var(--shadow-lg), inset 0 0 0 2px rgba(255,255,255,.03);
@@ -805,7 +806,7 @@ a.contact-item:hover { text-decoration: none; border-color: rgba(34,211,238,.4);
 }
 .cp-phone.light {
   --cp-bg: #f3f6fb; --cp-card: #ffffff; --cp-line: rgba(10, 30, 60, .1);
-  --cp-text: #0b1a2e; --cp-muted: #5b6d86; --cp-accent: #0891b2;
+  --cp-text: #0b1a2e; --cp-muted: #5b6d86;
 }
 .cp-notch { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 70px; height: 18px; border-radius: 12px; background: #050c18; z-index: 3; }
 .cp-screen {
@@ -830,7 +831,9 @@ a.contact-item:hover { text-decoration: none; border-color: rgba(34,211,238,.4);
   height: 96px; position: relative;
   background:
     radial-gradient(120px 80px at 80% 20%, rgba(255,255,255,.25), transparent 70%),
-    linear-gradient(135deg, #0e7490, #22d3ee 55%, #2dd4bf);
+    linear-gradient(180deg, rgba(0,0,0,.18), transparent),
+    linear-gradient(135deg, var(--pa), var(--pa2));
+  transition: background .4s;
 }
 .cp-brand {
   position: absolute; left: 14px; top: 16px; font-family: var(--font-head); font-size: .66rem; font-weight: 700;
@@ -840,14 +843,15 @@ a.contact-item:hover { text-decoration: none; border-color: rgba(34,211,238,.4);
   background:
     repeating-linear-gradient(45deg, rgba(255,255,255,.07) 0 8px, transparent 8px 16px),
     radial-gradient(140px 90px at 85% 15%, rgba(255,240,180,.35), transparent 70%),
-    linear-gradient(135deg, #1e3a5f, #0e7490 50%, #b8860b);
+    linear-gradient(135deg, #1e3a5f, var(--pa) 50%, #b8860b);
 }
 .cp-phone[data-level="3"] .cp-brand { background: linear-gradient(145deg, #fff3b0, #f5c22e); }
 
 .cp-avatar {
   width: 78px; height: 78px; margin: -40px auto 10px; position: relative; border-radius: 50%;
   display: grid; place-items: center; font-family: var(--font-head); font-weight: 700; font-size: 1.4rem; color: #04202a;
-  background: var(--gradient); border: 4px solid var(--cp-bg); transition: border-color .35s;
+  background: linear-gradient(135deg, var(--pa), var(--pa2)); border: 4px solid var(--cp-bg);
+  transition: border-color .35s, border-radius .35s;
 }
 .cp-name { font-family: var(--font-head); font-weight: 700; font-size: 1.1rem; }
 .cp-role { font-size: .78rem; color: var(--cp-muted); margin-top: 2px !important; }
@@ -878,9 +882,76 @@ a.contact-item:hover { text-decoration: none; border-color: rgba(34,211,238,.4);
 .cp-label { font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--cp-muted); margin-bottom: 8px !important; }
 .cp-btn {
   display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; border-radius: 12px;
-  font-size: .82rem; font-weight: 700; color: #04202a; background: var(--gradient);
+  font-size: .82rem; font-weight: 700; color: #0b1626; background: linear-gradient(135deg, var(--pa), var(--pa2));
 }
 .cp-btn .icon { width: 16px; height: 16px; }
+.cp-btn { text-align: center; padding: 6px 10px; line-height: 1.25; }
+/* Botón «Guardar contacto» y aviso */
+.cp-save {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: calc(100% - 28px); min-height: 40px; margin: 12px 14px 0; border-radius: 12px; cursor: pointer;
+  font-size: .8rem; font-weight: 700; color: var(--cp-text);
+  background: var(--cp-card); border: 1px solid var(--cp-line);
+}
+.cp-save:hover { border-color: var(--cp-accent); }
+.cp-save .icon { width: 16px; height: 16px; color: var(--cp-accent); }
+.cp-toast {
+  position: absolute; left: 50%; bottom: 30px; z-index: 6; pointer-events: none;
+  transform: translate(-50%, 10px); opacity: 0; transition: opacity .25s, transform .25s var(--ease);
+  padding: 8px 14px; border-radius: 999px; white-space: nowrap;
+  font-size: .72rem; font-weight: 700; color: #fff; background: #10b981; box-shadow: 0 8px 20px -6px rgba(0,0,0,.5);
+}
+.cp-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* Mapa con varias sucursales */
+.cp-map { position: relative; }
+.cp-map.multi { height: 112px; }
+.cp-pin {
+  position: absolute; transform: translate(-50%, -100%);
+  width: 22px; height: 22px; border-radius: 50%; line-height: 1;
+  display: grid; place-items: center;
+  font-size: .6rem; font-weight: 800; color: #0b1626;
+  background: linear-gradient(135deg, var(--pa), var(--pa2));
+  border: 2px solid #fff; box-shadow: 0 3px 8px rgba(0,0,0,.35);
+  transition: transform .25s var(--ease), background .25s;
+}
+.cp-pin::after {
+  content: ""; position: absolute; left: 50%; bottom: -7px; transform: translateX(-50%);
+  border: 5px solid transparent; border-top: 6px solid #fff; border-bottom: 0;
+}
+.cp-pin.active { background: #ef4444; color: #fff; transform: translate(-50%, -100%) scale(1.3); z-index: 2; }
+.cp-branches { display: flex; flex-direction: column; gap: 5px; margin-top: 8px; }
+.cp-branches button {
+  width: 100%; display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 9px; cursor: pointer;
+  text-align: left; color: var(--cp-text); background: transparent; border: 1px solid var(--cp-line);
+}
+.cp-branches button[aria-pressed="true"] { border-color: var(--cp-accent); background: rgba(255,255,255,.04); }
+.cp-num {
+  flex: none; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center;
+  font-size: .56rem; font-weight: 800; color: #0b1626; background: linear-gradient(135deg, var(--pa), var(--pa2));
+}
+.cp-branches button[aria-pressed="true"] .cp-num { background: #ef4444; color: #fff; }
+.cp-branch-txt { display: flex; flex-direction: column; min-width: 0; }
+.cp-branch-txt b { font-size: .7rem; line-height: 1.2; }
+.cp-branch-txt small { font-size: .6rem; color: var(--cp-muted); }
+
+/* Fila de archivo descargable (CV, catálogo, menú…) */
+.cp-file { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
+.cp-file-ico {
+  flex: none; width: 34px; height: 40px; border-radius: 7px; display: grid; place-items: end center; padding-bottom: 6px;
+  font-size: .56rem; font-weight: 800; letter-spacing: .04em; color: #fff;
+  background: linear-gradient(160deg, #f87171, #dc2626);
+  clip-path: polygon(0 0, 70% 0, 100% 24%, 100% 100%, 0 100%);
+}
+.cp-file-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.cp-file-txt b { font-size: .8rem; line-height: 1.25; }
+.cp-file-txt small { font-size: .64rem; color: var(--cp-muted); }
+.cp-file-dl {
+  flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+  color: #0b1626; background: linear-gradient(135deg, var(--pa), var(--pa2));
+}
+.cp-file-dl .icon { width: 15px; height: 15px; stroke-width: 2.2; }
+.cp-btn.ghost { background: transparent; color: var(--cp-accent); border: 1px solid var(--cp-accent); }
 .cp-map {
   height: 86px; border-radius: 10px; display: grid; place-items: center; color: #ef4444;
   background:
@@ -893,7 +964,7 @@ a.contact-item:hover { text-decoration: none; border-color: rgba(34,211,238,.4);
 .cp-map .icon { width: 26px; height: 26px; fill: #ef4444; stroke: #fff; stroke-width: 1.2; }
 .cp-link { display: block; margin-top: 8px; font-size: .74rem; font-weight: 600; color: var(--cp-accent); }
 .cp-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-.cp-thumbs i { aspect-ratio: 1; border-radius: 8px; background: linear-gradient(135deg, rgba(34,211,238,.45), rgba(45,212,191,.12)); }
+.cp-thumbs i { aspect-ratio: 1; border-radius: 8px; background: linear-gradient(135deg, var(--pa), transparent); opacity: .7; }
 .cp-thumbs i:nth-child(2) { background: linear-gradient(135deg, rgba(248,203,71,.45), rgba(236,154,98,.15)); }
 .cp-thumbs i:nth-child(3) { background: linear-gradient(135deg, rgba(167,139,250,.45), rgba(34,211,238,.12)); }
 .cp-pay { display: flex; flex-direction: column; gap: 6px; }
@@ -914,6 +985,101 @@ a.contact-item:hover { text-decoration: none; border-color: rgba(34,211,238,.4);
   background: linear-gradient(145deg, #fff3b0, #f5c22e); border: 3px solid #fff;
 }
 .cp-foot { margin-top: 14px !important; font-size: .66rem; color: var(--cp-muted); }
+
+/* Logo cuadrado para empresas y comercios */
+.cp-phone.is-logo .cp-avatar { border-radius: 22px; }
+
+/* Selector de perfil (tarjetas-digitales.html) */
+.persona-pick { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); }
+.persona-title { font-family: var(--font-head); font-weight: 600; font-size: 1.05rem; margin-bottom: 4px; }
+.persona-sub { color: var(--muted); font-size: .9rem; margin-bottom: 14px; }
+.persona-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.persona-chips button {
+  min-height: 38px; padding: 0 14px; border-radius: 999px; cursor: pointer;
+  font-size: .86rem; font-weight: 500; color: #cdd9ea;
+  background: rgba(255,255,255,.03); border: 1px solid var(--border-strong);
+  transition: background .2s, border-color .2s, color .2s;
+}
+.persona-chips button:hover { border-color: var(--cyan); color: var(--text); }
+.persona-chips button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--cyan); color: var(--cyan); font-weight: 600; }
+
+/* Comparativa con WhatsApp Business (tarjetas-digitales.html) */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.compare-band {
+  background:
+    radial-gradient(700px 300px at 50% 0%, rgba(34,211,238,.10), transparent 70%),
+    radial-gradient(500px 260px at 100% 100%, rgba(37,211,102,.06), transparent 70%),
+    var(--bg);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.compare-wrap {
+  max-width: 980px; margin: 0 auto; border-radius: var(--radius-lg); overflow: hidden;
+  border: 1px solid var(--border-strong); background: rgba(5, 13, 25, .7);
+}
+.compare-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+.compare-table th, .compare-table td { padding: 14px 18px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+.compare-table tbody tr:last-child th, .compare-table tbody tr:last-child td { border-bottom: 0; }
+.compare-table thead th { font-family: var(--font-head); font-size: .95rem; white-space: nowrap; }
+.compare-table thead th .icon { display: inline-block; vertical-align: -3px; margin-right: 6px; }
+.compare-table thead th:not(.is-ours) .icon { color: #25d366; }
+.compare-table thead .is-ours { color: var(--cyan); }
+.compare-table tbody th { font-weight: 600; color: var(--text); width: 24%; }
+.compare-table tbody td { color: var(--muted); }
+.compare-table tbody td:last-child { color: var(--text); background: rgba(34,211,238,.06); }
+.compare-table thead .is-ours { background: rgba(34,211,238,.10); }
+.compare-table td .icon { display: inline-block; vertical-align: -3px; margin-right: 8px; color: var(--teal); }
+/* Móvil: cada fila como tarjeta */
+@media (max-width: 719px) {
+  .compare-table thead { display: none; }
+  .compare-table, .compare-table tbody, .compare-table tr, .compare-table th, .compare-table td { display: block; width: 100%; }
+  .compare-table tr { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+  .compare-table tbody tr:last-child { border-bottom: 0; }
+  .compare-table th, .compare-table td { padding: 0; border: 0; }
+  .compare-table tbody th { width: 100%; margin-bottom: 8px; }
+  .compare-table tbody td { padding: 8px 10px; border-radius: 8px; font-size: .88rem; }
+  .compare-table tbody td::before { content: attr(data-label); display: block; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin-bottom: 2px; }
+  .compare-table tbody td:last-child { margin-top: 6px; }
+  .compare-table tbody td:last-child::before { color: var(--cyan); }
+}
+.compare-quote { max-width: 760px; margin: 32px auto 0; text-align: center; }
+.compare-quote p { color: var(--muted); font-size: 1.02rem; }
+.compare-quote strong { color: var(--text); }
+.compare-quote .page-actions { justify-content: center; }
+
+/* Para quién es: cliente → solución (tarjetas-digitales.html) */
+.client-grid { display: grid; gap: 12px; }
+@media (min-width: 640px) {
+  .client-grid { grid-template-columns: 1fr 1fr; }
+  .client-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+.client-card {
+  display: flex; align-items: center; gap: 14px; padding: 16px 18px;
+  border-radius: var(--radius); border: 1px solid var(--border); background: rgba(7,20,38,.55);
+  transition: border-color .25s;
+}
+.client-card:hover { border-color: rgba(34,211,238,.35); }
+.client-card > .icon {
+  width: 42px; height: 42px; padding: 10px; flex: none; border-radius: 12px;
+  color: var(--cyan); background: var(--accent-soft);
+}
+.client-card > div { flex: 1; min-width: 0; }
+.client-card h3 { font-size: .98rem; margin: 0 0 2px; }
+.client-card p { margin: 0; font-size: .86rem; color: var(--muted); }
+.client-social { display: flex; gap: 8px; margin-top: 8px; color: var(--faint); }
+.client-social .icon { width: 15px; height: 15px; }
+.client-card:hover .client-social { color: var(--cyan); }
+.client-try {
+  flex: none; padding: 7px 12px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+  font-size: .78rem; font-weight: 600; color: var(--cyan);
+  background: transparent; border: 1px solid rgba(34,211,238,.4);
+}
+.client-try:hover, .client-try[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--cyan); }
+.benefit-row { display: grid; gap: 12px; margin-top: 32px; }
+@media (min-width: 820px) { .benefit-row { grid-template-columns: repeat(3, 1fr); } }
+.benefit-row li { display: flex; gap: 14px; padding: 16px 18px; border-radius: var(--radius); border: 1px solid var(--border); background: rgba(7,20,38,.35); }
+.benefit-row .icon { width: 38px; height: 38px; padding: 9px; flex: none; border-radius: 10px; color: var(--cyan); background: var(--accent-soft); }
+.benefit-row strong { display: block; margin-bottom: 2px; }
+.benefit-row span { color: var(--muted); font-size: .9rem; }
 
 /* Visibilidad por plan (todos los prototipos) */
 .pv-device[data-level="1"] .lv-2,
