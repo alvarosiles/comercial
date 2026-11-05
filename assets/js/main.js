@@ -73,7 +73,8 @@
       var value = plans[key[0]] && plans[key[0]][key[1]];
       if (!value) return;
       el.textContent = value;
-      var hint = el.parentElement && el.parentElement.querySelector(".plan-price-hint");
+      var card = el.closest(".plan");
+      var hint = card && card.querySelector(".plan-price-hint");
       if (hint) hint.textContent = "Precio referencial";
     });
 
