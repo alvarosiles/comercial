@@ -431,6 +431,39 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .note { margin-top: 24px; font-size: .9rem; color: var(--muted); padding: 14px 16px; border-left: 3px solid var(--cyan); background: var(--accent-soft); border-radius: 0 10px 10px 0; }
 .note strong { color: var(--text); }
 
+/* Planes */
+.plans-grid { display: grid; gap: 20px; align-items: stretch; }
+@media (min-width: 960px) { .plans-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: center; } }
+.plan {
+  position: relative; display: flex; flex-direction: column; height: 100%;
+  padding: 28px 24px; border-radius: var(--radius-lg);
+  border: 1px solid var(--border); background: var(--surface);
+}
+.plan.featured {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(180deg, #10284a, #0b1f3b) padding-box,
+    var(--gradient) border-box;
+  box-shadow: 0 24px 60px -24px rgba(34, 211, 238, .45);
+}
+@media (min-width: 960px) { .plan.featured { padding: 40px 28px; } }
+.plan-badge {
+  position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+  padding: 4px 14px; border-radius: 999px; white-space: nowrap;
+  font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  background: var(--gradient); color: #04202a;
+}
+.plan-level { font-size: .74rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--cyan); margin-bottom: 6px; }
+.plan h3 { font-size: 1.35rem; margin-bottom: 8px; }
+.plan-desc { color: var(--muted); font-size: .93rem; min-height: 3em; }
+.plan-price { padding: 16px 0; margin: 4px 0 18px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.plan-price strong { display: block; font-family: var(--font-head); font-size: 1.7rem; line-height: 1.2; }
+.plan-price-hint { font-size: .8rem; color: var(--faint); }
+.plan-includes { font-size: .85rem; font-weight: 600; color: var(--text); margin-bottom: 10px; }
+.plan .check-list { flex: 1; margin-bottom: 24px; }
+.plan .btn { width: 100%; }
+.plans-note { text-align: center; color: var(--muted); font-size: .9rem; max-width: 640px; margin: 28px auto 0; }
+
 .cta-band {
   position: relative; overflow: hidden; text-align: center;
   padding: 44px 24px; border-radius: var(--radius-lg);

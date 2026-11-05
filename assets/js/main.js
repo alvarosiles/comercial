@@ -21,10 +21,10 @@
   function mailUrl(subject, body) {
     return "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
   }
-  function quoteMessage(product) {
-    return product
-      ? "Hola " + (CONFIG.name || "") + ", me interesa solicitar una cotización para: " + product + "."
-      : "Hola " + (CONFIG.name || "") + ", me gustaría recibir información sobre tus servicios.";
+  function quoteMessage(product, plan) {
+    if (!product) return "Hola " + (CONFIG.name || "") + ", me gustaría recibir información sobre tus servicios.";
+    return "Hola " + (CONFIG.name || "") + ", me interesa solicitar una cotización para: " + product +
+      (plan ? " — " + plan : "") + ".";
   }
 
   /* ---------- 1. Aplicar configuración ---------- */
@@ -65,6 +65,17 @@
         img.src = CONFIG.photo;
       });
     }
+
+    // Precios de planes: data-price="producto.plan" → CONFIG.plans.producto.plan
+    var plans = CONFIG.plans || {};
+    $$("[data-price]").forEach(function (el) {
+      var key = el.getAttribute("data-price").split(".");
+      var value = plans[key[0]] && plans[key[0]][key[1]];
+      if (!value) return;
+      el.textContent = value;
+      var hint = el.parentElement && el.parentElement.querySelector(".plan-price-hint");
+      if (hint) hint.textContent = "Precio referencial";
+    });
 
     $$("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
   }
@@ -121,14 +132,23 @@
     if (match) select.value = product;
   }
 
-  function goToForm(product) {
+  function prefillPlan(plan) {
+    var msg = $("#f-message");
+    if (plan && msg && !msg.value.trim()) msg.value = "Me interesa el " + plan + ". ";
+  }
+
+  function goToForm(product, plan) {
     var contact = document.getElementById("contacto");
     // En las páginas de producto el formulario vive en la portada
     if (!contact || !$("#contact-form")) {
-      window.location.href = FORM_PAGE + (product ? "?producto=" + encodeURIComponent(product) : "") + "#contacto";
+      var params = [];
+      if (product) params.push("producto=" + encodeURIComponent(product));
+      if (plan) params.push("plan=" + encodeURIComponent(plan));
+      window.location.href = FORM_PAGE + (params.length ? "?" + params.join("&") : "") + "#contacto";
       return;
     }
     preselectProduct(product);
+    prefillPlan(plan);
     contact.scrollIntoView();
     var name = $("#f-name");
     if (name) setTimeout(function () { name.focus({ preventScroll: true }); }, 450);
@@ -140,19 +160,20 @@
       btn.addEventListener("click", function () { goToForm(btn.getAttribute("data-request")); });
     });
 
-    // "Cotizar por WhatsApp" → abre WhatsApp con el mensaje armado
+    // "Cotizar por WhatsApp" / "Elegir este plan" → abre WhatsApp con el mensaje armado
     $$("[data-wa]").forEach(function (el) {
       var product = el.getAttribute("data-wa");
+      var plan = el.getAttribute("data-plan");
       if (el.tagName === "A" && hasWhatsApp()) {
-        el.href = waUrl(quoteMessage(product));
+        el.href = waUrl(quoteMessage(product, plan));
         el.target = "_blank";
         el.rel = "noopener";
         return;
       }
       el.addEventListener("click", function (e) {
         e.preventDefault();
-        if (hasWhatsApp()) window.open(waUrl(quoteMessage(product)), "_blank", "noopener");
-        else goToForm(product);
+        if (hasWhatsApp()) window.open(waUrl(quoteMessage(product, plan)), "_blank", "noopener");
+        else goToForm(product, plan);
       });
     });
   }
@@ -161,9 +182,11 @@
   function initForm() {
     var form = $("#contact-form");
     if (!form) return;
-    // Producto preseleccionado desde una página de producto (?producto=…)
+    // Producto y plan preseleccionados desde una página de producto (?producto=…&plan=…)
     if ("URLSearchParams" in window) {
-      preselectProduct(new URLSearchParams(window.location.search).get("producto"));
+      var params = new URLSearchParams(window.location.search);
+      preselectProduct(params.get("producto"));
+      prefillPlan(params.get("plan"));
     }
     var status = $(".form-status", form);
     var primaryBtn = $('[data-channel="primary"]', form);

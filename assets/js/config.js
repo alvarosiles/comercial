@@ -32,6 +32,14 @@ window.SITE_CONFIG = {
     facebook: ""
   },
 
+  /* Precios de los planes (texto libre, ej: "Bs 800", "Desde $150").
+     Vacío = se muestra "A cotizar". TODO: completar si quieres publicar precios */
+  plans: {
+    portafolios: { inicial: "", recomendado: "", avanzado: "" },
+    tarjetas:    { inicial: "", recomendado: "", avanzado: "" },
+    sistemas:    { inicial: "", recomendado: "", avanzado: "" }
+  },
+
   /* Ruta a tu fotografía (ej: "assets/img/perfil.jpg"). Vacío = iniciales. */
   photo: "",
 

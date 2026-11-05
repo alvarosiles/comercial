@@ -47,6 +47,7 @@ Editar **`assets/js/config.js`**:
 | `email`        | Correo de contacto (también habilita “Enviar por correo”). |
 | `location`     | Ciudad / país. |
 | `social`       | URLs de LinkedIn, GitHub, Instagram, Facebook (vacío = oculto). |
+| `plans`        | Precios de los 3 planes de cada producto (`inicial`, `recomendado`, `avanzado`). Vacío = “A cotizar”. |
 | `photo`        | Ruta a tu foto (ej. `assets/img/perfil.jpg`). |
 | `formEndpoint` | Opcional: URL de Formspree/Getform/tu API para recibir el formulario por POST (JSON). |
 
