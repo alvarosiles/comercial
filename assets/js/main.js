@@ -314,6 +314,23 @@
     });
   }
 
+  /* ---------- Filtros por categoría ([data-cat-filter]) ---------- */
+  function initCategoryFilters() {
+    $$("[data-cat-filter]").forEach(function (box) {
+      var tabs = $$("[data-cat-tab]", box);
+      var items = $$("[data-cat]", box);
+      function show(cat) {
+        tabs.forEach(function (t) { t.setAttribute("aria-pressed", String(t.getAttribute("data-cat-tab") === cat)); });
+        items.forEach(function (it) { it.hidden = !(cat === "all" || it.getAttribute("data-cat") === cat); });
+      }
+      tabs.forEach(function (t) {
+        t.addEventListener("click", function () { show(t.getAttribute("data-cat-tab")); });
+      });
+      var active = tabs.filter(function (t) { return t.getAttribute("aria-pressed") === "true"; })[0] || tabs[0];
+      if (active) show(active.getAttribute("data-cat-tab"));
+    });
+  }
+
   /* ---------- 5. Animaciones de aparición ---------- */
   function initReveal() {
     var items = $$(".reveal");
@@ -346,5 +363,6 @@
   initNav();
   initActions();
   initForm();
+  initCategoryFilters();
   initReveal();
 })();

@@ -193,6 +193,14 @@
         }).join("");
       }
       personaBtns.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-pv-persona") === key)); });
+
+      // Si el perfil está en otra categoría del selector, mostrar esa categoría
+      var chip = document.querySelector('.persona-chips [data-pv-persona="' + key + '"]');
+      if (chip && chip.hidden) {
+        var box = chip.closest("[data-cat-filter]");
+        var tab = box && box.querySelector('[data-cat-tab="' + chip.getAttribute("data-cat") + '"]');
+        if (tab) tab.click();
+      }
       if (screen) screen.scrollTo({ top: 0, behavior: "smooth" });
       var avatar = root.querySelector(".cp-avatar");
       if (avatar) { avatar.classList.remove("is-new"); void avatar.offsetWidth; avatar.classList.add("is-new"); }

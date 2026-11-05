@@ -1061,6 +1061,26 @@ a.contact-item:hover { text-decoration: none; border-color: rgba(34,211,238,.4);
 .compare-quote strong { color: var(--text); }
 .compare-quote .page-actions { justify-content: center; }
 
+/* Pestañas de categoría (selector de perfiles y «Para quién es») */
+.cat-tabs {
+  display: flex; gap: 6px; margin-bottom: 12px; padding-bottom: 4px;
+  overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.cat-tabs::-webkit-scrollbar { display: none; }
+.cat-tabs.center { flex-wrap: wrap; justify-content: center; overflow: visible; margin-bottom: 24px; }
+.cat-tabs button {
+  flex: none; min-height: 34px; padding: 0 14px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+  font-size: .8rem; font-weight: 600; color: var(--muted);
+  background: transparent; border: 1px solid var(--border);
+  transition: background .2s, color .2s, border-color .2s;
+}
+.cat-tabs button:hover { color: var(--text); border-color: var(--border-strong); }
+.cat-tabs button[aria-pressed="true"] { color: #04202a; background: var(--gradient); border-color: transparent; }
+.persona-filter .persona-chips { min-height: 84px; align-content: flex-start; }
+/* Las columnas del hero no deben ensancharse por contenido largo */
+.page-hero-grid > * { min-width: 0; }
+@media (min-width: 960px) { .persona-filter .cat-tabs { flex-wrap: wrap; overflow: visible; } }
+
 /* Para quién es: cliente → solución (tarjetas-digitales.html) */
 .client-grid { display: grid; gap: 12px; }
 @media (min-width: 640px) {
