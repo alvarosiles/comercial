@@ -79,22 +79,22 @@
           </div>
         </div>
         <!-- Prototipo interactivo: vista previa de la tarjeta según el plan -->
-        <div class="page-visual card-proto" id="vista-previa">
+        <div class="page-visual card-proto" id="vista-previa" data-plan-preview data-level="1">
           <div class="cp-switch" role="radiogroup" aria-label="Ver la tarjeta según el plan">
-            <button type="button" role="radio" aria-checked="true" class="tier-silver" data-level="1">Inicial</button>
-            <button type="button" role="radio" aria-checked="false" class="tier-bronze" data-level="2" tabindex="-1">Recomendado</button>
-            <button type="button" role="radio" aria-checked="false" class="tier-gold" data-level="3" tabindex="-1">Avanzado</button>
+            <button type="button" role="radio" aria-checked="true" class="tier-silver" data-level="1" data-title="Plan Inicial" data-desc="Incluye foto, datos, WhatsApp, llamadas, correo, redes sociales y código QR." data-hint="Desliza dentro del teléfono para ver toda la tarjeta.">Inicial</button>
+            <button type="button" role="radio" aria-checked="false" class="tier-bronze" data-level="2" tabindex="-1" data-title="Paquete Recomendado" data-desc="Suma disponibilidad, ubicación en Google Maps, agenda de reuniones, proyectos y modo claro/oscuro." data-hint="Prueba el botón de modo claro/oscuro arriba a la derecha.">Recomendado</button>
+            <button type="button" role="radio" aria-checked="false" class="tier-gold" data-level="3" tabindex="-1" data-title="Paquete Avanzado" data-desc="Suma métodos de pago y apoyo, cambio de idioma, QR con tu marca y diseño personalizado." data-hint="Prueba el cambio de idioma ES / EN.">Avanzado</button>
           </div>
 
-          <div class="cp-phone" data-level="1">
+          <div class="cp-phone pv-device" data-level="1">
             <div class="cp-notch" aria-hidden="true"></div>
             <div class="cp-top">
-              <button type="button" class="cp-chip lv-3" data-cp-lang aria-label="Cambiar idioma">ES</button>
-              <button type="button" class="cp-chip lv-2" data-cp-theme aria-label="Cambiar a modo claro">
+              <button type="button" class="cp-chip lv-3" data-pv-lang aria-label="Cambiar idioma">ES</button>
+              <button type="button" class="cp-chip lv-2" data-pv-theme aria-label="Cambiar a modo claro">
                 <svg class="icon"><use href="#i-moon"/></svg>
               </button>
             </div>
-            <div class="cp-screen" tabindex="0" aria-label="Vista previa de la tarjeta digital">
+            <div class="cp-screen pv-screen" tabindex="0" aria-label="Vista previa de la tarjeta digital">
 
               <div class="cp-cover"><span class="cp-brand lv-3">TU MARCA</span></div>
               <div class="cp-avatar" aria-hidden="true">TN</div>
@@ -116,7 +116,7 @@
                 <span><svg class="icon"><use href="#i-github"/></svg></span>
               </div>
 
-              <div class="cp-block lv-2">
+              <div class="cp-block lv-2" data-pv-scroll>
                 <span class="cp-btn"><svg class="icon"><use href="#i-calendar"/></svg><span data-es="Agendar reunión" data-en="Book a meeting">Agendar reunión</span></span>
               </div>
 
@@ -131,7 +131,7 @@
                 <div class="cp-thumbs" aria-hidden="true"><i></i><i></i><i></i></div>
               </div>
 
-              <div class="cp-block lv-3">
+              <div class="cp-block lv-3" data-pv-scroll>
                 <p class="cp-label" data-es="Métodos de pago" data-en="Payment methods">Métodos de pago</p>
                 <div class="cp-pay">
                   <span><svg class="icon"><use href="#i-qr"/></svg><span data-es="QR de pago" data-en="Payment QR">QR de pago</span></span>
@@ -141,7 +141,7 @@
               </div>
 
               <div class="cp-block cp-share">
-                <div class="cp-qr" aria-hidden="true"><span class="cp-qr-logo lv-3">AS</span></div>
+                <div class="cp-qr pv-qr" aria-hidden="true"><span class="cp-qr-logo lv-3">AS</span></div>
                 <p class="cp-label" data-es="Escanea para compartir" data-en="Scan to share">Escanea para compartir</p>
               </div>
               <p class="cp-foot">tunombre.com</p>
@@ -149,9 +149,9 @@
           </div>
 
           <div class="cp-caption" aria-live="polite">
-            <strong data-cp-title>Plan Inicial</strong>
-            <span data-cp-desc>Incluye foto, datos, WhatsApp, llamadas, correo, redes sociales y código QR.</span>
-            <small data-cp-hint>Desliza dentro del teléfono para ver toda la tarjeta.</small>
+            <strong data-pv-title>Plan Inicial</strong>
+            <span data-pv-desc>Incluye foto, datos, WhatsApp, llamadas, correo, redes sociales y código QR.</span>
+            <small data-pv-hint>Desliza dentro del teléfono para ver toda la tarjeta.</small>
           </div>
         </div>
       </div>
@@ -450,6 +450,6 @@
 
 <script src="assets/js/config.js"></script>
 <script src="assets/js/main.js" defer></script>
-<script src="assets/js/card-preview.js" defer></script>
+<script src="assets/js/plan-preview.js" defer></script>
 </body>
 </html>

@@ -20,6 +20,7 @@ assets/css/styles.css      Estilos (mobile-first, tokens en :root)
 assets/js/config.js        ⚙️ DATOS CONFIGURABLES (WhatsApp, correo, redes, foto…)
 assets/js/icons.js         Íconos SVG compartidos por todas las páginas
 assets/js/main.js          Menú, WhatsApp, validación y envío del formulario
+assets/js/plan-preview.js  Prototipos interactivos por plan (portafolios y tarjetas)
 assets/img/favicon.svg  Ícono del sitio
 robots.txt, sitemap.xml SEO básico
 ```

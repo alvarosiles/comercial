@@ -79,15 +79,168 @@
             <a href="#planes" class="btn btn-ghost">Ver planes</a>
           </div>
         </div>
-        <div class="page-visual" aria-hidden="true">
-          <div class="mk-browser lg">
-            <div class="win-bar"><i></i><i></i><i></i><span>tunombre.com</span></div>
-            <div class="mk-portfolio lg">
-              <div class="mp-nav"><i></i><span><i></i><i></i><i></i><i></i></span></div>
-              <div class="mp-hero"><span class="mp-avatar"></span><span class="mp-lines"><i></i><i></i><i></i></span></div>
-              <div class="mp-skills"><i></i><i></i><i></i><i></i><i></i></div>
-              <div class="mp-grid"><i></i><i></i><i></i></div>
+        <!-- Prototipo interactivo: vista previa del portafolio según el plan -->
+        <div class="page-visual card-proto pf-proto" id="vista-previa" data-plan-preview data-level="1">
+          <div class="cp-switch" role="radiogroup" aria-label="Ver el portafolio según el plan">
+            <button type="button" role="radio" aria-checked="true" class="tier-silver" data-level="1"
+              data-title="Plan Inicial"
+              data-desc="Sitio de una página con perfil, habilidades, experiencia, formación, proyectos y contacto directo."
+              data-hint="Desliza dentro de la ventana para ver todo el sitio.">Inicial</button>
+            <button type="button" role="radio" aria-checked="false" class="tier-bronze" data-level="2" tabindex="-1"
+              data-title="Paquete Recomendado"
+              data-desc="Suma CV descargable, certificados, galería, formulario de contacto, animaciones y SEO."
+              data-hint="Mira la pestaña del navegador: el título ya está optimizado para buscadores.">Recomendado</button>
+            <button type="button" role="radio" aria-checked="false" class="tier-gold" data-level="3" tabindex="-1"
+              data-title="Paquete Avanzado"
+              data-desc="Suma tu dominio propio, versión en dos idiomas, diseño personalizado y una página por proyecto."
+              data-hint="Prueba ES / EN y toca «Ver detalle» en un proyecto.">Avanzado</button>
+          </div>
+
+          <div class="pp-window pv-device" data-level="1">
+            <div class="pp-bar">
+              <span class="pp-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="pp-tab">
+                <span class="pp-fav" aria-hidden="true">TN</span>
+                <span class="lv-max-1">Mi portafolio</span>
+                <span class="lv-2">Tu Nombre · Ingeniero de Software</span>
+              </span>
             </div>
+            <div class="pp-url">
+              <svg class="icon lv-3" aria-hidden="true"><use href="#i-shield"/></svg>
+              <span class="lv-max-2">vista-previa / tu-portafolio</span>
+              <span class="lv-3">tunombre.com</span>
+            </div>
+
+            <div class="pp-body">
+              <div class="pp-screen pv-screen" tabindex="0" aria-label="Vista previa del portafolio">
+                <header class="pp-nav">
+                  <span class="pp-logo" aria-hidden="true">TN</span>
+                  <span class="pp-links">
+                    <span data-es="Inicio" data-en="Home">Inicio</span>
+                    <span data-es="Experiencia" data-en="Experience">Experiencia</span>
+                    <span data-es="Proyectos" data-en="Projects">Proyectos</span>
+                    <span class="lv-2" data-es="Contacto" data-en="Contact">Contacto</span>
+                  </span>
+                  <span class="pp-burger" aria-hidden="true"><svg class="icon"><use href="#i-menu"/></svg></span>
+                  <button type="button" class="pp-lang lv-3" data-pv-lang aria-label="Cambiar idioma del portafolio">ES</button>
+                </header>
+
+                <section class="pp-hero">
+                  <span class="pp-blob lv-2" aria-hidden="true"></span>
+                  <span class="pp-blob b2 lv-2" aria-hidden="true"></span>
+                  <div class="pp-avatar" aria-hidden="true">TN</div>
+                  <p class="pp-hello" data-es="Hola, soy" data-en="Hi, I'm">Hola, soy</p>
+                  <p class="pp-name">Tu Nombre</p>
+                  <p class="pp-role" data-es="Ingeniero/a de Software · Tu especialidad" data-en="Software Engineer · Your specialty">Ingeniero/a de Software · Tu especialidad</p>
+                  <div class="pp-cta">
+                    <span class="pp-btn" data-es="Contactar" data-en="Contact me">Contactar</span>
+                    <span class="pp-btn ghost lv-2"><svg class="icon"><use href="#i-download"/></svg><span data-es="Descargar CV" data-en="Download CV">Descargar CV</span></span>
+                  </div>
+                  <div class="pp-social" aria-hidden="true">
+                    <span><svg class="icon"><use href="#i-linkedin"/></svg></span>
+                    <span><svg class="icon"><use href="#i-github"/></svg></span>
+                    <span><svg class="icon"><use href="#i-instagram"/></svg></span>
+                  </div>
+                </section>
+
+                <section class="pp-sec">
+                  <p class="pp-h" data-es="Habilidades" data-en="Skills">Habilidades</p>
+                  <div class="pp-chips"><span>React</span><span>Node.js</span><span>SQL</span><span>Docker</span><span>Git</span></div>
+                </section>
+
+                <section class="pp-sec">
+                  <p class="pp-h" data-es="Experiencia" data-en="Experience">Experiencia</p>
+                  <ul class="pp-timeline">
+                    <li><b data-es="Cargo actual" data-en="Current role">Cargo actual</b><small data-es="Empresa · 2022 – hoy" data-en="Company · 2022 – now">Empresa · 2022 – hoy</small></li>
+                    <li><b data-es="Cargo anterior" data-en="Previous role">Cargo anterior</b><small data-es="Empresa · 2019 – 2022" data-en="Company · 2019 – 2022">Empresa · 2019 – 2022</small></li>
+                  </ul>
+                </section>
+
+                <section class="pp-sec">
+                  <p class="pp-h" data-es="Formación" data-en="Education">Formación</p>
+                  <ul class="pp-timeline">
+                    <li><b data-es="Ingeniería de Sistemas" data-en="Systems Engineering">Ingeniería de Sistemas</b><small data-es="Universidad" data-en="University">Universidad</small></li>
+                  </ul>
+                </section>
+
+                <section class="pp-sec lv-2" data-pv-scroll>
+                  <p class="pp-h" data-es="Certificados" data-en="Certifications">Certificados</p>
+                  <div class="pp-certs">
+                    <span><svg class="icon"><use href="#i-award"/></svg><span data-es="Certificado 1" data-en="Certificate 1">Certificado 1</span></span>
+                    <span><svg class="icon"><use href="#i-award"/></svg><span data-es="Certificado 2" data-en="Certificate 2">Certificado 2</span></span>
+                    <span><svg class="icon"><use href="#i-award"/></svg><span data-es="Certificado 3" data-en="Certificate 3">Certificado 3</span></span>
+                  </div>
+                </section>
+
+                <section class="pp-sec">
+                  <p class="pp-h" data-es="Proyectos" data-en="Projects">Proyectos</p>
+                  <div class="pp-projects">
+                    <article class="pp-project">
+                      <i class="pp-thumb" aria-hidden="true"></i>
+                      <b data-es="Proyecto destacado" data-en="Featured project">Proyecto destacado</b>
+                      <small data-es="Descripción breve del proyecto." data-en="Short project description.">Descripción breve del proyecto.</small>
+                      <button type="button" class="pp-more lv-3" data-pv-open="p1" data-es="Ver detalle →" data-en="View details →">Ver detalle →</button>
+                    </article>
+                    <article class="pp-project">
+                      <i class="pp-thumb t2" aria-hidden="true"></i>
+                      <b data-es="Otro proyecto" data-en="Another project">Otro proyecto</b>
+                      <small data-es="Descripción breve del proyecto." data-en="Short project description.">Descripción breve del proyecto.</small>
+                      <button type="button" class="pp-more lv-3" data-pv-open="p2" data-es="Ver detalle →" data-en="View details →">Ver detalle →</button>
+                    </article>
+                  </div>
+                </section>
+
+                <section class="pp-sec lv-2">
+                  <p class="pp-h" data-es="Galería" data-en="Gallery">Galería</p>
+                  <div class="pp-gallery" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </section>
+
+                <section class="pp-sec">
+                  <p class="pp-h" data-es="Contacto" data-en="Contact">Contacto</p>
+                  <div class="pp-direct lv-max-1">
+                    <span class="pp-btn"><svg class="icon"><use href="#i-whatsapp"/></svg>WhatsApp</span>
+                    <span class="pp-btn ghost"><svg class="icon"><use href="#i-mail"/></svg>Correo</span>
+                  </div>
+                  <div class="pp-form lv-2">
+                    <span class="pp-input" data-es="Nombre" data-en="Name">Nombre</span>
+                    <span class="pp-input" data-es="Correo electrónico" data-en="Email">Correo electrónico</span>
+                    <span class="pp-input tall" data-es="Mensaje" data-en="Message">Mensaje</span>
+                    <span class="pp-btn" data-es="Enviar mensaje" data-en="Send message">Enviar mensaje</span>
+                  </div>
+                </section>
+
+                <footer class="pp-foot">© Tu Nombre</footer>
+              </div>
+
+              <!-- Página de detalle de cada proyecto (Paquete Avanzado) -->
+              <div class="pv-panel pp-detail" data-pv-panel="p1">
+                <button type="button" class="pp-back" data-pv-close><span data-es="← Volver" data-en="← Back">← Volver</span></button>
+                <i class="pp-cover" aria-hidden="true"></i>
+                <p class="pp-name sm" data-es="Proyecto destacado" data-en="Featured project">Proyecto destacado</p>
+                <p class="pp-text" data-es="Contexto, tu rol, las tecnologías usadas y los resultados, con capturas y enlaces." data-en="Context, your role, the technologies used and the results, with screenshots and links.">Contexto, tu rol, las tecnologías usadas y los resultados, con capturas y enlaces.</p>
+                <div class="pp-chips"><span>React</span><span>Node.js</span><span>PostgreSQL</span></div>
+                <div class="pp-gallery" aria-hidden="true"><i></i><i></i><i></i></div>
+              </div>
+              <div class="pv-panel pp-detail" data-pv-panel="p2">
+                <button type="button" class="pp-back" data-pv-close><span data-es="← Volver" data-en="← Back">← Volver</span></button>
+                <i class="pp-cover t2" aria-hidden="true"></i>
+                <p class="pp-name sm" data-es="Otro proyecto" data-en="Another project">Otro proyecto</p>
+                <p class="pp-text" data-es="Cada proyecto tiene su propia página para contar el desafío y la solución en detalle." data-en="Each project has its own page to tell the challenge and the solution in detail.">Cada proyecto tiene su propia página para contar el desafío y la solución en detalle.</p>
+                <div class="pp-chips"><span>Angular</span><span>Java</span><span>Docker</span></div>
+                <div class="pp-gallery" aria-hidden="true"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pp-view" role="group" aria-label="Tipo de pantalla">
+            <button type="button" data-pv-view="desktop" aria-pressed="true"><svg class="icon"><use href="#i-layout"/></svg> Escritorio</button>
+            <button type="button" data-pv-view="mobile" aria-pressed="false"><svg class="icon"><use href="#i-mobile"/></svg> Celular</button>
+          </div>
+
+          <div class="cp-caption" aria-live="polite">
+            <strong data-pv-title>Plan Inicial</strong>
+            <span data-pv-desc>Sitio de una página con perfil, habilidades, experiencia, formación, proyectos y contacto directo.</span>
+            <small data-pv-hint>Desliza dentro de la ventana para ver todo el sitio.</small>
           </div>
         </div>
       </div>
@@ -204,6 +357,7 @@
             <li>Diseño responsive</li>
           </ul>
           <button type="button" class="btn plan-btn" data-wa="Portafolio Web Profesional" data-plan="Plan Inicial">Elegir Plan Inicial</button>
+          <button type="button" class="plan-preview" data-preview-level="1">Ver vista previa de este plan</button>
         </article>
         <article class="plan tier-bronze featured reveal">
           <span class="plan-badge">Más elegido</span>
@@ -226,6 +380,7 @@
             <li>SEO básico para buscadores</li>
           </ul>
           <button type="button" class="btn plan-btn" data-wa="Portafolio Web Profesional" data-plan="Paquete Recomendado">Elegir Paquete Recomendado</button>
+          <button type="button" class="plan-preview" data-preview-level="2">Ver vista previa de este plan</button>
         </article>
         <article class="plan tier-gold reveal">
           <div class="plan-head">
@@ -246,6 +401,7 @@
             <li>Soporte para actualizaciones iniciales</li>
           </ul>
           <button type="button" class="btn plan-btn" data-wa="Portafolio Web Profesional" data-plan="Paquete Avanzado">Elegir Paquete Avanzado</button>
+          <button type="button" class="plan-preview" data-preview-level="3">Ver vista previa de este plan</button>
         </article>
       </div>
       <p class="plans-note reveal">¿Necesitas algo intermedio? Cada plan puede ajustarse: agrega o quita funcionalidades y te envío una propuesta a medida.</p>
@@ -389,5 +545,6 @@
 
 <script src="assets/js/config.js"></script>
 <script src="assets/js/main.js" defer></script>
+<script src="assets/js/plan-preview.js" defer></script>
 </body>
 </html>

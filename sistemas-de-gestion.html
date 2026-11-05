@@ -78,17 +78,217 @@
             <a href="#planes" class="btn btn-ghost">Ver planes</a>
           </div>
         </div>
-        <div class="page-visual" aria-hidden="true">
-          <div class="mk-browser lg">
-            <div class="win-bar"><i></i><i></i><i></i><span>sistema.tunegocio.com</span></div>
-            <div class="mk-system lg">
-              <div class="ms-side"><b></b><b></b><b></b><b></b><b></b></div>
-              <div class="ms-main">
-                <div class="ms-stats"><i></i><i></i><i></i><i></i></div>
-                <div class="hv-chart"><span style="--h:40%"></span><span style="--h:65%"></span><span style="--h:52%"></span><span style="--h:80%"></span><span style="--h:70%"></span><span style="--h:90%"></span><span style="--h:60%"></span></div>
-                <div class="ms-table"><i></i><i></i><i></i><i></i></div>
+        <!-- Prototipo interactivo: sistema de gestión según el plan (datos de ejemplo) -->
+        <div class="page-visual card-proto sg-proto" id="vista-previa" data-plan-preview data-level="1">
+          <div class="cp-switch" role="radiogroup" aria-label="Ver el sistema según el plan">
+            <button type="button" role="radio" aria-checked="true" class="tier-silver" data-level="1"
+              data-title="Plan Inicial"
+              data-desc="Clientes, un módulo principal (en este ejemplo, ventas), control de pagos y reportes básicos."
+              data-hint="Navega por el menú del sistema.">Inicial</button>
+            <button type="button" role="radio" aria-checked="false" class="tier-bronze" data-level="2" tabindex="-1"
+              data-title="Paquete Recomendado"
+              data-desc="Suma dashboard con estadísticas, inventario, reservas y usuarios con roles y permisos."
+              data-hint="Cambia a «Vendedor» para ver cómo se limitan los permisos.">Recomendado</button>
+            <button type="button" role="radio" aria-checked="false" class="tier-gold" data-level="3" tabindex="-1"
+              data-title="Paquete Avanzado"
+              data-desc="Suma facturación, sucursales, empleados, integraciones con servicios externos y módulos a medida."
+              data-hint="Cambia de sucursal y revisa Facturación e Integraciones.">Avanzado</button>
+          </div>
+
+          <div class="pp-window sg-window pv-device" data-level="1" data-role="admin">
+            <div class="pp-bar">
+              <span class="pp-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="pp-tab"><span class="pp-fav" aria-hidden="true">TN</span><span>Sistema · Tu Negocio</span></span>
+            </div>
+            <div class="pp-url"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>sistema.tunegocio.com</span></div>
+
+            <div class="sg-app">
+              <aside class="sg-side">
+                <div class="sg-brand"><span class="pp-logo" aria-hidden="true">TN</span><span>Tu Negocio</span></div>
+                <nav class="sg-nav" aria-label="Menú del sistema">
+                  <button type="button" data-pv-go="inicio" aria-current="page"><svg class="icon"><use href="#i-dashboard"/></svg><span class="lv-max-1">Resumen</span><span class="lv-2">Dashboard</span></button>
+                  <button type="button" data-pv-go="clientes"><svg class="icon"><use href="#i-users"/></svg><span>Clientes</span></button>
+                  <button type="button" data-pv-go="ventas"><svg class="icon"><use href="#i-cart"/></svg><span>Ventas</span></button>
+                  <button type="button" data-pv-go="inventario" class="lv-2"><svg class="icon"><use href="#i-box"/></svg><span>Inventario</span></button>
+                  <button type="button" data-pv-go="pagos"><svg class="icon"><use href="#i-dollar"/></svg><span>Pagos</span></button>
+                  <button type="button" data-pv-go="reservas" class="lv-2"><svg class="icon"><use href="#i-calendar"/></svg><span>Reservas</span></button>
+                  <button type="button" data-pv-go="facturacion" class="lv-3"><svg class="icon"><use href="#i-receipt"/></svg><span>Facturación</span></button>
+                  <button type="button" data-pv-go="reportes" data-admin-only><svg class="icon"><use href="#i-chart"/></svg><span>Reportes</span></button>
+                  <button type="button" data-pv-go="usuarios" class="lv-2" data-admin-only><svg class="icon"><use href="#i-shield"/></svg><span>Usuarios y roles</span></button>
+                  <button type="button" data-pv-go="empleados" class="lv-3" data-admin-only><svg class="icon"><use href="#i-briefcase"/></svg><span>Empleados</span></button>
+                  <button type="button" data-pv-go="sucursales" class="lv-3" data-admin-only><svg class="icon"><use href="#i-building"/></svg><span>Sucursales</span></button>
+                  <button type="button" data-pv-go="integraciones" class="lv-3" data-admin-only><svg class="icon"><use href="#i-plug"/></svg><span>Integraciones</span></button>
+                  <button type="button" data-pv-go="medida" class="lv-3 sg-custom" data-admin-only><svg class="icon"><use href="#i-sliders"/></svg><span>Tu módulo</span></button>
+                </nav>
+              </aside>
+
+              <div class="sg-main pv-screen" tabindex="0" aria-label="Contenido del sistema">
+                <div class="sg-top">
+                  <div class="sg-seg lv-3" role="group" aria-label="Sucursal">
+                    <button type="button" data-pv-branch="1" aria-pressed="true">Central</button>
+                    <button type="button" data-pv-branch="2" aria-pressed="false">Norte</button>
+                  </div>
+                  <div class="sg-seg lv-2" role="group" aria-label="Ver como">
+                    <button type="button" data-pv-role="admin" aria-pressed="true">Admin</button>
+                    <button type="button" data-pv-role="seller" aria-pressed="false">Vendedor</button>
+                  </div>
+                  <span class="sg-avatar" aria-hidden="true">A</span>
+                </div>
+
+                <!-- Inicio -->
+                <section class="sg-page" data-pv-page="inicio">
+                  <p class="sg-h"><span class="lv-max-1">Resumen</span><span class="lv-2">Dashboard</span></p>
+                  <div class="sg-stats">
+                    <div><small>Ventas del día</small><b data-b1="24" data-b2="15">24</b></div>
+                    <div><small>Clientes</small><b data-b1="312" data-b2="187">312</b></div>
+                    <div><small>Pagos pendientes</small><b data-b1="7" data-b2="3">7</b></div>
+                    <div class="lv-2"><small>Stock bajo</small><b class="warn" data-b1="3" data-b2="5">3</b></div>
+                  </div>
+                  <div class="sg-card lv-2">
+                    <p class="sg-sub">Ventas de la semana</p>
+                    <div class="sg-chart" aria-hidden="true"><span style="--h:45%"></span><span style="--h:62%"></span><span style="--h:50%"></span><span style="--h:78%"></span><span style="--h:66%"></span><span style="--h:92%"></span><span style="--h:58%"></span></div>
+                  </div>
+                  <div class="sg-card">
+                    <p class="sg-sub">Últimas ventas</p>
+                    <ul class="sg-rows">
+                      <li><span>#0124 · Cliente A</span><b>Completada</b></li>
+                      <li><span>#0123 · Cliente B</span><b>Completada</b></li>
+                      <li><span>#0122 · Cliente C</span><b class="warn">Pendiente</b></li>
+                    </ul>
+                  </div>
+                </section>
+
+                <section class="sg-page" data-pv-page="clientes" hidden>
+                  <p class="sg-h">Clientes <span class="sg-add">+ Nuevo</span></p>
+                  <ul class="sg-rows">
+                    <li><span>Cliente A</span><small>Activo</small></li>
+                    <li><span>Cliente B</span><small>Activo</small></li>
+                    <li><span>Cliente C</span><small>Nuevo</small></li>
+                    <li><span>Cliente D</span><small>Inactivo</small></li>
+                  </ul>
+                </section>
+
+                <section class="sg-page" data-pv-page="ventas" hidden>
+                  <p class="sg-h">Ventas <span class="sg-add">+ Nueva venta</span></p>
+                  <ul class="sg-rows">
+                    <li><span>#0124 · Cliente A</span><small>3 productos</small></li>
+                    <li><span>#0123 · Cliente B</span><small>1 producto</small></li>
+                    <li><span>#0122 · Cliente C</span><small>5 productos</small></li>
+                    <li><span>#0121 · Cliente D</span><small>2 productos</small></li>
+                  </ul>
+                </section>
+
+                <section class="sg-page" data-pv-page="inventario" hidden>
+                  <p class="sg-h">Inventario</p>
+                  <ul class="sg-rows">
+                    <li><span>Producto 1</span><b>48 u.</b></li>
+                    <li><span>Producto 2</span><b>32 u.</b></li>
+                    <li><span>Producto 3</span><b class="warn">4 u. · bajo</b></li>
+                    <li><span>Producto 4</span><b class="warn">2 u. · bajo</b></li>
+                  </ul>
+                </section>
+
+                <section class="sg-page" data-pv-page="pagos" hidden>
+                  <p class="sg-h">Pagos</p>
+                  <ul class="sg-rows">
+                    <li><span>Cliente A · Mensualidad</span><b>Pagado</b></li>
+                    <li><span>Cliente B · Venta #0123</span><b>Pagado</b></li>
+                    <li><span>Cliente C · Venta #0122</span><b class="warn">Pendiente</b></li>
+                    <li><span>Cliente D · Mensualidad</span><b class="bad">Vencido</b></li>
+                  </ul>
+                </section>
+
+                <section class="sg-page" data-pv-page="reservas" hidden>
+                  <p class="sg-h">Reservas de la semana</p>
+                  <div class="sg-week" aria-hidden="true">
+                    <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span>
+                    <i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i>
+                    <i></i><i class="on"></i><i class="on"></i><i></i><i></i>
+                    <i class="on"></i><i></i><i></i><i class="on"></i><i class="on"></i>
+                  </div>
+                  <p class="sg-note">Reservas o control de asistencia, según tu rubro.</p>
+                </section>
+
+                <section class="sg-page" data-pv-page="facturacion" hidden>
+                  <p class="sg-h">Facturación <span class="sg-add">+ Emitir</span></p>
+                  <ul class="sg-rows">
+                    <li><span>F-000231 · Cliente A</span><b>Emitida</b></li>
+                    <li><span>F-000230 · Cliente B</span><b>Emitida</b></li>
+                    <li><span>F-000229 · Cliente C</span><b class="bad">Anulada</b></li>
+                  </ul>
+                </section>
+
+                <section class="sg-page" data-pv-page="reportes" hidden>
+                  <p class="sg-h">Reportes</p>
+                  <ul class="sg-rows">
+                    <li><span>Ventas del mes</span><small>PDF · Excel</small></li>
+                    <li><span>Pagos y deudas</span><small>PDF · Excel</small></li>
+                    <li class="lv-2"><span>Productos más vendidos</span><small>Gráfico</small></li>
+                    <li class="lv-2"><span>Comparativo mensual</span><small>Gráfico</small></li>
+                  </ul>
+                  <div class="sg-card lv-2">
+                    <p class="sg-sub">Comparativo mensual</p>
+                    <div class="sg-chart" aria-hidden="true"><span style="--h:55%"></span><span style="--h:48%"></span><span style="--h:70%"></span><span style="--h:82%"></span><span style="--h:76%"></span><span style="--h:95%"></span></div>
+                  </div>
+                </section>
+
+                <section class="sg-page" data-pv-page="usuarios" hidden>
+                  <p class="sg-h">Usuarios y roles</p>
+                  <ul class="sg-rows">
+                    <li><span>Administrador</span><small>Acceso total</small></li>
+                    <li><span>Vendedor 1</span><small>Ventas · Clientes · Pagos</small></li>
+                    <li><span>Vendedor 2</span><small>Ventas · Clientes · Pagos</small></li>
+                  </ul>
+                  <p class="sg-note">Prueba «Vendedor» arriba: el menú muestra solo lo que ese rol puede usar.</p>
+                </section>
+
+                <section class="sg-page" data-pv-page="empleados" hidden>
+                  <p class="sg-h">Empleados</p>
+                  <ul class="sg-rows">
+                    <li><span>Empleado 1</span><small>Encargado · 08:00–16:00</small></li>
+                    <li><span>Empleado 2</span><small>Ventas · 09:00–17:00</small></li>
+                    <li><span>Empleado 3</span><small>Caja · 14:00–22:00</small></li>
+                  </ul>
+                </section>
+
+                <section class="sg-page" data-pv-page="sucursales" hidden>
+                  <p class="sg-h">Sucursales</p>
+                  <ul class="sg-rows">
+                    <li><span>Central</span><small>312 clientes · 5 empleados</small></li>
+                    <li><span>Norte</span><small>187 clientes · 3 empleados</small></li>
+                  </ul>
+                  <p class="sg-note">Cambia de sucursal arriba: el dashboard muestra los datos de cada sede.</p>
+                </section>
+
+                <section class="sg-page" data-pv-page="integraciones" hidden>
+                  <p class="sg-h">Integraciones</p>
+                  <ul class="sg-rows">
+                    <li><span>WhatsApp (notificaciones)</span><b>Conectado</b></li>
+                    <li><span>Pasarela de pagos</span><b>Conectado</b></li>
+                    <li><span>Correo electrónico</span><b>Conectado</b></li>
+                  </ul>
+                </section>
+
+                <section class="sg-page" data-pv-page="medida" hidden>
+                  <p class="sg-h">Tu módulo a medida</p>
+                  <div class="sg-card sg-dashed">
+                    <svg class="icon" aria-hidden="true"><use href="#i-sliders"/></svg>
+                    <p>Diseñamos un módulo para el proceso específico de tu negocio: lo que hoy haces a mano o en planillas.</p>
+                  </div>
+                </section>
               </div>
             </div>
+          </div>
+
+          <div class="pp-view" role="group" aria-label="Tipo de pantalla">
+            <button type="button" data-pv-view="desktop" aria-pressed="true"><svg class="icon"><use href="#i-layout"/></svg> Escritorio</button>
+            <button type="button" data-pv-view="mobile" aria-pressed="false"><svg class="icon"><use href="#i-mobile"/></svg> Celular</button>
+          </div>
+
+          <div class="cp-caption" aria-live="polite">
+            <strong data-pv-title>Plan Inicial</strong>
+            <span data-pv-desc>Clientes, un módulo principal (en este ejemplo, ventas), control de pagos y reportes básicos.</span>
+            <small data-pv-hint>Navega por el menú del sistema.</small>
           </div>
         </div>
       </div>
@@ -203,6 +403,7 @@
             <li>Acceso web desde cualquier dispositivo</li>
           </ul>
           <button type="button" class="btn plan-btn" data-wa="Sistema de Gestión Empresarial" data-plan="Plan Inicial">Elegir Plan Inicial</button>
+          <button type="button" class="plan-preview" data-preview-level="1">Ver vista previa de este plan</button>
         </article>
         <article class="plan tier-bronze featured reveal">
           <span class="plan-badge">Más elegido</span>
@@ -225,6 +426,7 @@
             <li>Capacitación para tu equipo</li>
           </ul>
           <button type="button" class="btn plan-btn" data-wa="Sistema de Gestión Empresarial" data-plan="Paquete Recomendado">Elegir Paquete Recomendado</button>
+          <button type="button" class="plan-preview" data-preview-level="2">Ver vista previa de este plan</button>
         </article>
         <article class="plan tier-gold reveal">
           <div class="plan-head">
@@ -245,6 +447,7 @@
             <li>Módulos desarrollados a medida</li>
           </ul>
           <button type="button" class="btn plan-btn" data-wa="Sistema de Gestión Empresarial" data-plan="Paquete Avanzado">Elegir Paquete Avanzado</button>
+          <button type="button" class="plan-preview" data-preview-level="3">Ver vista previa de este plan</button>
         </article>
       </div>
       <p class="plans-note reveal">¿Necesitas algo intermedio? Cada plan puede ajustarse: agrega o quita funcionalidades y te envío una propuesta a medida.</p>
@@ -359,5 +562,6 @@
 
 <script src="assets/js/config.js"></script>
 <script src="assets/js/main.js" defer></script>
+<script src="assets/js/plan-preview.js" defer></script>
 </body>
 </html>
