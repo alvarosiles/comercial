@@ -11,11 +11,15 @@ y los servicios tecnológicos complementarios.
 ## Estructura
 
 ```
-index.html              Página principal (todas las secciones)
-privacidad.html         Política de privacidad
-assets/css/styles.css   Estilos (mobile-first, tokens en :root)
-assets/js/config.js     ⚙️ DATOS CONFIGURABLES (WhatsApp, correo, redes, foto…)
-assets/js/main.js       Menú, tabs, WhatsApp, validación y envío del formulario
+index.html                 Portada: hero, productos, servicios, metodología, tecnologías, sobre mí, FAQ, contacto
+portafolios-web.html       Página del Producto 01
+tarjetas-digitales.html    Página del Producto 02
+sistemas-de-gestion.html   Página del Producto 03
+privacidad.html            Política de privacidad
+assets/css/styles.css      Estilos (mobile-first, tokens en :root)
+assets/js/config.js        ⚙️ DATOS CONFIGURABLES (WhatsApp, correo, redes, foto…)
+assets/js/icons.js         Íconos SVG compartidos por todas las páginas
+assets/js/main.js          Menú, WhatsApp, validación y envío del formulario
 assets/img/favicon.svg  Ícono del sitio
 robots.txt, sitemap.xml SEO básico
 ```
@@ -51,6 +55,13 @@ Además:
 - Reemplazar `https://www.tudominio.com/` en `index.html` (canonical y Open Graph), `robots.txt` y `sitemap.xml`.
 - Crear `assets/img/og-image.png` (1200×630) y descomentar la etiqueta `og:image` en `index.html`.
 - Revisar el texto de `privacidad.html` según la normativa de tu país.
+
+## Páginas de producto
+
+Cada producto tiene su propia página con: problema que resuelve, funcionalidades, público objetivo,
+beneficios, preguntas frecuentes y llamado a la acción. El formulario vive en la portada; los botones
+«Solicitar información» de cada página llevan a `index.html?producto=…#contacto`, que deja el producto
+preseleccionado.
 
 ## Envío del formulario
 

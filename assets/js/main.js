@@ -36,7 +36,7 @@
 
     $$('[data-link="whatsapp"]').forEach(function (el) {
       if (hasWhatsApp()) el.href = waUrl(quoteMessage(""));
-      else { el.removeAttribute("target"); el.href = "#contacto"; }
+      else el.removeAttribute("target"); // conserva el href del HTML (formulario de contacto)
     });
     $$('[data-link="email"]').forEach(function (el) {
       if (hasEmail()) el.href = "mailto:" + CONFIG.email;
@@ -93,14 +93,15 @@
 
     // Enlace activo según la sección visible
     if (!("IntersectionObserver" in window)) return;
-    var links = $$(".nav-link");
+    // Solo enlaces a secciones de esta misma página (en páginas de producto apuntan a index.html#…)
+    var links = $$(".nav-link").filter(function (l) { return l.getAttribute("href").charAt(0) === "#"; });
+    if (!links.length) return;
     var map = {};
     links.forEach(function (l) { map[l.getAttribute("href").slice(1)] = l; });
     var spy = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
         var id = entry.target.id;
-        if (id === "detalle") id = "productos";
         if (id === "metodologia" || id === "tecnologias") id = "servicios";
         if (id === "faq") id = "sobre-mi";
         links.forEach(function (l) { l.classList.remove("active"); l.removeAttribute("aria-current"); });
@@ -110,52 +111,25 @@
     $$("main section[id]").forEach(function (s) { spy.observe(s); });
   }
 
-  /* ---------- 3. Tabs de detalle de producto ---------- */
-  var activateTab;
-  function initTabs() {
-    var tabs = $$('[role="tab"]');
+  /* ---------- 3. Acciones comerciales ---------- */
+  var FORM_PAGE = "index.html";
 
-    activateTab = function (tab, focus) {
-      tabs.forEach(function (t) {
-        var selected = t === tab;
-        t.setAttribute("aria-selected", String(selected));
-        t.tabIndex = selected ? 0 : -1;
-        document.getElementById(t.getAttribute("aria-controls")).hidden = !selected;
-      });
-      if (focus) tab.focus();
-    };
-
-    tabs.forEach(function (tab, i) {
-      tab.addEventListener("click", function () { activateTab(tab); });
-      tab.addEventListener("keydown", function (e) {
-        var next = null;
-        if (e.key === "ArrowRight") next = tabs[(i + 1) % tabs.length];
-        else if (e.key === "ArrowLeft") next = tabs[(i - 1 + tabs.length) % tabs.length];
-        else if (e.key === "Home") next = tabs[0];
-        else if (e.key === "End") next = tabs[tabs.length - 1];
-        if (next) { e.preventDefault(); activateTab(next, true); }
-      });
-    });
-
-    // Botones "Ver detalles"
-    $$("[data-detail]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        var tab = document.getElementById("tab-" + btn.getAttribute("data-detail"));
-        if (!tab) return;
-        activateTab(tab);
-        document.getElementById("detalle").scrollIntoView();
-      });
-    });
+  function preselectProduct(product) {
+    var select = $("#f-product");
+    if (!product || !select) return;
+    var match = $$("option", select).filter(function (o) { return o.value === product; })[0];
+    if (match) select.value = product;
   }
 
-  /* ---------- 4. Acciones comerciales ---------- */
   function goToForm(product) {
-    var select = $("#f-product");
-    if (product && select) {
-      var match = $$("option", select).filter(function (o) { return o.value === product; })[0];
-      if (match) select.value = product;
+    var contact = document.getElementById("contacto");
+    // En las páginas de producto el formulario vive en la portada
+    if (!contact || !$("#contact-form")) {
+      window.location.href = FORM_PAGE + (product ? "?producto=" + encodeURIComponent(product) : "") + "#contacto";
+      return;
     }
-    document.getElementById("contacto").scrollIntoView();
+    preselectProduct(product);
+    contact.scrollIntoView();
     var name = $("#f-name");
     if (name) setTimeout(function () { name.focus({ preventScroll: true }); }, 450);
   }
@@ -183,10 +157,14 @@
     });
   }
 
-  /* ---------- 5. Formulario de contacto ---------- */
+  /* ---------- 4. Formulario de contacto ---------- */
   function initForm() {
     var form = $("#contact-form");
     if (!form) return;
+    // Producto preseleccionado desde una página de producto (?producto=…)
+    if ("URLSearchParams" in window) {
+      preselectProduct(new URLSearchParams(window.location.search).get("producto"));
+    }
     var status = $(".form-status", form);
     var primaryBtn = $('[data-channel="primary"]', form);
     var emailBtn = $('[data-channel="email"]', form);
@@ -312,7 +290,7 @@
     });
   }
 
-  /* ---------- 6. Animaciones de aparición ---------- */
+  /* ---------- 5. Animaciones de aparición ---------- */
   function initReveal() {
     var items = $$(".reveal");
     if (!("IntersectionObserver" in window)) {
@@ -342,7 +320,6 @@
 
   applyConfig();
   initNav();
-  initTabs();
   initActions();
   initForm();
   initReveal();
