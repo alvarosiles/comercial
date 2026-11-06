@@ -334,7 +334,7 @@
 
     { id: "baile", cat: "arte", label: "Escuelas de baile", desc: "Perfil de la academia, horarios y redes sociales.",
       redes: ["instagram", "tiktok", "youtube", "facebook"], icon: "music", style: "classic",
-      name: "Ritmo Studio", tagline: "Escuela de baile", c1: "#9333ea", c2: "#db2777",
+      name: "Montuno Studio", tagline: "Escuela de baile", c1: "#9333ea", c2: "#db2777",
       about: "Clases para todas las edades y niveles. Aprende a bailar en un ambiente divertido, desde cero.",
       catalogTitle: "Clases", catalog: [
         { t: "Salsa", d: "Lunes y miércoles · 19:00" },
