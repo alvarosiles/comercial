@@ -573,7 +573,28 @@
     if (SOCIAL.facebook) items.push({ ic: "facebook", label: "Facebook", value: "Síguenos", href: SOCIAL.facebook });
     if (SOCIAL.instagram) items.push({ ic: "instagram", label: "Instagram", value: "Síguenos", href: SOCIAL.instagram });
     if (SOCIAL.tiktok) items.push({ ic: "tiktok", label: "TikTok", value: "Síguenos", href: SOCIAL.tiktok });
+    if (SOCIAL.linkedin) items.push({ ic: "briefcase", label: "LinkedIn", value: "Perfil profesional", href: SOCIAL.linkedin });
+
+    /* Pie de página: contacto en texto */
+    var fc = $("#footerContact");
+    fc.innerHTML = items.map(function (it) {
+      var ext = it.href.indexOf("http") === 0;
+      return '<li><a href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + ">" + esc(it.label === "Correo" ? it.value : it.label) + "</a></li>";
+    }).join("") + (CFG.location ? "<li>" + esc(CFG.location) + "</li>" : "");
+
+    /* Botón flotante de WhatsApp */
+    if (wa) {
+      var fl = $("#waFloat");
+      setContactLink(fl, "Hola, quiero información sobre las tarjetas digitales.");
+      fl.hidden = false;
+    }
+
+    if (CFG.location) items.push({ ic: "pin", label: "Ubicación", value: CFG.location, href: "" });
     list.innerHTML = items.map(function (it) {
+      if (!it.href) {
+        return '<li><div class="cl-static"><span class="cl-ic ' + it.ic + '">' + icon(it.ic) + "</span>" +
+          "<span><small>" + esc(it.label) + "</small><strong>" + esc(it.value) + "</strong></span></div></li>";
+      }
       var ext = it.href.indexOf("http") === 0;
       return '<li><a href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + ">" +
         '<span class="cl-ic ' + it.ic + '">' + icon(it.ic) + "</span>" +
@@ -583,8 +604,122 @@
     if (!items.length) list.hidden = true;
   })();
 
-  if (CFG.name) $("#ownerName").textContent = CFG.name;
+  /* ------------------------------------------------------------------
+   * Quién soy (desde config.js)
+   * ------------------------------------------------------------------ */
+  if (CFG.name) $$(".js-name").forEach(function (el) { el.textContent = CFG.name; });
+  if (CFG.role) $$(".js-role").forEach(function (el) { el.textContent = CFG.role; });
+  if (CFG.name) {
+    $("#aboutInitials").textContent = CFG.name.split(/\s+/).slice(0, 2).map(function (w) { return w.charAt(0); }).join("").toUpperCase();
+  }
+  if (CFG.photo) {
+    var img = new Image();
+    img.alt = "Foto de " + (CFG.name || "perfil");
+    img.onload = function () { var box = $("#aboutPhoto"); box.innerHTML = ""; box.appendChild(img); };
+    img.src = CFG.photo;
+  }
+  var loc = $("#aboutLoc");
+  if (CFG.location) $("span", loc).textContent = CFG.location; else loc.hidden = true;
   $("#year").textContent = new Date().getFullYear();
+
+  /* ------------------------------------------------------------------
+   * Formulario de contacto
+   * Sin backend: arma el mensaje y abre WhatsApp o el correo para que el
+   * cliente lo envíe. Si config.formEndpoint existe, envía por POST (JSON).
+   * ------------------------------------------------------------------ */
+  (function contactForm() {
+    var f = $("#contactForm");
+    var status = $("#cfStatus");
+    var waNum = String(CFG.whatsapp || "").replace(/\D/g, "");
+    if (!waNum) $("#cfWa").hidden = true;
+    if (!CFG.email) $("#cfMail").hidden = true;
+    if (!waNum && !CFG.email && !CFG.formEndpoint) { $("#cfMail").hidden = false; }
+    if (CFG.formEndpoint) {
+      $("#cfWa").hidden = true;
+      $("#cfMail").hidden = false;
+      $("#cfMail").innerHTML = icon("send") + " Enviar solicitud";
+      $(".cf-legal", f).innerHTML = 'Al enviar aceptas la <a href="privacidad.html">política de privacidad</a>.';
+    } else if (!waNum && CFG.email) {
+      $("#cfMail").className = "btn btn-primary";
+    }
+
+    /* Plan/rubro preseleccionado desde los botones de la página */
+    $$("[data-plan]").forEach(function (b) {
+      b.addEventListener("click", function () { f.plan.value = b.getAttribute("data-plan"); });
+    });
+
+    var MSG = {
+      valueMissing: "Este campo es obligatorio.",
+      tooShort: "Escribe un poco más, por favor."
+    };
+    function check(el) {
+      var err = el.closest(".cf-field") && $(".cf-error", el.closest(".cf-field"));
+      var ok = el.checkValidity();
+      el.classList.toggle("invalid", !ok);
+      if (err) err.textContent = ok ? "" : (el.validity.valueMissing ? MSG.valueMissing : MSG.tooShort);
+      return ok;
+    }
+    $$("input, select, textarea", f).forEach(function (el) {
+      el.addEventListener("blur", function () { if (el.value) check(el); });
+      el.addEventListener("input", function () { if (el.classList.contains("invalid")) check(el); });
+    });
+
+    function compose() {
+      return "Hola, quiero solicitar una tarjeta digital.\n" +
+        "• Nombre: " + f.nombre.value.trim() + "\n" +
+        (f.negocio.value.trim() ? "• Negocio: " + f.negocio.value.trim() + "\n" : "") +
+        "• Tipo de negocio: " + f.rubro.value + "\n" +
+        "• Plan de interés: " + (f.plan.value || "Aún no lo sé") + "\n" +
+        (f.nfc.checked ? "• Me interesa la tarjeta física con NFC\n" : "") +
+        "• Detalle: " + f.mensaje.value.trim();
+    }
+
+    f.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var fields = $$("[required]", f);
+      var valid = fields.map(check).every(Boolean);
+      if (!valid) {
+        status.className = "cf-status err";
+        status.textContent = "Revisa los campos marcados.";
+        var first = $(".invalid", f); if (first) first.focus();
+        return;
+      }
+      var channel = e.submitter ? e.submitter.getAttribute("data-channel") : (waNum ? "whatsapp" : "email");
+      var text = compose();
+
+      if (CFG.formEndpoint) {
+        status.className = "cf-status"; status.textContent = "Enviando…";
+        fetch(CFG.formEndpoint, {
+          method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({ nombre: f.nombre.value, negocio: f.negocio.value, rubro: f.rubro.value, plan: f.plan.value, nfc: f.nfc.checked, mensaje: f.mensaje.value })
+        }).then(function (r) {
+          if (!r.ok) throw new Error(r.status);
+          status.className = "cf-status ok"; status.textContent = "¡Gracias! Recibimos tu solicitud y te responderemos pronto.";
+          f.reset();
+        }).catch(function () {
+          status.className = "cf-status err"; status.textContent = "No se pudo enviar. Inténtalo de nuevo o escríbenos directamente.";
+        });
+        return;
+      }
+
+      var url;
+      if (channel === "whatsapp" && waNum) {
+        url = "https://wa.me/" + waNum + "?text=" + encodeURIComponent(text);
+        window.open(url, "_blank", "noopener");
+      } else if (CFG.email) {
+        url = "mailto:" + CFG.email + "?subject=" + encodeURIComponent("Solicitud de tarjeta digital") + "&body=" + encodeURIComponent(text);
+        location.href = url;
+      } else {
+        status.className = "cf-status err";
+        status.textContent = "Aún no hay un canal de contacto configurado.";
+        return;
+      }
+      status.className = "cf-status ok";
+      status.textContent = channel === "whatsapp" && waNum
+        ? "Se abrió WhatsApp con tu mensaje. Solo presiona enviar."
+        : "Se abrió tu correo con el mensaje listo. Solo presiona enviar.";
+    });
+  })();
 
   /* ------------------------------------------------------------------
    * Navegación móvil y cabecera

@@ -5,10 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tarjetas Digitales Empresariales</title>
   <meta name="description" content="Tarjetas digitales para negocios: comparte tu información, servicios, ubicación y redes sociales con un enlace, código QR o NFC. Mira demostraciones interactivas y solicita la tuya.">
+  <meta name="author" content="Alvaro Siles">
   <meta name="theme-color" content="#0b1626">
+  <meta name="robots" content="index, follow">
+  <!-- TODO: reemplazar por tu dominio real -->
+  <link rel="canonical" href="https://www.tudominio.com/">
+
+  <!-- Open Graph / redes sociales -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="Alvaro Siles · Software & Tech">
   <meta property="og:title" content="Tarjetas Digitales Empresariales">
   <meta property="og:description" content="Tu negocio merece una presentación profesional. Comparte todo desde una sola tarjeta digital.">
-  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.tudominio.com/">
+  <!-- TODO: crear una imagen 1200x630 y descomentar
+  <meta property="og:image" content="https://www.tudominio.com/assets/img/og-image.png">
+  -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tarjetas Digitales Empresariales">
+  <meta name="twitter:description" content="Comparte tu información, servicios y redes sociales desde una sola tarjeta digital.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Alvaro Siles · Software & Tech",
+    "description": "Tarjetas digitales empresariales: presentación web del negocio con contacto, WhatsApp, ubicación, catálogo, redes sociales, código QR y NFC.",
+    "areaServed": "Remoto",
+    "knowsAbout": ["Tarjetas digitales", "Desarrollo web", "Aplicaciones móviles", "Códigos QR", "NFC"]
+  }
+  </script>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,6 +82,12 @@
   <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="m3 21 1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol>
   <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
   <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
   <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M21 7.92v4.03a9.95 9.95 0 0 1-5-1.95v4.5a6.5 6.5 0 1 1-8-6.33v4.33a2.5 2.5 0 1 0 4 2V3h4.08A6 6 0 0 0 21 7.92z"/></symbol>
 </svg>
 
@@ -71,6 +103,7 @@
       <a href="#como-funciona">Cómo funciona</a>
       <a href="#demos">Demostraciones</a>
       <a href="#planes">Planes</a>
+      <a href="#sobre-mi">Quién soy</a>
       <a href="#faq">Preguntas</a>
       <a class="btn btn-primary btn-sm" href="#contacto">Solicitar</a>
     </nav>
@@ -426,8 +459,39 @@
   </div>
 </section>
 
+<!-- ================= 9b. QUIÉN SOY ================= -->
+<section class="section section-alt" id="sobre-mi">
+  <div class="container about">
+    <div class="about-card reveal">
+      <div class="avatar" id="aboutPhoto"><span id="aboutInitials">AS</span></div>
+      <h3 class="js-name">Alvaro Siles</h3>
+      <p class="muted js-role">Ingeniero de Sistemas · Full Stack Developer</p>
+      <dl class="about-stats">
+        <div><dt>Experiencia</dt><dd>+9 años</dd></div>
+        <div><dt>Plataformas</dt><dd>Web y móvil</dd></div>
+      </dl>
+      <p class="about-loc" id="aboutLoc"><svg class="ic"><use href="#i-pin"/></svg> <span></span></p>
+    </div>
+    <div class="about-copy reveal">
+      <span class="kicker">Quién está detrás</span>
+      <h2>Tecnología con criterio de negocio</h2>
+      <p class="lead-sm">Soy Ingeniero de Sistemas y Full Stack Developer, con más de 9 años de experiencia profesional en desarrollo de software web y móvil.</p>
+      <p class="muted">Diseño y desarrollo cada tarjeta personalmente: desde entender tu negocio hasta publicarla y acompañarte con los cambios. Trato directo, sin intermediarios.</p>
+      <h3 class="also-title">Si tu negocio necesita más, también desarrollo:</h3>
+      <ul class="also-grid">
+        <li><svg class="ic"><use href="#i-code"/></svg> Páginas web y landing pages</li>
+        <li><svg class="ic"><use href="#i-grid"/></svg> Catálogos digitales</li>
+        <li><svg class="ic"><use href="#i-cart"/></svg> Tiendas virtuales</li>
+        <li><svg class="ic"><use href="#i-mobile"/></svg> Aplicaciones web y móviles</li>
+        <li><svg class="ic"><use href="#i-zap"/></svg> Automatización de procesos</li>
+        <li><svg class="ic"><use href="#i-server"/></svg> Servidores e infraestructura IT</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- ================= 10. FAQ ================= -->
-<section class="section section-alt" id="faq">
+<section class="section" id="faq">
   <div class="container container-narrow">
     <div class="section-head">
       <span class="kicker">Preguntas frecuentes</span>
@@ -443,6 +507,9 @@
       <details><summary>¿Funciona en Android y iPhone?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>Sí. Funciona en cualquier celular con navegador, sea Android o iPhone, y también en computadoras y tablets.</p></details>
       <details><summary>¿Puedo tener un código QR?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>Sí. Te entregamos un código QR listo para imprimir que lleva directo a tu tarjeta. Está incluido desde el plan Profesional.</p></details>
       <details><summary>¿Puedo utilizarla para mi empresa?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>Sí. Sirve tanto para negocios pequeños como para empresas. En el plan Empresarial agregamos secciones y funciones según lo que necesites.</p></details>
+      <details><summary>¿Cuánto tiempo toma tenerla lista?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>Depende del plan y de qué tan rápido nos envíes tu información (logo, fotos, datos). Una tarjeta requiere bastante menos tiempo que una página web completa; al cotizar te indicamos un plazo estimado.</p></details>
+      <details><summary>¿Ofrecen soporte después de la entrega?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>Sí. Después de publicarla te acompañamos con correcciones, actualizaciones y mejoras. Si tu negocio crece, puedes sumar nuevas secciones o funciones.</p></details>
+      <details><summary>¿Cómo solicito una cotización?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>Escríbenos por WhatsApp o completa el formulario de contacto al final de esta página indicando tu tipo de negocio y el plan que te interesa. Te respondemos con una propuesta.</p></details>
     </div>
   </div>
 </section>
@@ -454,19 +521,97 @@
       <h2>Haz que tu negocio tenga su propia tarjeta digital.</h2>
       <p>Comienza a presentar tu negocio de una manera moderna y profesional. Nosotros nos encargamos de crear una tarjeta digital adaptada a tus necesidades.</p>
       <a class="btn btn-primary btn-lg js-contact" data-msg="Hola, quiero solicitar mi tarjeta digital para mi negocio." href="#contacto">Solicitar mi tarjeta digital <svg class="ic"><use href="#i-arrow"/></svg></a>
+      <ul class="contact-links" id="contactLinks"><!-- generado desde assets/js/config.js --></ul>
     </div>
-    <ul class="contact-links" id="contactLinks"><!-- generado desde assets/js/config.js --></ul>
+
+    <form class="contact-form" id="contactForm" novalidate>
+      <h3>Cuéntanos sobre tu negocio</h3>
+      <p class="cf-sub">Te respondemos con una propuesta a medida.</p>
+      <div class="cf-grid">
+        <label class="cf-field">
+          <span>Nombre *</span>
+          <input name="nombre" type="text" autocomplete="name" required minlength="2" maxlength="80">
+          <small class="cf-error"></small>
+        </label>
+        <label class="cf-field">
+          <span>Nombre del negocio</span>
+          <input name="negocio" type="text" autocomplete="organization" maxlength="100">
+        </label>
+        <label class="cf-field">
+          <span>Tipo de negocio *</span>
+          <select name="rubro" required>
+            <option value="">Selecciona una opción</option>
+            <option>Farmacia</option>
+            <option>Restaurante</option>
+            <option>Inmobiliaria</option>
+            <option>Escuela de baile</option>
+            <option>Profesional independiente</option>
+            <option>Otro</option>
+          </select>
+          <small class="cf-error"></small>
+        </label>
+        <label class="cf-field">
+          <span>Plan de interés</span>
+          <select name="plan">
+            <option value="">Aún no lo sé</option>
+            <option>Básico</option>
+            <option>Profesional</option>
+            <option>Empresarial</option>
+          </select>
+        </label>
+        <label class="cf-field cf-full">
+          <span>¿Qué te gustaría mostrar en tu tarjeta? *</span>
+          <textarea name="mensaje" rows="4" required minlength="10" maxlength="1500" placeholder="Ej. Mis servicios, horarios, ubicación y un botón de WhatsApp."></textarea>
+          <small class="cf-error"></small>
+        </label>
+        <label class="cf-check cf-full">
+          <input type="checkbox" name="nfc"> <span>Me interesa la tarjeta física con NFC</span>
+        </label>
+      </div>
+      <div class="cf-actions">
+        <button type="submit" class="btn btn-primary" data-channel="whatsapp" id="cfWa"><svg class="ic"><use href="#i-whatsapp"/></svg> Enviar por WhatsApp</button>
+        <button type="submit" class="btn btn-outline-light" data-channel="email" id="cfMail"><svg class="ic"><use href="#i-mail"/></svg> Enviar por correo</button>
+      </div>
+      <p class="cf-legal">Al enviar aceptas la <a href="privacidad.html">política de privacidad</a>. Se abrirá WhatsApp o tu correo con el mensaje listo para que lo envíes.</p>
+      <p class="cf-status" id="cfStatus" role="status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
 </main>
 
 <footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="brand brand-light" href="#inicio">
+        <span class="brand-mark"><svg class="ic"><use href="#i-mobile"/></svg></span>
+        <span class="brand-text">Tarjeta<strong>Digital</strong></span>
+      </a>
+      <p>Un servicio de <span class="js-name">Alvaro Siles</span> · Software &amp; Tech Solutions. Productos digitales y aplicaciones a medida para profesionales y negocios.</p>
+    </div>
+    <nav aria-label="Secciones">
+      <h2 class="footer-title">Tarjetas digitales</h2>
+      <ul>
+        <li><a href="#que-es">Qué es</a></li>
+        <li><a href="#demos">Demostraciones</a></li>
+        <li><a href="#planes">Planes</a></li>
+        <li><a href="#faq">Preguntas frecuentes</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h2 class="footer-title">Contacto</h2>
+      <ul id="footerContact"></ul>
+    </div>
+  </div>
   <div class="container footer-inner">
-    <p>© <span id="year"></span> <span id="ownerName">Tarjetas Digitales</span>. Los negocios mostrados en las demostraciones son ficticios.</p>
+    <p>© <span id="year"></span> <span class="js-name">Alvaro Siles</span>. Los negocios mostrados en las demostraciones son ficticios.</p>
     <a href="privacidad.html">Política de privacidad</a>
   </div>
 </footer>
+
+<a class="wa-float" id="waFloat" href="#contacto" aria-label="Escribir por WhatsApp" hidden>
+  <svg class="ic"><use href="#i-whatsapp"/></svg>
+</a>
 
 <!-- ================= MODAL DE DEMOSTRACIÓN ================= -->
 <div class="modal" id="demoModal" hidden>
