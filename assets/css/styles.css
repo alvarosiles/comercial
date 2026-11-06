@@ -1037,6 +1037,7 @@ body.pv-max-open { overflow: hidden; }
 .cp-phone.light .cp-map { background-color: #cfe3ea; }
 .cp-map .icon { width: 26px; height: 26px; fill: #ef4444; stroke: #fff; stroke-width: 1.2; }
 .cp-link { display: block; margin-top: 8px; font-size: .74rem; font-weight: 600; color: var(--cp-accent); }
+a.cp-link[href] { text-decoration: underline; text-underline-offset: 2px; }
 .cp-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 .cp-thumbs i { aspect-ratio: 1; border-radius: 8px; background: linear-gradient(135deg, var(--pa), transparent); opacity: .7; }
 .cp-thumbs i:nth-child(2) { background: linear-gradient(135deg, rgba(248,203,71,.45), rgba(236,154,98,.15)); }

@@ -260,6 +260,18 @@
     var branchList = root.querySelector("[data-pv-branches]");
     // Posiciones de los pines dentro del mapa (en %)
     var PIN_POS = [[28, 38], [70, 30], [46, 72], [82, 74]];
+    var mapLink = root.querySelector("[data-pv-maplink]");
+    var branchData = [];
+
+    // Enlace «Ver en Google Maps»: solo es real si la ubicación tiene coordenadas [nombre, name, dirección, lat, lng]
+    function setMapLink(b) {
+      if (!mapLink) return;
+      if (b && typeof b[3] === "number" && typeof b[4] === "number") {
+        mapLink.href = "https://www.google.com/maps?q=" + b[3] + "," + b[4] + "&z=17&hl=es";
+      } else {
+        mapLink.removeAttribute("href");
+      }
+    }
 
     function esc(t) {
       return String(t).replace(/[&<>"]/g, function (c) {
@@ -269,6 +281,7 @@
 
     function selectBranch(i) {
       if (!mapBox) return;
+      setMapLink(branchData[i]);
       toArray(mapBox.querySelectorAll(".cp-pin")).forEach(function (pin, j) { pin.classList.toggle("active", j === i); });
       toArray(branchList.querySelectorAll("[data-branch]")).forEach(function (b, j) {
         b.setAttribute("aria-pressed", String(j === i));
@@ -277,7 +290,9 @@
 
     function renderBranches(list) {
       if (!mapBox || !branchList) return;
-      if (!Array.isArray(list) || !list.length) {
+      branchData = Array.isArray(list) ? list : [];
+      if (!branchData.length) {
+        setMapLink(null);
         mapBox.classList.remove("multi");
         mapBox.innerHTML = '<svg class="icon"><use href="#i-pin"/></svg>';
         branchList.innerHTML = "";
