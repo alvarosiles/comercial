@@ -78,116 +78,37 @@
    * Datos de demostración (FICTICIOS)
    * schedule: índice 0 = domingo … 6 = sábado → [horaApertura, horaCierre] o null
    * ------------------------------------------------------------------ */
-  var DEMOS = {
-    farmacia: {
-      label: "Farmacia", icon: "pill",
-      name: "Farmacia Vida Sana", tagline: "Tu salud, cerca de casa",
-      c1: "#0f9f8f", c2: "#0b5f7a",
-      summary: "Servicios, entregas a domicilio y horario visible.",
-      about: "Medicamentos, cuidado personal y atención farmacéutica con trato cercano. Hacemos entregas a domicilio dentro de la zona.",
-      phone: "+591 700 00 001", email: "contacto@vidasana.ejemplo", address: "Av. Principal #123, Zona Centro",
-      hours: [["Lunes a sábado", "08:00 – 22:00"], ["Domingo", "09:00 – 14:00"]],
-      schedule: [[9, 14], [8, 22], [8, 22], [8, 22], [8, 22], [8, 22], [8, 22]],
-      catalogTitle: "Servicios",
-      catalog: [
-        { t: "Medicamentos con y sin receta", d: "Consulta disponibilidad por WhatsApp" },
-        { t: "Control de presión arterial", d: "Sin cita previa" },
-        { t: "Aplicación de inyectables", d: "Con personal capacitado" },
-        { t: "Entrega a domicilio", d: "Dentro de la zona" }
-      ],
-      social: ["facebook", "instagram"]
-    },
-    restaurante: {
-      label: "Restaurante", icon: "food",
-      name: "La Brasa del Valle", tagline: "Parrilla y comida casera",
-      c1: "#e2552b", c2: "#9a2a16",
-      summary: "Menú con precios, reservas por WhatsApp y ubicación.",
-      about: "Carnes a la parrilla, platos caseros y un ambiente familiar. Reserva tu mesa o pide para llevar por WhatsApp.",
-      phone: "+591 700 00 002", email: "reservas@labrasa.ejemplo", address: "Calle Los Pinos #45, Zona Sur",
-      hours: [["Martes a domingo", "12:00 – 23:00"], ["Lunes", "Cerrado"]],
-      schedule: [[12, 23], null, [12, 23], [12, 23], [12, 23], [12, 23], [12, 23]],
-      catalogTitle: "Menú",
-      catalog: [
-        { t: "Parrillada para dos", d: "Carnes surtidas con guarniciones", p: "Bs 120" },
-        { t: "Pollo a la brasa", d: "Con papas y ensalada", p: "Bs 55" },
-        { t: "Ensalada de la casa", d: "Verduras frescas de temporada", p: "Bs 30" },
-        { t: "Limonada natural", d: "Jarra de 1 litro", p: "Bs 18" }
-      ],
-      social: ["facebook", "instagram", "tiktok"]
-    },
-    inmobiliaria: {
-      label: "Inmobiliaria", icon: "home",
-      name: "Horizonte Propiedades", tagline: "Compra, venta y alquiler",
-      c1: "#1e40af", c2: "#0f172a",
-      summary: "Propiedades destacadas y contacto directo con el asesor.",
-      about: "Te acompañamos a encontrar, vender o alquilar tu propiedad con asesoría personalizada en cada paso.",
-      phone: "+591 700 00 003", email: "asesor@horizonte.ejemplo", address: "Edificio Central, Of. 4B",
-      hours: [["Lunes a viernes", "09:00 – 18:00"], ["Sábado", "09:00 – 13:00"]],
-      schedule: [null, [9, 18], [9, 18], [9, 18], [9, 18], [9, 18], [9, 13]],
-      catalogTitle: "Propiedades",
-      catalog: [
-        { t: "Departamento de 2 dormitorios", d: "Zona Norte · Venta" },
-        { t: "Casa con jardín", d: "Zona Sur · Venta" },
-        { t: "Oficina amoblada", d: "Centro · Alquiler" },
-        { t: "Terreno de 300 m²", d: "Afueras · Venta" }
-      ],
-      social: ["facebook", "instagram"]
-    },
-    baile: {
-      label: "Escuela de baile", icon: "music",
-      name: "Ritmo Studio", tagline: "Escuela de baile",
-      c1: "#9333ea", c2: "#db2777",
-      summary: "Clases y horarios, inscripción por WhatsApp y redes.",
-      about: "Clases para todas las edades y niveles. Aprende a bailar en un ambiente divertido, desde cero.",
-      phone: "+591 700 00 004", email: "hola@ritmostudio.ejemplo", address: "Calle Sucre #210, 2.º piso",
-      hours: [["Lunes a viernes", "16:00 – 21:00"], ["Sábado", "09:00 – 13:00"]],
-      schedule: [null, [16, 21], [16, 21], [16, 21], [16, 21], [16, 21], [9, 13]],
-      catalogTitle: "Clases",
-      catalog: [
-        { t: "Salsa", d: "Lunes y miércoles · 19:00" },
-        { t: "Bachata", d: "Martes y jueves · 19:00" },
-        { t: "Danza urbana juvenil", d: "Sábados · 10:00" },
-        { t: "Clase de prueba", d: "Consulta fechas por WhatsApp" }
-      ],
-      social: ["instagram", "tiktok", "facebook"]
-    },
-    profesional: {
-      label: "Profesional independiente", icon: "briefcase",
-      name: "Arq. Daniel Rojas", tagline: "Arquitectura e interiores",
-      c1: "#334155", c2: "#0f172a",
-      summary: "Servicios, atención con cita y guardar contacto.",
-      about: "Diseño de viviendas, remodelaciones e interiores. Atención con cita previa en oficina o a domicilio.",
-      phone: "+591 700 00 005", email: "daniel@rojasarq.ejemplo", address: "Av. Las Américas #890",
-      hours: [["Lunes a viernes", "09:00 – 18:00"], ["Fines de semana", "Con cita"]],
-      schedule: [null, [9, 18], [9, 18], [9, 18], [9, 18], [9, 18], null],
-      catalogTitle: "Servicios",
-      catalog: [
-        { t: "Diseño de viviendas", d: "Proyecto completo" },
-        { t: "Planos y trámites", d: "Aprobación municipal" },
-        { t: "Remodelaciones", d: "Cocinas, baños y ampliaciones" },
-        { t: "Diseño de interiores", d: "Espacios funcionales" }
-      ],
-      social: ["instagram", "facebook"]
-    },
-    otro: {
-      label: "Tu negocio", icon: "store",
-      name: "Mi Negocio", tagline: "Atención de calidad cerca de ti",
-      c1: "#0ea5a4", c2: "#1d4ed8",
-      summary: "",
-      about: "Aquí va una breve descripción de tu negocio: qué ofreces y por qué tus clientes deberían elegirte.",
-      phone: "+591 700 00 000", email: "contacto@tunegocio.ejemplo", address: "Dirección de tu local",
-      hours: [["Lunes a viernes", "08:30 – 18:30"], ["Sábado", "09:00 – 13:00"]],
-      schedule: [null, [8, 19], [8, 19], [8, 19], [8, 19], [8, 19], [9, 13]],
-      catalogTitle: "Catálogo",
-      catalog: [
-        { t: "Tu producto o servicio principal", d: "Descripción breve" },
-        { t: "Segundo servicio", d: "Descripción breve" },
-        { t: "Promoción del mes", d: "Detalle de la oferta" }
-      ],
-      social: ["facebook", "instagram", "tiktok"]
-    }
+  var TD = window.TD_DEMOS || { CATS: [], LIST: [], FEATURED: [] };
+  var DEMOS = {};
+  TD.LIST.forEach(function (d) { DEMOS[d.id] = d; });
+  DEMOS.otro = {
+    id: "otro", label: "Tu negocio", icon: "store",
+    name: "Mi Negocio", tagline: "Atención de calidad cerca de ti",
+    c1: "#0ea5a4", c2: "#1d4ed8",
+    summary: "",
+    about: "Aquí va una breve descripción de tu negocio: qué ofreces y por qué tus clientes deberían elegirte.",
+    phone: "+591 700 00 000", email: "contacto@tunegocio.ejemplo", address: "Dirección de tu local",
+    hours: [["Lunes a viernes", "08:30 – 18:30"], ["Sábado", "09:00 – 13:00"]],
+    schedule: [null, [8, 19], [8, 19], [8, 19], [8, 19], [8, 19], [9, 13]],
+    catalogTitle: "Catálogo",
+    catalog: [
+      { t: "Tu producto o servicio principal", d: "Descripción breve" },
+      { t: "Segundo servicio", d: "Descripción breve" },
+      { t: "Promoción del mes", d: "Detalle de la oferta" }
+    ],
+    social: ["facebook", "instagram", "tiktok"],
+    cta: { label: "Reservar o cotizar", icon: "calendar" }
   };
-  var DEMO_ORDER = ["farmacia", "restaurante", "inmobiliaria", "baile", "profesional"];
+  var DEMO_ORDER = TD.LIST.map(function (d) { return d.id; });
+  var CAT_LABEL = {};
+  TD.CATS.forEach(function (c) { CAT_LABEL[c.id] = c.label; });
+
+  var NET_LABELS = {
+    facebook: "Facebook", instagram: "Instagram", tiktok: "TikTok", linkedin: "LinkedIn", x: "X",
+    github: "GitHub", gitlab: "GitLab", figma: "Figma", pinterest: "Pinterest", behance: "Behance", youtube: "YouTube"
+  };
+
+  function netIcon(s) { return s === "x" ? "xsocial" : s; }
 
   var COLORS = [
     { name: "Turquesa", c1: "#0ea5a4", c2: "#1d4ed8" },
@@ -203,8 +124,10 @@
    * Estado de apertura
    * ------------------------------------------------------------------ */
   function openStatus(d) {
+    if (d.statusText) return { open: true, text: d.statusText };
     var now = new Date(), slot = d.schedule && d.schedule[now.getDay()];
     var h = now.getHours() + now.getMinutes() / 60;
+    if (slot && slot[0] === 0 && slot[1] === 24) return { open: true, text: "Abierto las 24 horas" };
     if (slot && h >= slot[0] && h < slot[1]) {
       return { open: true, text: "Abierto ahora · cierra " + String(slot[1]).padStart(2, "0") + ":00" };
     }
@@ -216,8 +139,12 @@
    * ------------------------------------------------------------------ */
   function renderCard(d, opts) {
     opts = opts || {};
+    var style = opts.style || d.style || "classic";
     var st = openStatus(d);
+    var badge = esc(opts.badge || "Ejemplo · datos ficticios");
     var initials = d.name.replace(/^(Arq|Lic|Dr|Dra|Ing)\.\s*/i, "").split(/\s+/).slice(0, 2).map(function (w) { return w.charAt(0); }).join("").toUpperCase();
+    var mark = d.person ? '<span class="dc-mono">' + esc(initials) + "</span>" : icon(d.icon);
+    var status = '<span class="dc-status ' + (st.open ? "is-open" : "is-closed") + '">' + esc(st.text) + "</span>";
 
     var catalog = d.catalog.map(function (it) {
       return '<li><div><strong>' + esc(it.t) + "</strong><span>" + esc(it.d) + "</span></div>" +
@@ -228,21 +155,72 @@
       return "<li><span>" + esc(h[0]) + "</span><strong>" + esc(h[1]) + "</strong></li>";
     }).join("");
 
-    var social = d.social.map(function (s) {
-      var labels = { facebook: "Facebook", instagram: "Instagram", tiktok: "TikTok" };
-      return '<button type="button" class="dc-soc" data-act="social" data-net="' + s + '" aria-label="' + labels[s] + '">' + icon(s) + "</button>";
-    }).join("");
+    var social = '<div class="dc-social">' + d.social.map(function (s) {
+      return '<button type="button" class="dc-soc" data-act="social" data-net="' + s + '" aria-label="' + (NET_LABELS[s] || s) + '">' + icon(netIcon(s)) + "</button>";
+    }).join("") + "</div>";
+    var cta = d.cta ? { label: esc(d.cta.label), icon: d.cta.icon || "calendar" } : null;
 
+    var vars = ' style="--c1:' + d.c1 + ";--c2:" + d.c2 + '"';
+
+    /* --- Estilos en lista (Oscuro / Degradado) --- */
+    if (style === "dark" || style === "grad") {
+      var row = function (act, ic, label, extra) {
+        return '<button type="button" class="dc-row" data-act="' + act + '"' + (extra || "") + ">" + icon(ic) + "<span>" + esc(label) + "</span></button>";
+      };
+      var rows = '<div class="dc-rows">' +
+        (cta ? '<button type="button" class="dc-row dc-row-cta" data-act="book">' + icon(cta.icon) + "<span>" + cta.label + "</span></button>" : "") +
+        row("call", "phone", "Llamar") +
+        row("whatsapp", "whatsapp", "WhatsApp") +
+        row("mail", "mail", "Escríbeme") +
+        row("expand", "grid", "Ver " + d.catalogTitle.toLowerCase(), ' data-target="catalog" aria-expanded="false"') +
+        '<div class="dc-drop" data-drop="catalog" hidden><ul class="dc-list">' + catalog + "</ul></div>" +
+        row("map", "pin", "Cómo llegar") +
+        row("expand", "clock", "Horarios", ' data-target="hours" aria-expanded="false"') +
+        '<div class="dc-drop" data-drop="hours" hidden><ul class="dc-hours">' + hours + "</ul></div>" +
+        (style === "dark" ? row("share", "share", "Compartir mi tarjeta") : "") +
+        "</div>";
+
+      if (style === "dark") {
+        return '<div class="dc st-dark"' + vars + ">" +
+          '<div class="dk-top"><span class="dk-brand">' + icon(d.icon) + '</span><span class="dc-badge-sm">' + badge + "</span></div>" +
+          '<div class="dk-card">' +
+            '<div class="dk-avatar">' + mark + "</div>" +
+            '<h3 class="dc-name">' + esc(d.name) + ' <span class="dk-verified" title="Verificado">' + icon("check") + "</span></h3>" +
+            '<p class="dc-tag">' + esc(d.tagline) + "</p>" + status +
+            '<div class="dk-btns">' +
+              '<button type="button" class="dk-save" data-act="save">' + icon("user-plus") + "Guardar</button>" +
+              '<button type="button" class="dk-connect" data-act="whatsapp">Contáctame</button>' +
+            "</div>" +
+          "</div>" + rows + social +
+          '<p class="dc-foot">' + icon("link") + " tunegocio.com · demostración</p>" +
+        "</div>";
+      }
+
+      return '<div class="dc st-grad"' + vars + ">" +
+        '<div class="gr-head">' +
+          '<span class="dc-badge-sm">' + badge + "</span>" +
+          '<div class="gr-avatar">' + mark + "</div>" +
+          '<h3 class="dc-name">' + esc(d.name) + "</h3>" +
+          '<p class="dc-tag">' + esc(d.tagline) + "</p>" + status +
+        "</div>" + rows + social +
+        '<div class="gr-bar">' +
+          '<button type="button" data-act="save">' + icon("user-plus") + "<span>Guardar contacto</span></button>" +
+          '<button type="button" data-act="share">' + icon("qr") + "<span>Enviar</span></button>" +
+        "</div>" +
+      "</div>";
+    }
+
+    /* --- Estilo clásico (con modo claro/oscuro) --- */
     return '' +
-      '<div class="dc" style="--c1:' + d.c1 + ";--c2:" + d.c2 + '">' +
+      '<div class="dc st-classic' + (opts.dark ? " is-dark" : "") + '"' + vars + ">" +
         '<div class="dc-cover">' +
-          '<span class="dc-badge">' + esc(opts.badge || "Ejemplo · datos ficticios") + "</span>" +
+          '<span class="dc-badge">' + badge + "</span>" +
+          '<button type="button" class="dc-theme" data-act="theme" aria-label="Cambiar entre modo claro y oscuro">' + icon("contrast") + "</button>" +
         "</div>" +
         '<div class="dc-head">' +
-          '<div class="dc-logo" aria-hidden="true">' + icon(d.icon) + "</div>" +
+          '<div class="dc-logo" aria-hidden="true">' + mark + "</div>" +
           '<h3 class="dc-name">' + esc(d.name) + "</h3>" +
-          '<p class="dc-tag">' + esc(d.tagline) + "</p>" +
-          '<span class="dc-status ' + (st.open ? "is-open" : "is-closed") + '">' + esc(st.text) + "</span>" +
+          '<p class="dc-tag">' + esc(d.tagline) + "</p>" + status +
         "</div>" +
         '<div class="dc-actions">' +
           '<button type="button" data-act="call">' + icon("phone") + "<span>Llamar</span></button>" +
@@ -263,7 +241,8 @@
         "</div>" +
         '<div class="dc-panel" data-panel="catalog" hidden><ul class="dc-list">' + catalog + "</ul></div>" +
         '<div class="dc-panel" data-panel="hours" hidden><ul class="dc-hours">' + hours + "</ul></div>" +
-        '<div class="dc-social">' + social + "</div>" +
+        (cta ? '<button type="button" class="dc-book" data-act="book">' + icon(cta.icon) + cta.label + "</button>" : "") +
+        social +
         '<div class="dc-cta">' +
           '<button type="button" class="dc-save" data-act="save">' + icon("user-plus") + "Guardar contacto</button>" +
           '<button type="button" class="dc-share" data-act="share" aria-label="Compartir y ver código QR">' + icon("qr") + "</button>" +
@@ -293,7 +272,11 @@
           '<strong class="p-sheet-title">Comparte esta tarjeta</strong>' +
           '<div class="p-qr"></div>' +
           '<p class="p-sheet-note">Escanéalo con la cámara de otro celular.</p>' +
-          '<button type="button" class="btn btn-primary btn-sm btn-block" data-act="copy">' + icon("copy") + " Copiar enlace</button>" +
+          '<div class="p-sheet-opts">' +
+            '<button type="button" data-act="copy">' + icon("copy") + "<span>Copiar enlace</span></button>" +
+            '<button type="button" data-act="download-qr">' + icon("qr") + "<span>Descargar QR</span></button>" +
+            '<button type="button" data-act="native-share">' + icon("share") + "<span>Compartir</span></button>" +
+          "</div>" +
         "</div></div>";
       phone.appendChild(layer);
     }
@@ -359,8 +342,12 @@
     mail: function (d) { return icon("mail") + "<span>En tu tarjeta real, se <b>abre el correo</b> dirigido a " + esc(d.email) + ".</span>"; },
     map: function () { return icon("pin") + "<span>En tu tarjeta real, se <b>abre Google Maps</b> con la ruta hasta tu local.</span>"; },
     social: function (d, net) {
-      var n = { facebook: "Facebook", instagram: "Instagram", tiktok: "TikTok" }[net] || "tu red social";
-      return icon(net) + "<span>En tu tarjeta real, se <b>abre tu perfil de " + n + "</b>.</span>";
+      var n = NET_LABELS[net] || "tu red social";
+      return icon(netIcon(net)) + "<span>En tu tarjeta real, se <b>abre tu perfil de " + n + "</b>.</span>";
+    },
+    book: function (d) {
+      var l = d.cta ? d.cta.label : "Reservar";
+      return icon(d.cta && d.cta.icon || "calendar") + "<span>En tu tarjeta real, «" + esc(l) + "» abre <b>tu agenda, un formulario o WhatsApp</b> con la solicitud lista.</span>";
     }
   };
 
@@ -392,6 +379,38 @@
         toast(phone, icon("info") + "<span>No se pudo copiar automáticamente.</span>");
       });
       closeSheet(phone);
+    } else if (act === "download-qr") {
+      var svg = qrSvg(pageUrl() + "#demos");
+      if (svg) {
+        var blob = new Blob(['<?xml version="1.0" encoding="UTF-8"?>' + svg.replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" ')], { type: "image/svg+xml" });
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "codigo-qr-tarjeta.svg";
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
+        toast(phone, icon("check") + "<span>Código QR descargado, listo para <b>imprimir</b>.</span>");
+      } else {
+        toast(phone, icon("info") + "<span>El código QR necesita conexión a internet.</span>");
+      }
+      closeSheet(phone);
+    } else if (act === "native-share") {
+      var shareData = { title: data.name, text: "Mira la tarjeta digital de " + data.name, url: pageUrl() + "#demos" };
+      if (navigator.share) {
+        navigator.share(shareData).catch(function () {});
+      } else {
+        toast(phone, icon("share") + "<span>En el celular se abre el menú para <b>compartir por WhatsApp</b>, redes o correo.</span>");
+      }
+      closeSheet(phone);
+    } else if (act === "expand") {
+      var drop = $('[data-drop="' + btn.getAttribute("data-target") + '"]', phone);
+      if (drop) {
+        drop.hidden = !drop.hidden;
+        btn.setAttribute("aria-expanded", String(!drop.hidden));
+      }
+    } else if (act === "theme") {
+      var card = btn.closest(".dc");
+      var dark = card.classList.toggle("is-dark");
+      toast(phone, icon("contrast") + "<span>Modo " + (dark ? "<b>oscuro</b>" : "<b>claro</b>") + " activado. Tu tarjeta se ve bien de día y de noche.</span>");
     } else if (ACTION_MSG[act]) {
       toast(phone, ACTION_MSG[act](data, btn.getAttribute("data-net")));
     }
@@ -402,25 +421,68 @@
    * ------------------------------------------------------------------ */
   $$(".phone[data-card]").forEach(function (p) {
     var d = DEMOS[p.getAttribute("data-card")];
-    if (d) mountCard(p, d);
+    if (d) mountCard(p, d, { style: p.getAttribute("data-style") || undefined });
   });
 
   /* ------------------------------------------------------------------
-   * Galería de demostraciones + modal
+   * Galería de demostraciones (por rubro, con filtros) + modal
    * ------------------------------------------------------------------ */
   var grid = $("#demoGrid");
-  grid.innerHTML = DEMO_ORDER.map(function (id) {
+  var filterBox = $("#demoFilters");
+  var moreBtn = $("#demoMore");
+  var demoCat = "all";
+  var showAll = false;
+
+  function demoCardHtml(id) {
     var d = DEMOS[id];
-    return '<article class="demo-card reveal" style="--c1:' + d.c1 + ";--c2:" + d.c2 + '">' +
-      '<div class="demo-top"><span class="demo-ic">' + icon(d.icon) + "</span>" +
-        '<span class="demo-mini" aria-hidden="true"><i></i><i></i><i></i></span></div>' +
-      '<div class="demo-body">' +
-        '<span class="demo-label">' + esc(d.label) + "</span>" +
-        "<h3>" + esc(d.name) + "</h3>" +
-        "<p>" + esc(d.summary) + "</p>" +
-        '<button type="button" class="btn btn-light btn-block" data-open-demo="' + id + '">' + icon("eye") + " Ver tarjeta</button>" +
-      "</div></article>";
+    var nets = d.social.map(function (s) {
+      return '<span class="demo-net" title="' + (NET_LABELS[s] || s) + '">' + icon(netIcon(s)) + "</span>";
+    }).join("");
+    return '<article class="demo-card" style="--c1:' + d.c1 + ";--c2:" + d.c2 + '">' +
+      '<div class="demo-head"><span class="demo-ic">' + icon(d.icon) + "</span>" +
+        '<span class="demo-cat">' + esc(CAT_LABEL[d.cat] || "") + "</span></div>" +
+      "<h3>" + esc(d.label) + "</h3>" +
+      "<p>" + esc(d.desc) + "</p>" +
+      '<div class="demo-nets"><span>Redes:</span>' + nets + "</div>" +
+      '<button type="button" class="btn btn-light btn-block" data-open-demo="' + id + '">' + icon("eye") + " Ver ejemplo</button>" +
+    "</article>";
+  }
+
+  function renderGallery() {
+    var ids = demoCat === "all"
+      ? (showAll ? DEMO_ORDER : TD.FEATURED.filter(function (k) { return DEMOS[k]; }))
+      : DEMO_ORDER.filter(function (k) { return DEMOS[k].cat === demoCat; });
+    grid.innerHTML = ids.map(demoCardHtml).join("");
+    moreBtn.hidden = demoCat !== "all";
+    moreBtn.innerHTML = showAll
+      ? icon("minus") + " Mostrar menos"
+      : icon("grid") + " Ver los " + DEMO_ORDER.length + " rubros";
+    moreBtn.setAttribute("aria-expanded", String(showAll));
+  }
+
+  filterBox.innerHTML = [{ id: "all", label: "Destacados" }].concat(TD.CATS).map(function (c) {
+    var n = c.id === "all" ? "" : ' <small>' + DEMO_ORDER.filter(function (k) { return DEMOS[k].cat === c.id; }).length + "</small>";
+    return '<button type="button" class="chip' + (c.id === "all" ? " active" : "") + '" data-cat="' + c.id + '" aria-pressed="' + (c.id === "all") + '">' + esc(c.label) + n + "</button>";
   }).join("");
+  filterBox.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-cat]");
+    if (!b) return;
+    demoCat = b.getAttribute("data-cat");
+    showAll = false;
+    $$("[data-cat]", filterBox).forEach(function (x) {
+      x.classList.toggle("active", x === b);
+      x.setAttribute("aria-pressed", String(x === b));
+    });
+    renderGallery();
+  });
+  moreBtn.addEventListener("click", function () {
+    showAll = !showAll;
+    renderGallery();
+    if (!showAll) $("#demos").scrollIntoView({ behavior: "smooth" });
+  });
+  var countEl = $("#demoCount");
+  if (countEl) countEl.textContent = DEMO_ORDER.length;
+  renderGallery();
 
   var modal = $("#demoModal");
   var modalPhone = $("#modalPhone");
@@ -433,15 +495,16 @@
     $("#modalTitle").textContent = d.label + ": " + d.name;
     $("#modalDesc").textContent = d.summary + " Pruébala como lo haría tu cliente.";
     var cta = $("#modalCta");
-    var msg = "Hola, vi la demostración de " + d.label.toLowerCase() + " y quiero una tarjeta digital para mi negocio.";
+    var msg = "Hola, vi la demostración para " + d.label.toLowerCase() + " y quiero una tarjeta digital.";
     cta.setAttribute("data-msg", msg);
     setContactLink(cta, msg);
-    $("#modalSwitch").innerHTML = DEMO_ORDER.map(function (k) {
+    var same = DEMO_ORDER.filter(function (k) { return DEMOS[k].cat === d.cat; });
+    $("#modalSwitchLabel").textContent = "Más ejemplos de " + (CAT_LABEL[d.cat] || "").toLowerCase() + ":";
+    $("#modalSwitch").innerHTML = same.map(function (k) {
       return '<button type="button" class="chip' + (k === id ? " active" : "") + '" data-open-demo="' + k + '" aria-pressed="' + (k === id) + '">' +
         icon(DEMOS[k].icon) + esc(DEMOS[k].label) + "</button>";
     }).join("");
   }
-
   function openModal(id) {
     lastFocus = document.activeElement;
     showDemo(id);
@@ -487,6 +550,26 @@
   var swatchBox = $("#swatches");
   var colorIdx = 0;
 
+  /* Rellena un <select> con los rubros agrupados por categoría */
+  function fillRubros(select, useIds, placeholder) {
+    var html = placeholder ? '<option value="">' + esc(placeholder) + "</option>" : "";
+    TD.CATS.forEach(function (c) {
+      var items = DEMO_ORDER.filter(function (k) { return DEMOS[k].cat === c.id; });
+      html += '<optgroup label="' + esc(c.label) + '">' + items.map(function (k) {
+        var l = esc(DEMOS[k].label);
+        return useIds ? '<option value="' + k + '">' + l + "</option>" : "<option>" + l + "</option>";
+      }).join("") + "</optgroup>";
+    });
+    html += useIds ? '<option value="otro">Otro tipo de negocio</option>' : "<option>Otro</option>";
+    select.innerHTML = html;
+  }
+  if (TD.LIST.length) {
+    fillRubros(form.rubro, true);
+    form.rubro.value = "otro";
+    var cfRubro = $("#contactForm select[name=rubro]");
+    if (cfRubro) fillRubros(cfRubro, false, "Selecciona una opción");
+  }
+
   swatchBox.innerHTML = COLORS.map(function (c, i) {
     return '<button type="button" class="swatch" role="radio" aria-checked="' + (i === 0) + '" aria-label="' + c.name + '" data-color="' + i + '" style="--c1:' + c.c1 + ";--c2:" + c.c2 + '"></button>';
   }).join("");
@@ -506,12 +589,15 @@
 
   function updateBuilder(keepTab) {
     var d = builderData();
-    mountCard(builderPhone, d, { badge: "Vista previa", keepTab: keepTab });
+    var style = form.estilo.value || "classic";
+    mountCard(builderPhone, d, { badge: "Vista previa", keepTab: keepTab, style: style });
+    var styleName = { classic: "Clásico", dark: "Oscuro elegante", grad: "Degradado" }[style];
     var rubroText = form.rubro.options[form.rubro.selectedIndex].text;
     var msg = "Hola, quiero solicitar una tarjeta digital.\n" +
       "• Negocio: " + (form.elements.name.value.trim() || "(por definir)") + "\n" +
       "• Rubro: " + rubroText + "\n" +
       (form.tagline.value.trim() ? "• Eslogan: " + form.tagline.value.trim() + "\n" : "") +
+      "• Estilo: " + styleName + "\n" +
       "• Color preferido: " + COLORS[colorIdx].name;
     setContactLink($("#builderSend"), msg);
   }
@@ -555,6 +641,7 @@
   function paintPageQr() {
     var box = $("#pageQr");
     box.innerHTML = qrSvg(pageUrl()) || qrFallback();
+    $$(".js-qr").forEach(function (el) { el.innerHTML = qrSvg(pageUrl()) || icon("qr"); });
   }
   if (typeof window.qrcode === "function") paintPageQr();
   else window.addEventListener("load", paintPageQr);
