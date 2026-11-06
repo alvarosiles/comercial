@@ -415,3 +415,108 @@
 
   toArray(document.querySelectorAll("[data-plan-preview]")).forEach(initPreview);
 })();
+
+/* Maximizar la vista previa a pantalla completa ([data-pv-max])
+   En pantalla completa se muestra además un selector desplegable de rubros,
+   armado a partir de los chips .persona-chips (y sus categorías [data-cat-tab]). */
+(function () {
+  "use strict";
+  var toArray = function (list) { return Array.prototype.slice.call(list); };
+  var chips = toArray(document.querySelectorAll(".persona-chips [data-pv-persona]"));
+
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  function buildRubros(box) {
+    if (!chips.length) return null;
+    var switcher = box.querySelector(".cp-switch");
+    var wrap = document.createElement("div");
+    wrap.className = "cp-rubro";
+
+    // Agrupar por categoría, respetando el orden de las pestañas
+    var groups = [], byCat = {};
+    chips.forEach(function (c) {
+      var cat = c.getAttribute("data-cat") || "";
+      if (!byCat[cat]) {
+        var tab = document.querySelector('[data-cat-tab="' + cat + '"]');
+        byCat[cat] = { label: tab ? tab.textContent.trim() : cat, items: [] };
+        groups.push(byCat[cat]);
+      }
+      byCat[cat].items.push(c);
+    });
+
+    wrap.innerHTML =
+      '<button type="button" class="cp-rubro-btn" aria-haspopup="true" aria-expanded="false">' +
+        '<span class="cp-rubro-k">Rubro</span><span class="cp-rubro-v"></span>' +
+        '<svg class="icon cp-rubro-caret" aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>' +
+      "</button>" +
+      '<div class="cp-rubro-menu" role="menu" hidden>' +
+        groups.map(function (g) {
+          return '<p class="cp-rubro-group">' + esc(g.label) + "</p>" +
+            g.items.map(function (c) {
+              return '<button type="button" role="menuitemradio" data-rubro="' + esc(c.getAttribute("data-pv-persona")) +
+                '" aria-checked="false">' + esc(c.textContent.trim()) + "</button>";
+            }).join("");
+        }).join("") +
+      "</div>";
+
+    if (switcher && switcher.nextSibling) box.insertBefore(wrap, switcher.nextSibling); else box.appendChild(wrap);
+
+    var btn = wrap.querySelector(".cp-rubro-btn");
+    var menu = wrap.querySelector(".cp-rubro-menu");
+    var value = wrap.querySelector(".cp-rubro-v");
+    var items = toArray(menu.querySelectorAll("[data-rubro]"));
+
+    function sync() {
+      var active = chips.filter(function (c) { return c.getAttribute("aria-pressed") === "true"; })[0];
+      var key = active && active.getAttribute("data-pv-persona");
+      value.textContent = active ? active.textContent.trim() : "";
+      items.forEach(function (i) { i.setAttribute("aria-checked", String(i.getAttribute("data-rubro") === key)); });
+    }
+    function open(show) {
+      menu.hidden = !show;
+      btn.setAttribute("aria-expanded", String(show));
+      if (show) {
+        sync();
+        var cur = menu.querySelector('[aria-checked="true"]') || items[0];
+        if (cur) { cur.scrollIntoView({ block: "center" }); cur.focus(); }
+      }
+    }
+
+    btn.addEventListener("click", function () { open(menu.hidden); });
+    items.forEach(function (i) {
+      i.addEventListener("click", function () {
+        var chip = chips.filter(function (c) { return c.getAttribute("data-pv-persona") === i.getAttribute("data-rubro"); })[0];
+        if (chip) chip.click();
+        sync();
+        open(false);
+        btn.focus();
+      });
+    });
+    document.addEventListener("click", function (e) { if (!menu.hidden && !wrap.contains(e.target)) open(false); });
+
+    return { sync: sync, isOpen: function () { return !menu.hidden; }, close: function () { open(false); btn.focus(); } };
+  }
+
+  toArray(document.querySelectorAll("[data-pv-max]")).forEach(function (btn) {
+    var box = btn.closest("[data-plan-preview]");
+    if (!box) return;
+    var rubros = buildRubros(box);
+
+    function set(open) {
+      box.classList.toggle("is-max", open);
+      document.body.classList.toggle("pv-max-open", open);
+      btn.setAttribute("aria-pressed", String(open));
+      btn.setAttribute("aria-label", open ? "Cerrar pantalla completa" : "Maximizar vista previa");
+      btn.title = open ? "Minimizar" : "Maximizar";
+      if (rubros) { rubros.sync(); if (!open && rubros.isOpen()) rubros.close(); }
+      if (!open) box.scrollIntoView({ block: "nearest" });
+    }
+
+    btn.addEventListener("click", function () { set(!box.classList.contains("is-max")); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape" || !box.classList.contains("is-max")) return;
+      if (rubros && rubros.isOpen()) { rubros.close(); return; }
+      set(false); btn.focus();
+    });
+  });
+})();

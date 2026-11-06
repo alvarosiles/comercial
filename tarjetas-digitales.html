@@ -129,6 +129,10 @@
         </div>
         <!-- Prototipo interactivo: vista previa de la tarjeta según el plan -->
         <div class="page-visual card-proto" id="vista-previa" data-plan-preview data-level="1">
+          <button type="button" class="cp-max" data-pv-max aria-pressed="false" aria-label="Maximizar vista previa" title="Maximizar">
+            <svg class="icon icon-open" aria-hidden="true"><use href="#i-maximize"/></svg>
+            <svg class="icon icon-close" aria-hidden="true"><use href="#i-minimize"/></svg>
+          </button>
           <div class="cp-switch" role="radiogroup" aria-label="Ver la tarjeta según el plan">
             <button type="button" role="radio" aria-checked="true" class="tier-silver" data-level="1" data-title="Plan Inicial" data-desc="Incluye foto y presentación, WhatsApp, Instagram o Messenger, llamadas, correo, redes de tu rubro, guardar contacto y código QR." data-hint="Desliza dentro del teléfono para ver toda la tarjeta.">Inicial</button>
             <button type="button" role="radio" aria-checked="false" class="tier-bronze" data-level="2" tabindex="-1" data-title="Paquete Recomendado" data-desc="Suma disponibilidad laboral, portafolio, CV, botones personalizados (portafolio web, GitHub, Figma…), agenda, Google Maps, modo claro/oscuro y estadísticas." data-hint="Prueba el botón de modo claro/oscuro arriba a la derecha.">Recomendado</button>
