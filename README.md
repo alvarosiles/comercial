@@ -71,3 +71,16 @@ No hay backend: el formulario **no simula envíos**. Según la configuración:
 
 - con `formEndpoint` → envía los datos por POST y muestra éxito o error según la respuesta real;
 - sin endpoint → abre WhatsApp o la app de correo con la solicitud ya redactada para que el cliente la envíe.
+
+
+https://www.qrcodechimp.com/pricing
+https://www.qrcodechimp.com/digital-business-cards?from=googleAds-dbc-new
+https://www.hihello.com/
+https://popl.co/pages/pricing
+
+https://www.digitalbusinesscard.com/es
+https://hola.ec/
+https://www.instagram.com/p/DX91mVfjxvm/
+
+https://triadadigital.co/tarjetas-de-presentacion-digital/
+https://brandingsolutions.com.co/ecards/
