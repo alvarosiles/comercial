@@ -13,16 +13,16 @@ window.SITE_CONFIG = {
 
   /* WhatsApp: código de país + número, SOLO dígitos, sin "+" ni espacios.
      Ejemplo Bolivia: "59170000000". TODO: reemplazar */
-  whatsapp: "",
+  whatsapp: "59177181073",
 
   /* Texto visible del teléfono (opcional). TODO */
-  phoneLabel: "+000 0000 0000",
+  phoneLabel: "+591 77181073",
 
   /* Correo de contacto. TODO */
-  email: "contacto@tudominio.com",
+  email: "alvarosiles.developer@gmail.com",
 
   /* Ciudad / país (texto libre). TODO */
-  location: "Tu ciudad, País",
+  location: "Santa Cruz, Bolivia",
 
   /* Redes: deja "" para ocultar el ícono. TODO */
   social: {
@@ -42,7 +42,7 @@ window.SITE_CONFIG = {
   },
 
   /* Ruta a tu fotografía (ej: "assets/img/perfil.jpg"). Vacío = iniciales. */
-  photo: "",
+  photo: "assets/img/alvaro-siles.jpg",
 
   /* Endpoint opcional para el formulario (Formspree, Getform, tu API…).
      Si queda vacío, el formulario envía la solicitud por WhatsApp o correo

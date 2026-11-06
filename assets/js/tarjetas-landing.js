@@ -123,66 +123,151 @@
   /* ------------------------------------------------------------------
    * Estado de apertura
    * ------------------------------------------------------------------ */
-  function openStatus(d) {
-    if (d.statusText) return { open: true, text: d.statusText };
+  function openStatus(d, lang) {
+    var L = UI[lang === "en" ? "en" : "es"];
+    if (d.statusText) return { open: true, text: tx(d.statusText, lang) };
     var now = new Date(), slot = d.schedule && d.schedule[now.getDay()];
     var h = now.getHours() + now.getMinutes() / 60;
-    if (slot && slot[0] === 0 && slot[1] === 24) return { open: true, text: "Abierto las 24 horas" };
+    if (slot && slot[0] === 0 && slot[1] === 24) return { open: true, text: L.open24 };
     if (slot && h >= slot[0] && h < slot[1]) {
-      return { open: true, text: "Abierto ahora · cierra " + String(slot[1]).padStart(2, "0") + ":00" };
+      return { open: true, text: L.open + String(slot[1]).padStart(2, "0") + ":00" };
     }
-    return { open: false, text: "Cerrado ahora" };
+    return { open: false, text: L.closed };
   }
 
   /* ------------------------------------------------------------------
    * Render de una tarjeta digital
    * ------------------------------------------------------------------ */
+  /* ------------------------------------------------------------------
+   * Idioma de las tarjetas de ejemplo (ES / EN)
+   * UI: textos de botones y secciones. EN_TEXT: frases de los datos de
+   * ejemplo (títulos, horarios, eslóganes). Lo que no está traducido se
+   * muestra en español.
+   * ------------------------------------------------------------------ */
+  var UI = {
+    es: {
+      badge: "Ejemplo", preview: "Vista previa", call: "Llamar", mail: "Correo", map: "Mapa", home: "Inicio", hours: "Horarios",
+      save: "Guardar contacto", saveShort: "Guardar", contact: "Contáctame", writeMe: "Escríbeme", view: "Ver ", directions: "Cómo llegar",
+      shareCard: "Compartir mi tarjeta", send: "Enviar", links: "Enlaces", location: "Ubicación", payments: "Métodos de pago",
+      qrPay: "QR de pago", bank: "Transferencia bancaria", cash: "Efectivo", pdfTitle: " y precios", pdfSub: "Documento PDF · descargar",
+      addLinks: "Agrega tus propios enlaces", website: "Sitio web", reviews: "Reseñas de clientes", faq: "Preguntas frecuentes",
+      gmaps: "Ver en Google Maps", foot: "Tarjeta digital de demostración", footDark: "tunegocio.com · demostración",
+      open: "Abierto ahora · cierra ", closed: "Cerrado ahora", open24: "Abierto las 24 horas",
+      theme: "Cambiar entre modo claro y oscuro", lang: "Cambiar idioma a inglés", verified: "Verificado"
+    },
+    en: {
+      badge: "Example", preview: "Preview", call: "Call", mail: "Email", map: "Map", home: "Home", hours: "Hours",
+      save: "Save contact", saveShort: "Save", contact: "Contact me", writeMe: "Email me", view: "View ", directions: "Get directions",
+      shareCard: "Share my card", send: "Send", links: "Links", location: "Location", payments: "Payment methods",
+      qrPay: "QR payment", bank: "Bank transfer", cash: "Cash", pdfTitle: " & prices", pdfSub: "PDF document · download",
+      addLinks: "Add your own links", website: "Website", reviews: "Customer reviews", faq: "FAQ",
+      gmaps: "Open in Google Maps", foot: "Demo digital card", footDark: "yourbusiness.com · demo",
+      open: "Open now · closes ", closed: "Closed now", open24: "Open 24 hours",
+      theme: "Switch light / dark mode", lang: "Cambiar idioma a español", verified: "Verified"
+    }
+  };
+  var EN_TEXT = {
+    /* títulos de catálogo */
+    "Servicios": "Services", "Menú": "Menu", "Clases": "Classes", "Propiedades": "Properties", "Catálogo": "Catalog",
+    "Tratamientos": "Treatments", "Consultas": "Consultations", "Sesiones": "Sessions", "Planes": "Plans", "Precios": "Prices",
+    "Proyectos": "Projects", "Áreas de práctica": "Practice areas", "Obras": "Projects", "Equipo": "Team", "Prendas": "Clothing",
+    "Tortas": "Cakes", "Paquetes": "Packages", "Enlaces": "Links",
+    /* galerías */
+    "Trabajos realizados": "Our work", "Nuestras instalaciones": "Our facilities", "Productos destacados": "Featured products",
+    "Nuestros platos": "Our dishes", "Galería": "Gallery",
+    /* botones de agenda */
+    "Agendar reunión": "Book a meeting", "Descargar CV": "Download CV", "Agendar consulta": "Book a consultation",
+    "Cotizar proyecto": "Request a quote", "Reservar turno": "Book an appointment", "Reservar sesión": "Book a session",
+    "Agendar sesión": "Book a session", "Reservar examen visual": "Book an eye exam", "Pedir clase de prueba": "Book a trial class",
+    "Solicitar reunión": "Request a meeting", "Solicitar cotización": "Request a quote", "Agendar visita": "Schedule a visit",
+    "Cotizar materiales": "Quote materials", "Avísame del próximo live": "Notify me of the next live", "Reservar mesa": "Book a table",
+    "Reservar fecha": "Book a date", "Pedir presupuesto": "Request a quote", "Agendar revisión": "Book a check-up",
+    "Inscribirme": "Sign up", "Reservar clase": "Book a class", "Trabajemos juntos": "Let's work together", "Reservar o cotizar": "Book or get a quote",
+    /* días y horarios */
+    "Lunes a viernes": "Monday to Friday", "Lunes a sábado": "Monday to Saturday", "Sábado": "Saturday", "Domingo": "Sunday",
+    "Martes a domingo": "Tuesday to Sunday", "Lunes": "Monday", "Martes a sábado": "Tuesday to Saturday", "Domingo y lunes": "Sunday and Monday",
+    "Fines de semana": "Weekends", "Atención": "Office hours", "Eventos": "Events", "Urgencias": "Emergencies",
+    "Respuesta a marcas": "Brand inquiries", "Contenido nuevo": "New content", "Cerrado": "Closed", "Con cita": "By appointment",
+    "24 horas": "24 hours", "Lunes a sábado · 09:00 – 19:00": "Monday to Saturday · 09:00 – 19:00",
+    "Fines de semana y feriados": "Weekends and holidays", "En 24 a 48 horas": "Within 24–48 hours",
+    "Lunes, miércoles y viernes": "Monday, Wednesday and Friday", "Disponible para colaboraciones": "Open to collaborations",
+    /* eslóganes */
+    "Consultora en marketing": "Marketing consultant", "Ingeniero de software": "Software engineer",
+    "Abogada · Derecho civil y familiar": "Lawyer · Civil and family law", "Contador público": "Certified accountant",
+    "Arquitectura e interiores": "Architecture & interiors", "Médico internista": "Internal medicine physician",
+    "Clínica odontológica": "Dental clinic", "Fisioterapia y rehabilitación": "Physiotherapy & rehabilitation",
+    "Psicóloga clínica": "Clinical psychologist", "Monturas, lentes y examen visual": "Frames, lenses & eye exams",
+    "Tu salud, cerca de casa": "Your health, close to home", "Clínica veterinaria y pet shop": "Veterinary clinic & pet shop",
+    "Salón de belleza": "Beauty salon", "Cortes y barba": "Haircuts & beards", "Gimnasio y entrenamiento personal": "Gym & personal training",
+    "Soluciones para empresas": "Business solutions", "Decoración hecha a mano": "Handmade decor", "Asesor comercial": "Sales advisor",
+    "Compra, venta y alquiler": "Buy, sell & rent", "Materiales y herramientas": "Materials & tools", "Ropa y accesorios": "Clothing & accessories",
+    "Parrilla y comida casera": "Grill & home cooking", "Tortas y postres por encargo": "Custom cakes & desserts",
+    "Electricidad, plomería y mantenimiento": "Electrical, plumbing & maintenance", "Mecánica de motos": "Motorcycle repair",
+    "Música para eventos": "Music for events", "Escuela de baile": "Dance school", "Profesora de salsa y bachata": "Salsa & bachata teacher",
+    "Fotografía de retratos y eventos": "Portrait & event photography", "Creadora de contenido de viajes": "Travel content creator",
+    "Atención de calidad cerca de ti": "Quality service near you"
+  };
+  function tx(s, lang) { return lang === "en" && EN_TEXT[s] ? EN_TEXT[s] : s; }
+
   /* Secciones extra comunes a todos los estilos: PDF, enlaces, ubicación, galería y pagos */
   var GALLERY_TITLE = {
     prof: "Trabajos realizados", salud: "Nuestras instalaciones", belleza: "Trabajos realizados",
     comercio: "Productos destacados", gastro: "Nuestros platos", oficios: "Trabajos realizados", arte: "Galería"
   };
-  var DEFAULT_LINKS = [
-    { i: "globe", t: "Sitio web" },
-    { i: "star", t: "Reseñas de clientes" },
-    { i: "chat", t: "Preguntas frecuentes" }
-  ];
-  function renderExtras(d) {
-    var links = (d.links || DEFAULT_LINKS).map(function (l) {
+  function renderExtras(d, lang) {
+    var L = UI[lang];
+    var links = (d.links || [{ i: "globe", t: L.website }, { i: "star", t: L.reviews }, { i: "chat", t: L.faq }]).map(function (l) {
       return '<button type="button" class="dx-row" data-act="link" data-label="' + esc(l.t) + '">' + icon(l.i) + "<span>" + esc(l.t) + "</span>" + icon("arrow") + "</button>";
     }).join("");
     var shots = [0, 1, 2].map(function (i) {
-      return '<button type="button" class="dx-shot dx-shot-' + i + '" data-act="photo" aria-label="Ver foto ' + (i + 1) + '">' + (i === 0 ? icon(d.icon) : "") + "</button>";
+      return '<button type="button" class="dx-shot dx-shot-' + i + '" data-act="photo" aria-label="Foto ' + (i + 1) + '">' + (i === 0 ? icon(d.icon) : "") + "</button>";
     }).join("");
     return '<div class="dx">' +
       '<button type="button" class="dx-pdf" data-act="pdf">' +
         '<span class="dx-pdf-ic">PDF</span>' +
-        '<span class="dx-pdf-txt"><strong>' + esc(d.catalogTitle) + " y precios</strong><small>Documento PDF · descargar</small></span>" +
+        '<span class="dx-pdf-txt"><strong>' + esc(tx(d.catalogTitle, lang)) + L.pdfTitle + "</strong><small>" + L.pdfSub + "</small></span>" +
         '<span class="dx-dl">' + icon("download") + "</span>" +
       "</button>" +
-      '<section class="dx-box"><h4>Enlaces</h4>' + links +
-        '<button type="button" class="dx-add" data-act="add-link">' + icon("plus") + "Agrega tus propios enlaces</button></section>" +
-      '<section class="dx-box"><h4>Ubicación</h4>' +
-        '<button type="button" class="dx-map" data-act="map" aria-label="Ver ubicación en el mapa"><i class="dx-r1"></i><i class="dx-r2"></i><i class="dx-r3"></i><i class="dx-park"></i><span class="dx-pin">' + icon("pin") + "</span></button>" +
+      '<section class="dx-box"><h4>' + L.links + "</h4>" + links +
+        '<button type="button" class="dx-add" data-act="add-link">' + icon("plus") + L.addLinks + "</button></section>" +
+      '<section class="dx-box"><h4>' + L.location + "</h4>" +
+        '<button type="button" class="dx-map" data-act="map" aria-label="' + L.map + '"><i class="dx-r1"></i><i class="dx-r2"></i><i class="dx-r3"></i><i class="dx-park"></i><span class="dx-pin">' + icon("pin") + "</span></button>" +
         '<p class="dx-addr">' + icon("pin") + esc(d.address) + "</p>" +
-        '<button type="button" class="dx-maplink" data-act="map">Ver en Google Maps ' + icon("arrow") + "</button></section>" +
-      '<section class="dx-box"><h4>' + esc(GALLERY_TITLE[d.cat] || "Galería") + '</h4><div class="dx-gallery">' + shots + "</div></section>" +
-      '<section class="dx-box"><h4>Métodos de pago</h4>' +
-        '<button type="button" class="dx-row" data-act="pay-qr">' + icon("qr") + "<span>QR de pago</span>" + icon("arrow") + "</button>" +
-        '<button type="button" class="dx-row" data-act="pay-bank">' + icon("card") + "<span>Transferencia bancaria</span>" + icon("arrow") + "</button>" +
-        '<button type="button" class="dx-row" data-act="pay-cash">' + icon("cash") + "<span>Efectivo</span>" + icon("arrow") + "</button>" +
+        '<button type="button" class="dx-maplink" data-act="map">' + L.gmaps + " " + icon("arrow") + "</button></section>" +
+      '<section class="dx-box"><h4>' + esc(tx(GALLERY_TITLE[d.cat] || "Galería", lang)) + '</h4><div class="dx-gallery">' + shots + "</div></section>" +
+      '<section class="dx-box"><h4>' + L.payments + "</h4>" +
+        '<button type="button" class="dx-row" data-act="pay-qr">' + icon("qr") + "<span>" + L.qrPay + "</span>" + icon("arrow") + "</button>" +
+        '<button type="button" class="dx-row" data-act="pay-bank">' + icon("card") + "<span>" + L.bank + "</span>" + icon("arrow") + "</button>" +
+        '<button type="button" class="dx-row" data-act="pay-cash">' + icon("cash") + "<span>" + L.cash + "</span>" + icon("arrow") + "</button>" +
       "</section>" +
+    "</div>";
+  }
+
+  /* Botones de idioma y tema (arriba a la derecha en todos los estilos) */
+  function renderControls(lang, isDark) {
+    var L = UI[lang];
+    return '<div class="dc-ctrl">' +
+      '<button type="button" class="dc-ctl" data-act="lang" aria-label="' + L.lang + '">' + (lang === "en" ? "EN" : "ES") + "</button>" +
+      '<button type="button" class="dc-ctl" data-act="theme" aria-label="' + L.theme + '">' + icon(isDark ? "sun" : "moon") + "</button>" +
     "</div>";
   }
 
   function renderCard(d, opts) {
     opts = opts || {};
     var style = opts.style || d.style || "classic";
-    var st = openStatus(d);
-    var badge = esc(opts.badge || "Ejemplo · datos ficticios");
-    var initials = d.name.replace(/^(Arq|Lic|Dr|Dra|Ing)\.\s*/i, "").split(/\s+/).slice(0, 2).map(function (w) { return w.charAt(0); }).join("").toUpperCase();
+    var lang = opts.lang === "en" ? "en" : "es";
+    var L = UI[lang];
+    var alt = !!opts.alt;                                  /* tema alternativo al del estilo */
+    var isDark = style === "dark" ? !alt : alt;
+    var themeCls = style === "dark" ? (alt ? " is-light" : "") : (alt ? " is-dark" : "");
+    var st = openStatus(d, lang);
+    var badge = esc(opts.badge === "preview" ? L.preview : L.badge);
+    var initials = d.name.replace(/^(Arq|Lic|Dr|Dra|Ing|Prof)\.\s*/i, "").split(/\s+/).slice(0, 2).map(function (w) { return w.charAt(0); }).join("").toUpperCase();
     var mark = d.person ? '<span class="dc-mono">' + esc(initials) + "</span>" : icon(d.icon);
     var status = '<span class="dc-status ' + (st.open ? "is-open" : "is-closed") + '">' + esc(st.text) + "</span>";
+    var catTitle = tx(d.catalogTitle, lang);
+    var tagline = tx(d.tagline, lang);
+    var controls = renderControls(lang, isDark);
 
     var catalog = d.catalog.map(function (it) {
       return '<li><div><strong>' + esc(it.t) + "</strong><span>" + esc(it.d) + "</span></div>" +
@@ -190,16 +275,16 @@
     }).join("");
 
     var hours = d.hours.map(function (h) {
-      return "<li><span>" + esc(h[0]) + "</span><strong>" + esc(h[1]) + "</strong></li>";
+      return "<li><span>" + esc(tx(h[0], lang)) + "</span><strong>" + esc(tx(h[1], lang)) + "</strong></li>";
     }).join("");
 
     var social = '<div class="dc-social">' + d.social.map(function (s) {
       return '<button type="button" class="dc-soc" data-act="social" data-net="' + s + '" aria-label="' + (NET_LABELS[s] || s) + '">' + icon(netIcon(s)) + "</button>";
     }).join("") + "</div>";
-    var cta = d.cta ? { label: esc(d.cta.label), icon: d.cta.icon || "calendar" } : null;
-    var extras = renderExtras(d);
+    var cta = d.cta ? { label: esc(tx(d.cta.label, lang)), icon: d.cta.icon || "calendar" } : null;
+    var extras = renderExtras(d, lang);
 
-    var vars = ' style="--c1:' + d.c1 + ";--c2:" + d.c2 + '"';
+    var vars = ' lang="' + lang + '" style="--c1:' + d.c1 + ";--c2:" + d.c2 + '"';
 
     /* --- Estilos en lista (Oscuro / Degradado) --- */
     if (style === "dark" || style === "grad") {
@@ -208,69 +293,68 @@
       };
       var rows = '<div class="dc-rows">' +
         (cta ? '<button type="button" class="dc-row dc-row-cta" data-act="book">' + icon(cta.icon) + "<span>" + cta.label + "</span></button>" : "") +
-        row("call", "phone", "Llamar") +
+        row("call", "phone", L.call) +
         row("whatsapp", "whatsapp", "WhatsApp") +
-        row("mail", "mail", "Escríbeme") +
-        row("expand", "grid", "Ver " + d.catalogTitle.toLowerCase(), ' data-target="catalog" aria-expanded="false"') +
+        row("mail", "mail", L.writeMe) +
+        row("expand", "grid", L.view + (lang === "en" ? catTitle.toLowerCase() : catTitle.toLowerCase()), ' data-target="catalog" aria-expanded="false"') +
         '<div class="dc-drop" data-drop="catalog" hidden><ul class="dc-list">' + catalog + "</ul></div>" +
-        row("map", "pin", "Cómo llegar") +
-        row("expand", "clock", "Horarios", ' data-target="hours" aria-expanded="false"') +
+        row("map", "pin", L.directions) +
+        row("expand", "clock", L.hours, ' data-target="hours" aria-expanded="false"') +
         '<div class="dc-drop" data-drop="hours" hidden><ul class="dc-hours">' + hours + "</ul></div>" +
-        (style === "dark" ? row("share", "share", "Compartir mi tarjeta") : "") +
+        (style === "dark" ? row("share", "share", L.shareCard) : "") +
         "</div>";
 
       if (style === "dark") {
-        return '<div class="dc st-dark"' + vars + ">" +
-          '<div class="dk-top"><span class="dk-brand">' + icon(d.icon) + '</span><span class="dc-badge-sm">' + badge + "</span></div>" +
+        return '<div class="dc st-dark' + themeCls + '"' + vars + ">" +
+          '<div class="dk-top"><span class="dk-brand">' + icon(d.icon) + '</span><span class="dc-badge-sm">' + badge + "</span>" + controls + "</div>" +
           '<div class="dk-card">' +
             '<div class="dk-avatar">' + mark + "</div>" +
-            '<h3 class="dc-name">' + esc(d.name) + ' <span class="dk-verified" title="Verificado">' + icon("check") + "</span></h3>" +
-            '<p class="dc-tag">' + esc(d.tagline) + "</p>" + status +
+            '<h3 class="dc-name">' + esc(d.name) + ' <span class="dk-verified" title="' + L.verified + '">' + icon("check") + "</span></h3>" +
+            '<p class="dc-tag">' + esc(tagline) + "</p>" + status +
             '<div class="dk-btns">' +
-              '<button type="button" class="dk-save" data-act="save">' + icon("user-plus") + "Guardar</button>" +
-              '<button type="button" class="dk-connect" data-act="whatsapp">Contáctame</button>' +
+              '<button type="button" class="dk-save" data-act="save">' + icon("user-plus") + L.saveShort + "</button>" +
+              '<button type="button" class="dk-connect" data-act="whatsapp">' + L.contact + "</button>" +
             "</div>" +
           "</div>" + rows + social + extras +
-          '<p class="dc-foot">' + icon("link") + " tunegocio.com · demostración</p>" +
+          '<p class="dc-foot">' + icon("link") + " " + L.footDark + "</p>" +
         "</div>";
       }
 
-      return '<div class="dc st-grad"' + vars + ">" +
+      return '<div class="dc st-grad' + themeCls + '"' + vars + ">" +
+        '<div class="gr-top"><span class="dc-badge-sm">' + badge + "</span>" + controls + "</div>" +
         '<div class="gr-head">' +
-          '<span class="dc-badge-sm">' + badge + "</span>" +
           '<div class="gr-avatar">' + mark + "</div>" +
           '<h3 class="dc-name">' + esc(d.name) + "</h3>" +
-          '<p class="dc-tag">' + esc(d.tagline) + "</p>" + status +
+          '<p class="dc-tag">' + esc(tagline) + "</p>" + status +
         "</div>" + rows + social + extras +
         '<div class="gr-bar">' +
-          '<button type="button" data-act="save">' + icon("user-plus") + "<span>Guardar contacto</span></button>" +
-          '<button type="button" data-act="share">' + icon("qr") + "<span>Enviar</span></button>" +
+          '<button type="button" data-act="save">' + icon("user-plus") + "<span>" + L.save + "</span></button>" +
+          '<button type="button" data-act="share">' + icon("qr") + "<span>" + L.send + "</span></button>" +
         "</div>" +
       "</div>";
     }
 
-    /* --- Estilo clásico (con modo claro/oscuro) --- */
+    /* --- Estilo clásico --- */
     return '' +
-      '<div class="dc st-classic' + (opts.dark ? " is-dark" : "") + '"' + vars + ">" +
+      '<div class="dc st-classic' + themeCls + '"' + vars + ">" +
         '<div class="dc-cover">' +
-          '<span class="dc-badge">' + badge + "</span>" +
-          '<button type="button" class="dc-theme" data-act="theme" aria-label="Cambiar entre modo claro y oscuro">' + icon("contrast") + "</button>" +
+          '<div class="cl-top"><span class="dc-badge-sm">' + badge + "</span>" + controls + "</div>" +
         "</div>" +
         '<div class="dc-head">' +
           '<div class="dc-logo" aria-hidden="true">' + mark + "</div>" +
           '<h3 class="dc-name">' + esc(d.name) + "</h3>" +
-          '<p class="dc-tag">' + esc(d.tagline) + "</p>" + status +
+          '<p class="dc-tag">' + esc(tagline) + "</p>" + status +
         "</div>" +
         '<div class="dc-actions">' +
-          '<button type="button" data-act="call">' + icon("phone") + "<span>Llamar</span></button>" +
+          '<button type="button" data-act="call">' + icon("phone") + "<span>" + L.call + "</span></button>" +
           '<button type="button" data-act="whatsapp" class="is-wa">' + icon("whatsapp") + "<span>WhatsApp</span></button>" +
-          '<button type="button" data-act="mail">' + icon("mail") + "<span>Correo</span></button>" +
-          '<button type="button" data-act="map">' + icon("pin") + "<span>Mapa</span></button>" +
+          '<button type="button" data-act="mail">' + icon("mail") + "<span>" + L.mail + "</span></button>" +
+          '<button type="button" data-act="map">' + icon("pin") + "<span>" + L.map + "</span></button>" +
         "</div>" +
         '<div class="dc-tabs" role="tablist">' +
-          '<button type="button" role="tab" data-tab="info" aria-selected="true">Inicio</button>' +
-          '<button type="button" role="tab" data-tab="catalog" aria-selected="false">' + esc(d.catalogTitle) + "</button>" +
-          '<button type="button" role="tab" data-tab="hours" aria-selected="false">Horarios</button>' +
+          '<button type="button" role="tab" data-tab="info" aria-selected="true">' + L.home + "</button>" +
+          '<button type="button" role="tab" data-tab="catalog" aria-selected="false">' + esc(catTitle) + "</button>" +
+          '<button type="button" role="tab" data-tab="hours" aria-selected="false">' + L.hours + "</button>" +
         "</div>" +
         '<div class="dc-panel" data-panel="info">' +
           '<div class="dc-photo" aria-hidden="true"><span>' + esc(initials) + "</span>" + icon("image") + "</div>" +
@@ -283,30 +367,43 @@
         (cta ? '<button type="button" class="dc-book" data-act="book">' + icon(cta.icon) + cta.label + "</button>" : "") +
         social +
         '<div class="dc-cta">' +
-          '<button type="button" class="dc-save" data-act="save">' + icon("user-plus") + "Guardar contacto</button>" +
-          '<button type="button" class="dc-share" data-act="share" aria-label="Compartir y ver código QR">' + icon("qr") + "</button>" +
+          '<button type="button" class="dc-save" data-act="save">' + icon("user-plus") + L.save + "</button>" +
+          '<button type="button" class="dc-share" data-act="share" aria-label="QR">' + icon("qr") + "</button>" +
         "</div>" + extras +
-        '<p class="dc-foot">Tarjeta digital de demostración</p>' +
+        '<p class="dc-foot">' + L.foot + "</p>" +
       "</div>";
   }
 
   /* Cada teléfono guarda los datos de la tarjeta que muestra */
   var phoneData = new WeakMap();
 
+  var phoneOpts = new WeakMap();
+
   function mountCard(phone, data, opts) {
+    opts = Object.assign({}, opts || {});
     var screen = $(".phone-screen", phone);
+    var prev = phoneOpts.get(phone);
+    /* conservar idioma y tema al actualizar la misma tarjeta (constructor, cambio de tema/idioma) */
+    if (prev && opts.keepTab) {
+      if (opts.lang === undefined) opts.lang = prev.lang;
+      if (opts.alt === undefined) opts.alt = prev.alt;
+    }
     var activeTab = (function () {
       var t = $('.dc-tabs [aria-selected="true"]', screen);
       return t ? t.getAttribute("data-tab") : null;
     })();
+    var keepScroll = opts.keepScroll ? screen.scrollTop : 0;
     screen.innerHTML = renderCard(data, opts);
-    screen.scrollTop = 0;
+    screen.scrollTop = keepScroll;
     phoneData.set(phone, data);
-    if (activeTab && opts && opts.keepTab) selectTab(phone, activeTab);
+    phoneOpts.set(phone, opts);
+    if (activeTab && opts.keepTab) selectTab(phone, activeTab);
 
-    var style = (opts && opts.style) || data.style || "classic";
-    phone.style.setProperty("--status-bg", style === "dark" ? "#14171c" : data.c1);
-    phone.classList.remove("is-scrolled");
+    var style = opts.style || data.style || "classic";
+    var lightTop = style === "dark" && opts.alt;
+    phone.style.setProperty("--status-bg", lightTop ? "#ffffff" : (style === "dark" ? "#14171c" : data.c1));
+    phone.style.setProperty("--status-fg", lightTop ? "#0b1626" : "#ffffff");
+    phone.classList.toggle("is-scrolled", keepScroll > 24);
 
     if (!$(".phone-layer", phone)) {
       var layer = document.createElement("div");
@@ -572,10 +669,17 @@
         drop.hidden = !drop.hidden;
         btn.setAttribute("aria-expanded", String(!drop.hidden));
       }
-    } else if (act === "theme") {
-      var card = btn.closest(".dc");
-      var dark = card.classList.toggle("is-dark");
-      toast(phone, icon("contrast") + "<span>Modo " + (dark ? "<b>oscuro</b>" : "<b>claro</b>") + " activado. Tu tarjeta se ve bien de día y de noche.</span>");
+    } else if (act === "theme" || act === "lang") {
+      var o = Object.assign({}, phoneOpts.get(phone) || {}, { keepTab: true, keepScroll: true });
+      if (act === "theme") o.alt = !o.alt; else o.lang = o.lang === "en" ? "es" : "en";
+      mountCard(phone, data, o);
+      var dk = phone.querySelector(".dc");
+      if (act === "theme") {
+        var nowDark = dk.classList.contains("st-dark") ? !dk.classList.contains("is-light") : dk.classList.contains("is-dark");
+        toast(phone, icon(nowDark ? "moon" : "sun") + "<span>Modo " + (nowDark ? "<b>oscuro</b>" : "<b>claro</b>") + " activado. Tu tarjeta se ve bien de día y de noche.</span>");
+      } else {
+        toast(phone, icon("globe") + "<span>" + (o.lang === "en" ? "<b>English</b>. En tu tarjeta real también se traducen tus descripciones y productos." : "<b>Español</b> activado.") + "</span>");
+      }
     } else if (ACTION_MSG[act]) {
       if (btn.closest(".p-sheet")) closeSheet(phone);
       toast(phone, ACTION_MSG[act](data, btn.getAttribute("data-net")));
@@ -756,7 +860,7 @@
   function updateBuilder(keepTab) {
     var d = builderData();
     var style = form.estilo.value || "classic";
-    mountCard(builderPhone, d, { badge: "Vista previa", keepTab: keepTab, style: style });
+    mountCard(builderPhone, d, { badge: "preview", keepTab: keepTab, style: style });
     var styleName = { classic: "Clásico", dark: "Oscuro elegante", grad: "Degradado" }[style];
     var rubroText = form.rubro.options[form.rubro.selectedIndex].text;
     var msg = "Hola, quiero solicitar una tarjeta digital.\n" +
@@ -885,7 +989,9 @@
     var status = $("#cfStatus");
     var waNum = String(CFG.whatsapp || "").replace(/\D/g, "");
     if (!waNum) $("#cfWa").hidden = true;
-    if (!CFG.email) $("#cfMail").hidden = true;
+    /* Con WhatsApp configurado, el formulario se envía solo por WhatsApp */
+    if (!CFG.email || waNum) $("#cfMail").hidden = true;
+    if (waNum) $(".cf-legal", f).innerHTML = 'Al enviar aceptas la <a href="privacidad.html">política de privacidad</a>. Se abrirá WhatsApp con tu mensaje listo para enviar.';
     if (!waNum && !CFG.email && !CFG.formEndpoint) { $("#cfMail").hidden = false; }
     if (CFG.formEndpoint) {
       $("#cfWa").hidden = true;

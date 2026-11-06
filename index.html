@@ -8,8 +8,7 @@
   <meta name="author" content="Alvaro Siles">
   <meta name="theme-color" content="#0b1626">
   <meta name="robots" content="index, follow">
-  <!-- TODO: reemplazar por tu dominio real -->
-  <link rel="canonical" href="https://www.tudominio.com/">
+  <link rel="canonical" href="https://alvarosiles.cloud/">
 
   <!-- Open Graph / redes sociales -->
   <meta property="og:type" content="website">
@@ -17,9 +16,9 @@
   <meta property="og:site_name" content="Alvaro Siles · Software & Tech">
   <meta property="og:title" content="Tarjetas Digitales Empresariales">
   <meta property="og:description" content="Tu negocio merece una presentación profesional. Comparte todo desde una sola tarjeta digital.">
-  <meta property="og:url" content="https://www.tudominio.com/">
+  <meta property="og:url" content="https://alvarosiles.cloud/">
   <!-- TODO: crear una imagen 1200x630 y descomentar
-  <meta property="og:image" content="https://www.tudominio.com/assets/img/og-image.png">
+  <meta property="og:image" content="https://alvarosiles.cloud/assets/img/og-image.png">
   -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Tarjetas Digitales Empresariales">
@@ -116,6 +115,8 @@
   <symbol id="i-disc" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/><path d="M6.5 12a5.5 5.5 0 0 1 5.5-5.5"/></symbol>
   <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol>
   <symbol id="i-video" viewBox="0 0 24 24"><path d="m16 13 5.22 3.48a.5.5 0 0 0 .78-.42V7.87a.5.5 0 0 0-.75-.43L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
   <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></symbol>
@@ -175,6 +176,9 @@
         <li><svg class="ic"><use href="#i-check"/></svg> Android y iPhone</li>
         <li><svg class="ic"><use href="#i-check"/></svg> Enlace, QR o NFC</li>
       </ul>
+      <a class="real-link" href="https://alvarosiles.github.io/personal/" target="_blank" rel="noopener">
+        <span class="rl-dot"></span> ¿Quieres ver una tarjeta real funcionando? <strong>Mira mi tarjeta digital</strong> <svg class="ic"><use href="#i-arrow"/></svg>
+      </a>
     </div>
 
     <div class="hero-visual">
@@ -348,6 +352,16 @@
     <div class="demo-filters" id="demoFilters" aria-label="Filtrar por categoría"></div>
     <div class="demo-grid" id="demoGrid" aria-live="polite"><!-- generado por JS desde assets/js/tarjetas-demos.js --></div>
     <div class="demo-more-wrap"><button type="button" class="btn btn-outline-dark" id="demoMore" aria-controls="demoGrid"></button></div>
+
+    <div class="real-banner reveal">
+      <span class="rb-ic"><svg class="ic"><use href="#i-mobile"/></svg></span>
+      <div class="rb-txt">
+        <span class="rb-kicker"><span class="rl-dot"></span> Ejemplo real, en funcionamiento</span>
+        <h3>Mira una tarjeta digital publicada</h3>
+        <p>Esta es mi propia tarjeta: ábrela desde tu celular y prueba cada botón como lo haría un cliente.</p>
+      </div>
+      <a class="btn btn-primary btn-lg" href="https://alvarosiles.github.io/personal/" target="_blank" rel="noopener">Ver tarjeta real <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
   </div>
 </section>
 
@@ -638,6 +652,7 @@
         <div><dt>Plataformas</dt><dd>Web y móvil</dd></div>
       </dl>
       <p class="about-loc" id="aboutLoc"><svg class="ic"><use href="#i-pin"/></svg> <span></span></p>
+      <a class="btn btn-outline btn-block about-real" href="https://alvarosiles.github.io/personal/" target="_blank" rel="noopener"><svg class="ic"><use href="#i-eye"/></svg> Ver mi tarjeta digital</a>
     </div>
     <div class="about-copy reveal">
       <span class="kicker">Quién está detrás</span>
@@ -794,6 +809,7 @@
       <p id="modalDesc" class="muted"></p>
       <ul class="try-list">
         <li><svg class="ic"><use href="#i-grid"/></svg><span>Descarga el <strong>PDF</strong> de precios, mira la <strong>ubicación</strong> y abre el <strong>QR de pago</strong> (baja dentro del celular).</span></li>
+        <li><svg class="ic"><use href="#i-globe"/></svg><span>Arriba a la derecha cambia el <strong>idioma (ES/EN)</strong> y el <strong>modo claro/oscuro</strong>.</span></li>
         <li><svg class="ic"><use href="#i-user-plus"/></svg><span><strong>Guardar contacto</strong> descarga un contacto real a tu celular.</span></li>
         <li><svg class="ic"><use href="#i-qr"/></svg><span><strong>Compartir</strong> muestra el QR para descargar, copiar el enlace o compartirlo.</span></li>
         <li><svg class="ic"><use href="#i-whatsapp"/></svg><span>WhatsApp, llamada y mapa te explican qué harían en tu tarjeta real.</span></li>
