@@ -958,3 +958,24 @@ body.no-scroll .wa-float { display: none; }
 .p-bank div { display: flex; justify-content: space-between; gap: 8px; padding: 8px 10px; border-radius: 10px; background: #f1f5f9; font-size: 11.5px; }
 .p-bank dt { color: var(--muted); }
 .p-bank dd { margin: 0; font-weight: 700; color: var(--ink); text-align: right; }
+
+/* =========================================================
+   Comparación: "Lo que una tarjeta impresa nunca podrá hacer"
+   ========================================================= */
+.only { margin-top: 40px; }
+.only-title { text-align: center; font-size: clamp(1.25rem, 3vw, 1.6rem); margin: 0 0 22px; }
+.only-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
+.only-card {
+  display: flex; flex-direction: column; padding: 14px 14px 20px; border-radius: 22px;
+  background: radial-gradient(circle at 50% 0%, #1c2c44, #0b1626 70%); box-shadow: var(--shadow);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.only-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.only-card > h4 { color: #fff; font-family: var(--font-display); font-size: 1.05rem; margin: 16px 6px 4px; }
+.only-card > p { color: #a9b8cc; font-size: .9rem; margin: 0 6px; line-height: 1.5; }
+.only-ui { min-height: 0; padding: 0; background: none; display: grid; gap: 10px; font-size: 13px; }
+.only-ui .dx-box, .only-ui .dx-pdf { background: rgba(255, 255, 255, .05); }
+.only-ui .dx-map { height: 110px; }
+.only-ui .dx-maplink { margin-top: 10px; }
+.only-ui .dx-row .ic:first-child { color: #eab308; }
+.only-links .dx-row:last-child { margin-bottom: 0; }

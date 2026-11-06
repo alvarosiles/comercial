@@ -791,7 +791,7 @@
    * Compartir: enlace y QR de esta página
    * ------------------------------------------------------------------ */
   var shareUrl = $("#shareUrl");
-  shareUrl.textContent = location.protocol.indexOf("http") === 0 ? location.host + location.pathname : "tunegocio.com/tu-tarjeta";
+  shareUrl.textContent = "tunegocio.com";
 
   $("#copyLink").addEventListener("click", function () {
     var btn = this, original = btn.innerHTML;

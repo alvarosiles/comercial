@@ -333,7 +333,7 @@
       hours: "events", cta: { label: "Reservar fecha", icon: "calendar" } },
 
     { id: "baile", cat: "arte", label: "Escuelas de baile", desc: "Perfil de la academia, horarios y redes sociales.",
-      redes: ["instagram", "tiktok", "youtube", "facebook"], icon: "music", style: "classic",
+      redes: ["instagram", "tiktok", "youtube", "facebook"], icon: "dance", style: "classic",
       name: "Montuno Studio", tagline: "Escuela de baile", c1: "#9333ea", c2: "#db2777",
       about: "Clases para todas las edades y niveles. Aprende a bailar en un ambiente divertido, desde cero.",
       catalogTitle: "Clases", catalog: [
@@ -345,7 +345,7 @@
       cta: { label: "Inscribirme", icon: "calendar" } },
 
     { id: "profesor-baile", cat: "arte", label: "Profesores de baile", desc: "Perfil individual con clases y contacto.",
-      redes: ["instagram", "tiktok", "youtube", "facebook"], icon: "music", style: "grad", person: true,
+      redes: ["instagram", "tiktok", "youtube", "facebook"], icon: "dance", style: "grad", person: true,
       name: "Prof. Valeria Cruz", tagline: "Profesora de salsa y bachata", c1: "#f43f5e", c2: "#f59e0b",
       about: "Clases particulares y grupales para que bailes con confianza en cualquier fiesta.",
       catalogTitle: "Clases", catalog: [
