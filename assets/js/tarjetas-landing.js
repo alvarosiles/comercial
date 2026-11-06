@@ -137,6 +137,44 @@
   /* ------------------------------------------------------------------
    * Render de una tarjeta digital
    * ------------------------------------------------------------------ */
+  /* Secciones extra comunes a todos los estilos: PDF, enlaces, ubicación, galería y pagos */
+  var GALLERY_TITLE = {
+    prof: "Trabajos realizados", salud: "Nuestras instalaciones", belleza: "Trabajos realizados",
+    comercio: "Productos destacados", gastro: "Nuestros platos", oficios: "Trabajos realizados", arte: "Galería"
+  };
+  var DEFAULT_LINKS = [
+    { i: "globe", t: "Sitio web" },
+    { i: "star", t: "Reseñas de clientes" },
+    { i: "chat", t: "Preguntas frecuentes" }
+  ];
+  function renderExtras(d) {
+    var links = (d.links || DEFAULT_LINKS).map(function (l) {
+      return '<button type="button" class="dx-row" data-act="link" data-label="' + esc(l.t) + '">' + icon(l.i) + "<span>" + esc(l.t) + "</span>" + icon("arrow") + "</button>";
+    }).join("");
+    var shots = [0, 1, 2].map(function (i) {
+      return '<button type="button" class="dx-shot dx-shot-' + i + '" data-act="photo" aria-label="Ver foto ' + (i + 1) + '">' + (i === 0 ? icon(d.icon) : "") + "</button>";
+    }).join("");
+    return '<div class="dx">' +
+      '<button type="button" class="dx-pdf" data-act="pdf">' +
+        '<span class="dx-pdf-ic">PDF</span>' +
+        '<span class="dx-pdf-txt"><strong>' + esc(d.catalogTitle) + " y precios</strong><small>Documento PDF · descargar</small></span>" +
+        '<span class="dx-dl">' + icon("download") + "</span>" +
+      "</button>" +
+      '<section class="dx-box"><h4>Enlaces</h4>' + links +
+        '<button type="button" class="dx-add" data-act="add-link">' + icon("plus") + "Agrega tus propios enlaces</button></section>" +
+      '<section class="dx-box"><h4>Ubicación</h4>' +
+        '<button type="button" class="dx-map" data-act="map" aria-label="Ver ubicación en el mapa"><i class="dx-r1"></i><i class="dx-r2"></i><i class="dx-r3"></i><i class="dx-park"></i><span class="dx-pin">' + icon("pin") + "</span></button>" +
+        '<p class="dx-addr">' + icon("pin") + esc(d.address) + "</p>" +
+        '<button type="button" class="dx-maplink" data-act="map">Ver en Google Maps ' + icon("arrow") + "</button></section>" +
+      '<section class="dx-box"><h4>' + esc(GALLERY_TITLE[d.cat] || "Galería") + '</h4><div class="dx-gallery">' + shots + "</div></section>" +
+      '<section class="dx-box"><h4>Métodos de pago</h4>' +
+        '<button type="button" class="dx-row" data-act="pay-qr">' + icon("qr") + "<span>QR de pago</span>" + icon("arrow") + "</button>" +
+        '<button type="button" class="dx-row" data-act="pay-bank">' + icon("card") + "<span>Transferencia bancaria</span>" + icon("arrow") + "</button>" +
+        '<button type="button" class="dx-row" data-act="pay-cash">' + icon("cash") + "<span>Efectivo</span>" + icon("arrow") + "</button>" +
+      "</section>" +
+    "</div>";
+  }
+
   function renderCard(d, opts) {
     opts = opts || {};
     var style = opts.style || d.style || "classic";
@@ -159,6 +197,7 @@
       return '<button type="button" class="dc-soc" data-act="social" data-net="' + s + '" aria-label="' + (NET_LABELS[s] || s) + '">' + icon(netIcon(s)) + "</button>";
     }).join("") + "</div>";
     var cta = d.cta ? { label: esc(d.cta.label), icon: d.cta.icon || "calendar" } : null;
+    var extras = renderExtras(d);
 
     var vars = ' style="--c1:' + d.c1 + ";--c2:" + d.c2 + '"';
 
@@ -191,7 +230,7 @@
               '<button type="button" class="dk-save" data-act="save">' + icon("user-plus") + "Guardar</button>" +
               '<button type="button" class="dk-connect" data-act="whatsapp">Contáctame</button>' +
             "</div>" +
-          "</div>" + rows + social +
+          "</div>" + rows + social + extras +
           '<p class="dc-foot">' + icon("link") + " tunegocio.com · demostración</p>" +
         "</div>";
       }
@@ -202,7 +241,7 @@
           '<div class="gr-avatar">' + mark + "</div>" +
           '<h3 class="dc-name">' + esc(d.name) + "</h3>" +
           '<p class="dc-tag">' + esc(d.tagline) + "</p>" + status +
-        "</div>" + rows + social +
+        "</div>" + rows + social + extras +
         '<div class="gr-bar">' +
           '<button type="button" data-act="save">' + icon("user-plus") + "<span>Guardar contacto</span></button>" +
           '<button type="button" data-act="share">' + icon("qr") + "<span>Enviar</span></button>" +
@@ -246,7 +285,7 @@
         '<div class="dc-cta">' +
           '<button type="button" class="dc-save" data-act="save">' + icon("user-plus") + "Guardar contacto</button>" +
           '<button type="button" class="dc-share" data-act="share" aria-label="Compartir y ver código QR">' + icon("qr") + "</button>" +
-        "</div>" +
+        "</div>" + extras +
         '<p class="dc-foot">Tarjeta digital de demostración</p>' +
       "</div>";
   }
@@ -261,25 +300,32 @@
       return t ? t.getAttribute("data-tab") : null;
     })();
     screen.innerHTML = renderCard(data, opts);
+    screen.scrollTop = 0;
     phoneData.set(phone, data);
     if (activeTab && opts && opts.keepTab) selectTab(phone, activeTab);
+
+    var style = (opts && opts.style) || data.style || "classic";
+    phone.style.setProperty("--status-bg", style === "dark" ? "#14171c" : data.c1);
+    phone.classList.remove("is-scrolled");
+
     if (!$(".phone-layer", phone)) {
       var layer = document.createElement("div");
       layer.className = "phone-layer";
-      layer.innerHTML = '<div class="p-toast" role="status" aria-live="polite"></div>' +
-        '<div class="p-sheet" hidden><div class="p-sheet-card">' +
+      layer.innerHTML =
+        '<div class="p-status" aria-hidden="true"><span class="p-time"></span>' +
+          '<span class="p-sig"><i></i><i></i><i></i><i></i><b></b></span></div>' +
+        '<div class="p-toast" role="status" aria-live="polite"></div>' +
+        '<div class="p-sheet" hidden><div class="p-sheet-card" role="dialog" aria-modal="false">' +
           '<button type="button" class="p-sheet-close" data-act="close-sheet" aria-label="Cerrar">' + icon("x") + "</button>" +
-          '<strong class="p-sheet-title">Comparte esta tarjeta</strong>' +
-          '<div class="p-qr"></div>' +
-          '<p class="p-sheet-note">Escanéalo con la cámara de otro celular.</p>' +
-          '<div class="p-sheet-opts">' +
-            '<button type="button" data-act="copy">' + icon("copy") + "<span>Copiar enlace</span></button>" +
-            '<button type="button" data-act="download-qr">' + icon("qr") + "<span>Descargar QR</span></button>" +
-            '<button type="button" data-act="native-share">' + icon("share") + "<span>Compartir</span></button>" +
-          "</div>" +
+          '<div class="p-sheet-body"></div>' +
         "</div></div>";
       phone.appendChild(layer);
+      screen.addEventListener("scroll", function () {
+        phone.classList.toggle("is-scrolled", screen.scrollTop > 24);
+      }, { passive: true });
     }
+    var now = new Date();
+    $(".p-time", phone).textContent = now.getHours() + ":" + String(now.getMinutes()).padStart(2, "0");
     closeSheet(phone);
   }
 
@@ -300,11 +346,46 @@
     toastTimers.set(phone, setTimeout(function () { el.classList.remove("show"); }, 3600));
   }
 
-  function openSheet(phone) {
+  /* Hoja inferior genérica: compartir / pagar con QR / transferencia */
+  function payPayload(d) { return "PAGO DE EJEMPLO - " + d.name + " - Tarjeta digital de demostración (no realiza cobros)"; }
+
+  function openSheet(phone, kind) {
+    var d = phoneData.get(phone);
     var sheet = $(".p-sheet", phone);
-    var url = pageUrl() + "#demos";
-    var svg = qrSvg(url);
-    $(".p-qr", sheet).innerHTML = svg || qrFallback();
+    var body = $(".p-sheet-body", sheet);
+    kind = kind || "share";
+    var html = "";
+
+    if (kind === "share") {
+      html = '<strong class="p-sheet-title">Comparte esta tarjeta</strong>' +
+        '<div class="p-qr">' + (qrSvg(pageUrl() + "#demos") || qrFallback()) + "</div>" +
+        '<p class="p-sheet-note">Escanéalo con la cámara de otro celular.</p>' +
+        '<div class="p-sheet-opts">' +
+          '<button type="button" data-act="copy">' + icon("copy") + "<span>Copiar enlace</span></button>" +
+          '<button type="button" data-act="download-qr" data-qr="share">' + icon("qr") + "<span>Descargar QR</span></button>" +
+          '<button type="button" data-act="native-share">' + icon("share") + "<span>Compartir</span></button>" +
+        "</div>";
+    } else if (kind === "pay-qr") {
+      html = '<span class="p-sheet-kicker">' + icon("qr") + " Pago con QR</span>" +
+        '<strong class="p-sheet-title">' + esc(d.name) + "</strong>" +
+        '<div class="p-qr p-qr-pay" style="--c1:' + d.c1 + '">' + (qrSvg(payPayload(d), "#0b1626") || qrFallback()) + '<span class="p-qr-logo">' + icon(d.icon) + "</span></div>" +
+        '<p class="p-sheet-note">Escanéalo desde la app de tu banco y envía el comprobante por WhatsApp.<br><em>QR de ejemplo: no realiza cobros.</em></p>' +
+        '<div class="p-sheet-opts p-sheet-opts-2">' +
+          '<button type="button" data-act="download-qr" data-qr="pay">' + icon("download") + "<span>Guardar QR</span></button>" +
+          '<button type="button" data-act="whatsapp">' + icon("whatsapp") + "<span>Enviar comprobante</span></button>" +
+        "</div>";
+    } else if (kind === "pay-bank") {
+      var rows = [["Banco", "Banco Ejemplo"], ["Cuenta", "1000-2000-3000"], ["Titular", d.name], ["NIT / CI", "0000000"]];
+      html = '<span class="p-sheet-kicker">' + icon("card") + " Transferencia bancaria</span>" +
+        '<strong class="p-sheet-title">Datos para transferir</strong>' +
+        '<dl class="p-bank">' + rows.map(function (r) { return "<div><dt>" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd></div>"; }).join("") + "</dl>" +
+        '<p class="p-sheet-note"><em>Datos bancarios ficticios de demostración.</em></p>' +
+        '<div class="p-sheet-opts p-sheet-opts-2">' +
+          '<button type="button" data-act="copy-bank">' + icon("copy") + "<span>Copiar datos</span></button>" +
+          '<button type="button" data-act="whatsapp">' + icon("whatsapp") + "<span>Enviar comprobante</span></button>" +
+        "</div>";
+    }
+    body.innerHTML = html;
     sheet.hidden = false;
     requestAnimationFrame(function () { sheet.classList.add("open"); });
   }
@@ -313,6 +394,70 @@
     if (!sheet) return;
     sheet.classList.remove("open");
     sheet.hidden = true;
+  }
+
+  /* ------------------------------------------------------------------
+   * PDF real (una página) con el catálogo del negocio de ejemplo
+   * ------------------------------------------------------------------ */
+  function pdfText(s) {
+    var map = { "•": "\x95", "—": "\x97", "–": "\x96", "“": "\x93", "”": "\x94", "‘": "\x91", "’": "\x92", "…": "\x85" };
+    return String(s).replace(/[•—–“”‘’…]/g, function (c) { return map[c]; })
+      .replace(/[^\x00-\xff]/g, "?").replace(/([\\()])/g, "\\$1");
+  }
+  function hexRgb(hex) {
+    var n = parseInt(hex.replace("#", ""), 16);
+    return [(n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255].map(function (v) { return v.toFixed(3); }).join(" ");
+  }
+  function downloadPdf(d) {
+    var y = 700, ops = [];
+    function text(font, size, x, yy, s, color) {
+      ops.push("BT " + (color || "0.15 0.2 0.28") + " rg /" + font + " " + size + " Tf " + x + " " + yy + " Td (" + pdfText(s) + ") Tj ET");
+    }
+    ops.push(hexRgb(d.c1) + " rg 0 742 595 100 re f");
+    text("F2", 24, 50, 790, d.name, "1 1 1");
+    text("F1", 13, 50, 766, d.tagline, "1 1 1");
+    text("F2", 15, 50, y, d.catalogTitle, hexRgb(d.c1));
+    y -= 28;
+    d.catalog.forEach(function (it) {
+      text("F2", 12, 50, y, "• " + it.t);
+      if (it.p) text("F2", 12, 470, y, it.p, hexRgb(d.c1));
+      y -= 16;
+      text("F1", 10.5, 62, y, it.d, "0.4 0.45 0.52");
+      y -= 24;
+    });
+    y -= 10;
+    text("F2", 15, 50, y, "Horarios", hexRgb(d.c1)); y -= 24;
+    d.hours.forEach(function (h) { text("F1", 11, 50, y, h[0] + ": " + h[1]); y -= 18; });
+    y -= 14;
+    text("F2", 15, 50, y, "Contacto", hexRgb(d.c1)); y -= 24;
+    [["Teléfono / WhatsApp", d.phone], ["Correo", d.email], ["Dirección", d.address]].forEach(function (r) {
+      text("F1", 11, 50, y, r[0] + ": " + r[1]); y -= 18;
+    });
+    ops.push("0.85 0.88 0.92 rg 50 70 495 0.8 re f");
+    text("F1", 9, 50, 52, "Documento de demostración con datos ficticios — generado desde la tarjeta digital de ejemplo.", "0.5 0.55 0.6");
+
+    var stream = ops.join("\n");
+    var objs = [
+      "<< /Type /Catalog /Pages 2 0 R >>",
+      "<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
+      "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>",
+      "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>",
+      "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>",
+      "<< /Length " + stream.length + " >>\nstream\n" + stream + "\nendstream"
+    ];
+    var out = "%PDF-1.4\n", offsets = [];
+    objs.forEach(function (o, i) { offsets.push(out.length); out += (i + 1) + " 0 obj\n" + o + "\nendobj\n"; });
+    var xref = out.length;
+    out += "xref\n0 " + (objs.length + 1) + "\n0000000000 65535 f \n" +
+      offsets.map(function (o) { return String(o).padStart(10, "0") + " 00000 n \n"; }).join("") +
+      "trailer\n<< /Size " + (objs.length + 1) + " /Root 1 0 R >>\nstartxref\n" + xref + "\n%%EOF";
+    var bytes = new Uint8Array(out.length);
+    for (var i = 0; i < out.length; i++) bytes[i] = out.charCodeAt(i) & 255;
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
+    a.download = d.name.replace(/[^\wÀ-ÿ]+/g, "-").replace(/^-|-$/g, "") + "-" + d.catalogTitle.toLowerCase().replace(/[^\wÀ-ÿ]+/g, "-") + "-ejemplo.pdf";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
   }
 
   /* vCard real (datos ficticios) para "Guardar contacto" */
@@ -369,7 +514,7 @@
       downloadVCard(data);
       toast(phone, icon("check") + "<span>Contacto descargado. Ábrelo para <b>guardarlo en tu agenda</b>.</span>");
     } else if (act === "share") {
-      openSheet(phone);
+      openSheet(phone, "share");
     } else if (act === "close-sheet") {
       closeSheet(phone);
     } else if (act === "copy") {
@@ -379,13 +524,33 @@
         toast(phone, icon("info") + "<span>No se pudo copiar automáticamente.</span>");
       });
       closeSheet(phone);
+    } else if (act === "pdf") {
+      downloadPdf(data);
+      toast(phone, icon("check") + "<span>PDF descargado: <b>" + esc(data.catalogTitle) + "</b> con precios, horarios y contacto.</span>");
+    } else if (act === "pay-qr" || act === "pay-bank") {
+      openSheet(phone, act);
+    } else if (act === "pay-cash") {
+      toast(phone, icon("card") + "<span>También aceptamos <b>efectivo</b> en el local o al momento de la entrega.</span>");
+    } else if (act === "copy-bank") {
+      copyText("Banco Ejemplo\nCuenta: 1000-2000-3000\nTitular: " + data.name + "\nNIT/CI: 0000000").then(function () {
+        toast(phone, icon("check") + "<span>Datos bancarios <b>copiados</b>. Pégalos en la app de tu banco.</span>");
+      }, function () {
+        toast(phone, icon("info") + "<span>No se pudo copiar automáticamente.</span>");
+      });
+      closeSheet(phone);
+    } else if (act === "link") {
+      toast(phone, icon("link") + "<span>En tu tarjeta real, «" + esc(btn.getAttribute("data-label")) + "» abre <b>el enlace que tú elijas</b>.</span>");
+    } else if (act === "add-link") {
+      toast(phone, icon("plus") + "<span>Puedes agregar <b>los enlaces que necesites</b>: tienda, reseñas, formularios, videos…</span>");
+    } else if (act === "photo") {
+      toast(phone, icon("image") + "<span>En tu tarjeta real, aquí se ven <b>tus fotos en grande</b>.</span>");
     } else if (act === "download-qr") {
-      var svg = qrSvg(pageUrl() + "#demos");
+      var svg = btn.getAttribute("data-qr") === "pay" ? qrSvg(payPayload(data)) : qrSvg(pageUrl() + "#demos");
       if (svg) {
         var blob = new Blob(['<?xml version="1.0" encoding="UTF-8"?>' + svg.replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" ')], { type: "image/svg+xml" });
         var a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
-        a.download = "codigo-qr-tarjeta.svg";
+        a.download = btn.getAttribute("data-qr") === "pay" ? "qr-de-pago-ejemplo.svg" : "codigo-qr-tarjeta.svg";
         document.body.appendChild(a); a.click(); a.remove();
         setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
         toast(phone, icon("check") + "<span>Código QR descargado, listo para <b>imprimir</b>.</span>");
@@ -412,6 +577,7 @@
       var dark = card.classList.toggle("is-dark");
       toast(phone, icon("contrast") + "<span>Modo " + (dark ? "<b>oscuro</b>" : "<b>claro</b>") + " activado. Tu tarjeta se ve bien de día y de noche.</span>");
     } else if (ACTION_MSG[act]) {
+      if (btn.closest(".p-sheet")) closeSheet(phone);
       toast(phone, ACTION_MSG[act](data, btn.getAttribute("data-net")));
     }
   });
