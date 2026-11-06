@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tarjetas Digitales Empresariales</title>
+  <meta name="description" content="Tarjetas digitales para negocios: comparte tu información, servicios, ubicación y redes sociales con un enlace, código QR o NFC. Mira demostraciones interactivas y solicita la tuya.">
+  <meta name="theme-color" content="#0b1626">
+  <meta property="og:title" content="Tarjetas Digitales Empresariales">
+  <meta property="og:description" content="Tu negocio merece una presentación profesional. Comparte todo desde una sola tarjeta digital.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tarjetas-landing.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- ================= ÍCONOS (sprite SVG) ================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3M20 17h1"/></symbol>
+  <symbol id="i-user-plus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></symbol>
+  <symbol id="i-text" viewBox="0 0 24 24"><path d="M17 6H3M21 12H3M15 18H3"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M3 9 5 3h14l2 6"/><path d="M3 9h18v1a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z"/><path d="M5 13v8h14v-8M10 21v-5h4v5"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-nfc" viewBox="0 0 24 24"><path d="M6 8.32a7.43 7.43 0 0 1 0 7.36M9.46 6.21a11.76 11.76 0 0 1 0 11.58M12.91 4.1a15.91 15.91 0 0 1 .01 15.8M16.37 2a20.16 20.16 0 0 1 0 20"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 17v4M17 19h4"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></symbol>
+  <symbol id="i-mobile" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+  <symbol id="i-pill" viewBox="0 0 24 24"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></symbol>
+  <symbol id="i-food" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+  <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="m3 21 1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol>
+  <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01"/></symbol>
+  <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M21 7.92v4.03a9.95 9.95 0 0 1-5-1.95v4.5a6.5 6.5 0 1 1-8-6.33v4.33a2.5 2.5 0 1 0 4 2V3h4.08A6 6 0 0 0 21 7.92z"/></symbol>
+</svg>
+
+<!-- ================= CABECERA ================= -->
+<header class="site-header" id="top">
+  <div class="container nav">
+    <a class="brand" href="#inicio" aria-label="Inicio">
+      <span class="brand-mark"><svg class="ic"><use href="#i-mobile"/></svg></span>
+      <span class="brand-text">Tarjeta<strong>Digital</strong></span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Principal">
+      <a href="#que-es">Qué es</a>
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#demos">Demostraciones</a>
+      <a href="#planes">Planes</a>
+      <a href="#faq">Preguntas</a>
+      <a class="btn btn-primary btn-sm" href="#contacto">Solicitar</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+      <svg class="ic"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= 1. HERO ================= -->
+<section class="hero" id="inicio">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow"><span class="dot"></span> Tarjetas digitales para negocios</span>
+      <h1>Tu negocio merece una <span class="hl">presentación profesional.</span></h1>
+      <p class="lead">Comparte tu información, servicios y redes sociales desde una sola tarjeta digital. Fácil de compartir, siempre disponible y accesible desde cualquier celular.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href="#crea">Crear mi tarjeta digital <svg class="ic"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost btn-lg" href="#demos"><svg class="ic"><use href="#i-eye"/></svg> Ver demostración</a>
+      </div>
+      <ul class="hero-points">
+        <li><svg class="ic"><use href="#i-check"/></svg> Sin instalar aplicaciones</li>
+        <li><svg class="ic"><use href="#i-check"/></svg> Android y iPhone</li>
+        <li><svg class="ic"><use href="#i-check"/></svg> Enlace, QR o NFC</li>
+      </ul>
+    </div>
+
+    <div class="hero-visual">
+      <div class="phone phone-float" data-card="farmacia" aria-label="Ejemplo de tarjeta digital de una farmacia">
+        <div class="phone-screen"></div>
+      </div>
+      <div class="float-chip chip-a"><span class="chip-ic wa"><svg class="ic"><use href="#i-whatsapp"/></svg></span> Te escriben por WhatsApp</div>
+      <div class="float-chip chip-b"><span class="chip-ic qr"><svg class="ic"><use href="#i-qr"/></svg></span> Código QR propio</div>
+      <div class="float-chip chip-c"><span class="chip-ic pin"><svg class="ic"><use href="#i-pin"/></svg></span> Ubicación en el mapa</div>
+      <p class="hero-hint"><svg class="ic"><use href="#i-info"/></svg> Es interactiva: toca los botones.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 2. QUÉ ES ================= -->
+<section class="section" id="que-es">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">¿Qué es una tarjeta digital?</span>
+      <h2>Tu negocio completo, en un solo enlace</h2>
+      <p>Es una presentación de tu negocio en formato web que reúne toda tu información importante en un solo lugar. Tus clientes pueden conocerte, escribirte, ver tus servicios y encontrar tus redes <strong>sin instalar ninguna aplicación</strong>.</p>
+    </div>
+
+    <div class="compare-visual reveal">
+      <article class="cv-side cv-print">
+        <span class="cv-label">Tarjeta tradicional</span>
+        <div class="paper-card" aria-hidden="true">
+          <div class="pc-logo"></div>
+          <div>
+            <strong>Nombre del negocio</strong>
+            <span>Teléfono: 700 00 000</span>
+            <span>Dirección del local</span>
+          </div>
+        </div>
+        <ul class="cv-list">
+          <li class="no"><svg class="ic"><use href="#i-x"/></svg> Espacio para pocos datos</li>
+          <li class="no"><svg class="ic"><use href="#i-x"/></svg> Si cambias de número, hay que reimprimir</li>
+          <li class="no"><svg class="ic"><use href="#i-x"/></svg> Se pierde o se queda en un cajón</li>
+          <li class="no"><svg class="ic"><use href="#i-x"/></svg> El cliente debe copiar los datos a mano</li>
+        </ul>
+      </article>
+
+      <div class="cv-vs" aria-hidden="true">VS</div>
+
+      <article class="cv-side cv-digital">
+        <span class="cv-label cv-label-brand">Tarjeta digital</span>
+        <div class="phone phone-sm" data-card="profesional" aria-label="Ejemplo de tarjeta digital de un profesional">
+          <div class="phone-screen"></div>
+        </div>
+        <ul class="cv-list">
+          <li class="yes"><svg class="ic"><use href="#i-check"/></svg> Contacto, servicios, ubicación y redes</li>
+          <li class="yes"><svg class="ic"><use href="#i-check"/></svg> Se actualiza sin reimprimir nada</li>
+          <li class="yes"><svg class="ic"><use href="#i-check"/></svg> Se comparte por WhatsApp en segundos</li>
+          <li class="yes"><svg class="ic"><use href="#i-check"/></svg> Un toque para llamar, escribir o guardarte</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3. QUÉ INCLUYE ================= -->
+<section class="section section-alt" id="incluye">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Contenido</span>
+      <h2>¿Qué puede incluir tu tarjeta digital?</h2>
+      <p>Elige lo que tu negocio necesita mostrar. Todo queda ordenado y a un toque de distancia.</p>
+    </div>
+    <div class="features-grid">
+      <article class="feature reveal"><span class="f-ic"><svg class="ic"><use href="#i-store"/></svg></span><h3>Logo y nombre</h3><p>Tu marca bien visible desde el primer vistazo.</p></article>
+      <article class="feature reveal"><span class="f-ic"><svg class="ic"><use href="#i-image"/></svg></span><h3>Fotografía empresarial</h3><p>Una imagen de tu local, equipo o productos.</p></article>
+      <article class="feature reveal"><span class="f-ic"><svg class="ic"><use href="#i-text"/></svg></span><h3>Descripción</h3><p>Qué haces y por qué elegirte, en pocas líneas.</p></article>
+      <article class="feature reveal"><span class="f-ic wa"><svg class="ic"><use href="#i-whatsapp"/></svg></span><h3>WhatsApp</h3><p>Te escriben con un toque, sin guardar tu número.</p></article>
+      <article class="feature reveal"><span class="f-ic"><svg class="ic"><use href="#i-mail"/></svg></span><h3>Correo electrónico</h3><p>Para cotizaciones y consultas formales.</p></article>
+      <article class="feature reveal"><span class="f-ic"><svg class="ic"><use href="#i-pin"/></svg></span><h3>Ubicación en Google Maps</h3><p>Llegan a tu local sin perderse.</p></article>
+      <article class="feature reveal"><span class="f-ic"><svg class="ic"><use href="#i-instagram"/></svg></span><h3>Redes sociales</h3><p>Facebook, Instagram y TikTok en un solo lugar.</p></article>
+      <article class="feature reveal"><span class="f-ic"><svg class="ic"><use href="#i-grid"/></svg></span><h3>Catálogo</h3><p>Tus productos o servicios, siempre a mano.</p></article>
+      <article class="feature reveal"><span class="f-ic"><svg class="ic"><use href="#i-user-plus"/></svg></span><h3>Guardar contacto</h3><p>Tus datos quedan en la agenda del cliente.</p></article>
+      <article class="feature reveal"><span class="f-ic"><svg class="ic"><use href="#i-qr"/></svg></span><h3>Código QR personalizado</h3><p>Para tu mostrador, vitrina o material impreso.</p></article>
+      <article class="feature reveal"><span class="f-ic"><svg class="ic"><use href="#i-phone"/></svg></span><h3>Botón de llamada</h3><p>Una llamada directa con un solo toque.</p></article>
+      <article class="feature reveal"><span class="f-ic"><svg class="ic"><use href="#i-clock"/></svg></span><h3>Horarios de atención</h3><p>Muestra si estás abierto en este momento.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4. CÓMO FUNCIONA ================= -->
+<section class="section" id="como-funciona">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Proceso</span>
+      <h2>¿Cómo funciona?</h2>
+      <p>Tú nos das la información; nosotros nos encargamos del resto.</p>
+    </div>
+    <ol class="steps">
+      <li class="step reveal">
+        <span class="step-num">1</span>
+        <div class="step-art art-1" aria-hidden="true">
+          <span class="a-swatch s1"></span><span class="a-swatch s2"></span><span class="a-swatch s3"></span>
+          <span class="a-pen"><svg class="ic"><use href="#i-pen"/></svg></span>
+        </div>
+        <h3>Creamos tu tarjeta digital</h3>
+        <p>Personalizamos el diseño con el nombre, logo, colores e información de tu negocio.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step-num">2</span>
+        <div class="step-art art-2" aria-hidden="true">
+          <span class="a-url"><svg class="ic"><use href="#i-link"/></svg> tunegocio.com</span>
+          <span class="a-qr"><svg class="ic"><use href="#i-qr"/></svg></span>
+        </div>
+        <h3>Recibes tu enlace y código QR</h3>
+        <p>Tu tarjeta tendrá una dirección web propia que podrás compartir fácilmente.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step-num">3</span>
+        <div class="step-art art-3" aria-hidden="true">
+          <span class="a-bubble b1"><svg class="ic"><use href="#i-whatsapp"/></svg> Hola, vi su tarjeta…</span>
+          <span class="a-bubble b2"><svg class="ic"><use href="#i-phone"/></svg> Llamada entrante</span>
+        </div>
+        <h3>Tus clientes te contactan</h3>
+        <p>Desde su celular te escriben por WhatsApp, te llaman, ven tu ubicación y tus servicios.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= 5. DEMOSTRACIONES ================= -->
+<section class="section section-dark" id="demos">
+  <div class="container">
+    <div class="section-head on-dark">
+      <span class="kicker">Demostraciones interactivas</span>
+      <h2>Mira cómo se vería en tu rubro</h2>
+      <p>Abre un ejemplo y pruébalo como lo haría tu cliente. Todos los datos son <strong>ficticios</strong>.</p>
+    </div>
+    <div class="demo-grid" id="demoGrid"><!-- generado por JS --></div>
+  </div>
+</section>
+
+<!-- ================= 5b. CREA LA TUYA ================= -->
+<section class="section" id="crea">
+  <div class="container builder">
+    <div class="builder-form">
+      <span class="kicker">Pruébalo ahora</span>
+      <h2>Arma una vista previa de tu tarjeta</h2>
+      <p class="muted">Escribe el nombre de tu negocio y elige un color. Verás el resultado al instante; cuando te guste, envíanos la solicitud.</p>
+
+      <form id="builderForm" autocomplete="off" novalidate>
+        <label class="field">
+          <span>Nombre de tu negocio</span>
+          <input type="text" name="name" maxlength="40" placeholder="Ej. Farmacia San José">
+        </label>
+        <label class="field">
+          <span>Rubro</span>
+          <select name="rubro">
+            <option value="farmacia">Farmacia</option>
+            <option value="restaurante">Restaurante</option>
+            <option value="inmobiliaria">Inmobiliaria</option>
+            <option value="baile">Escuela de baile</option>
+            <option value="profesional">Profesional independiente</option>
+            <option value="otro" selected>Otro tipo de negocio</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Frase o eslogan <em>(opcional)</em></span>
+          <input type="text" name="tagline" maxlength="50" placeholder="Ej. Atención de calidad cerca de ti">
+        </label>
+        <fieldset class="field">
+          <legend>Color principal</legend>
+          <div class="swatches" id="swatches" role="radiogroup" aria-label="Color principal"></div>
+        </fieldset>
+        <div class="builder-actions">
+          <a class="btn btn-primary btn-lg" id="builderSend" href="#contacto">Solicitar esta tarjeta <svg class="ic"><use href="#i-arrow"/></svg></a>
+          <p class="note">Es solo una vista previa: el diseño final se personaliza con tu logo, fotos e información real.</p>
+        </div>
+      </form>
+    </div>
+
+    <div class="builder-preview">
+      <div class="phone" id="builderPhone" aria-live="polite" aria-label="Vista previa de tu tarjeta">
+        <div class="phone-screen"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6. COMPARACIÓN ================= -->
+<section class="section section-alt" id="comparacion">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Comparación</span>
+      <h2>¿Cómo se compara con otros medios?</h2>
+    </div>
+    <div class="table-wrap reveal">
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th scope="col">Característica</th>
+            <th scope="col">Tarjeta impresa</th>
+            <th scope="col">WhatsApp Business</th>
+            <th scope="col" class="col-hl">Tarjeta digital</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Información empresarial</th><td><span class="v v-mid">Limitada</span></td><td><span class="v v-mid">Parcial</span></td><td class="col-hl"><span class="v v-yes">Completa</span></td></tr>
+          <tr><th scope="row">Redes sociales</th><td><span class="v v-no">No</span></td><td><span class="v v-mid">Parcial</span></td><td class="col-hl"><span class="v v-yes">Sí</span></td></tr>
+          <tr><th scope="row">Ubicación</th><td><span class="v v-no">No</span></td><td><span class="v v-yes">Sí</span></td><td class="col-hl"><span class="v v-yes">Sí</span></td></tr>
+          <tr><th scope="row">Catálogo</th><td><span class="v v-no">No</span></td><td><span class="v v-yes">Sí</span></td><td class="col-hl"><span class="v v-yes">Sí</span></td></tr>
+          <tr><th scope="row">Personalización visual</th><td><span class="v v-mid">Limitada</span></td><td><span class="v v-mid">Limitada</span></td><td class="col-hl"><span class="v v-yes">Amplia</span></td></tr>
+          <tr><th scope="row">Enlace para compartir</th><td><span class="v v-no">No</span></td><td><span class="v v-yes">Sí</span></td><td class="col-hl"><span class="v v-yes">Sí</span></td></tr>
+          <tr><th scope="row">Código QR</th><td><span class="v v-mid">Puede incluir</span></td><td><span class="v v-yes">Sí</span></td><td class="col-hl"><span class="v v-yes">Sí</span></td></tr>
+          <tr><th scope="row">Página personalizada</th><td><span class="v v-no">No</span></td><td><span class="v v-no">No</span></td><td class="col-hl"><span class="v v-yes">Sí</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout reveal">
+      <span class="callout-ic wa"><svg class="ic"><use href="#i-whatsapp"/></svg></span>
+      <p><strong>No reemplaza a WhatsApp Business, lo complementa.</strong> Tu tarjeta digital es la vitrina donde el cliente conoce tu negocio; desde ahí te escribe a tu WhatsApp con un solo toque.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 7. BENEFICIOS ================= -->
+<section class="section" id="beneficios">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Beneficios</span>
+      <h2>Lo que gana tu negocio</h2>
+    </div>
+    <div class="benefits">
+      <article class="benefit reveal"><span class="b-ic"><svg class="ic"><use href="#i-award"/></svg></span><h3>Imagen profesional</h3><p>Presenta tu negocio de una manera moderna.</p></article>
+      <article class="benefit reveal"><span class="b-ic"><svg class="ic"><use href="#i-share"/></svg></span><h3>Fácil de compartir</h3><p>Envíala por WhatsApp, redes sociales o correo.</p></article>
+      <article class="benefit reveal"><span class="b-ic"><svg class="ic"><use href="#i-clock"/></svg></span><h3>Disponible las 24 horas</h3><p>Tus clientes consultan tu información cuando quieran.</p></article>
+      <article class="benefit reveal"><span class="b-ic"><svg class="ic"><use href="#i-chat"/></svg></span><h3>Más canales de contacto</h3><p>Facilita llamadas, mensajes y consultas.</p></article>
+      <article class="benefit reveal"><span class="b-ic"><svg class="ic"><use href="#i-layers"/></svg></span><h3>Todo en un solo lugar</h3><p>Evita enviar un enlace distinto para cada cosa.</p></article>
+      <article class="benefit reveal"><span class="b-ic"><svg class="ic"><use href="#i-mobile"/></svg></span><h3>Sin aplicaciones</h3><p>Se abre directo desde el navegador del celular.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 8. CÓMO SE COMPARTE ================= -->
+<section class="section section-alt" id="compartir">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Compartir</span>
+      <h2>¿Cómo se comparte?</h2>
+      <p>Tres formas de llegar a tus clientes. Prueba las dos primeras ahora mismo.</p>
+    </div>
+    <div class="share-grid">
+      <article class="share-card reveal">
+        <div class="share-art">
+          <div class="url-bar"><svg class="ic"><use href="#i-link"/></svg><span id="shareUrl">tunegocio.com</span></div>
+          <button class="btn btn-soft btn-sm" id="copyLink" type="button"><svg class="ic"><use href="#i-copy"/></svg> Copiar enlace de esta página</button>
+        </div>
+        <h3>1. Mediante un enlace web</h3>
+        <p>Pégalo en WhatsApp, Instagram, Facebook o en tu firma de correo.</p>
+      </article>
+      <article class="share-card reveal">
+        <div class="share-art">
+          <div class="qr-box" id="pageQr" aria-label="Código QR de esta página" role="img"></div>
+        </div>
+        <h3>2. Mediante un código QR</h3>
+        <p>Imprímelo en tu mostrador, vitrina, menú o bolsas. Escanéalo con tu cámara.</p>
+      </article>
+      <article class="share-card reveal">
+        <div class="share-art nfc-art" aria-hidden="true">
+          <div class="nfc-card"><svg class="ic"><use href="#i-nfc"/></svg><span>Tu negocio</span></div>
+          <div class="nfc-waves"><span></span><span></span><span></span></div>
+          <div class="nfc-phone"><svg class="ic"><use href="#i-mobile"/></svg></div>
+        </div>
+        <h3>3. Con una tarjeta física NFC <span class="tag">Opcional</span></h3>
+        <p>Acercas la tarjeta al celular del cliente y tu tarjeta digital se abre sola.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 9. PLANES ================= -->
+<section class="section" id="planes">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Planes</span>
+      <h2>Elige el plan para tu negocio</h2>
+      <p>Cada negocio es distinto: cuéntanos qué necesitas y te enviamos una cotización sin compromiso.</p>
+    </div>
+    <div class="plans">
+      <article class="plan reveal">
+        <h3>Básico</h3>
+        <p class="plan-desc">Para empezar a presentarte de forma profesional.</p>
+        <ul>
+          <li><svg class="ic"><use href="#i-check"/></svg> Presentación del negocio</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Logo y datos de contacto</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Botón de WhatsApp</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Redes sociales</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Enlace personalizado</li>
+        </ul>
+        <a class="btn btn-outline btn-block js-contact" data-msg="Hola, quiero solicitar una cotización del plan Básico de tarjeta digital." href="#contacto">Solicitar cotización</a>
+      </article>
+      <article class="plan plan-featured reveal">
+        <span class="plan-badge">Recomendado</span>
+        <h3>Profesional</h3>
+        <p class="plan-desc">La opción completa para atraer y atender clientes.</p>
+        <ul>
+          <li class="plus"><svg class="ic"><use href="#i-check"/></svg> Todo lo del plan Básico</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Diseño personalizado</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Código QR</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Ubicación en Google Maps</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Catálogo de productos o servicios</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Botón para guardar contacto</li>
+        </ul>
+        <a class="btn btn-primary btn-block js-contact" data-msg="Hola, quiero solicitar una cotización del plan Profesional de tarjeta digital." href="#contacto">Solicitar cotización</a>
+      </article>
+      <article class="plan reveal">
+        <h3>Empresarial</h3>
+        <p class="plan-desc">Para empresas que necesitan más secciones y funciones.</p>
+        <ul>
+          <li class="plus"><svg class="ic"><use href="#i-check"/></svg> Todo lo del plan Profesional</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Secciones adicionales</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Mayor personalización</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Galería de fotografías</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Funcionalidades según requerimiento</li>
+        </ul>
+        <a class="btn btn-outline btn-block js-contact" data-msg="Hola, quiero solicitar una cotización del plan Empresarial de tarjeta digital." href="#contacto">Solicitar cotización</a>
+      </article>
+    </div>
+    <p class="plans-note"><svg class="ic"><use href="#i-nfc"/></svg> La tarjeta física con NFC se puede agregar a cualquier plan.</p>
+  </div>
+</section>
+
+<!-- ================= 10. FAQ ================= -->
+<section class="section section-alt" id="faq">
+  <div class="container container-narrow">
+    <div class="section-head">
+      <span class="kicker">Preguntas frecuentes</span>
+      <h2>Resolvemos tus dudas</h2>
+    </div>
+    <div class="faq">
+      <details><summary>¿Qué es una tarjeta digital?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>Es una pequeña página web de tu negocio que reúne tus datos de contacto, servicios, ubicación y redes sociales. Se abre desde un enlace, un código QR o una tarjeta NFC.</p></details>
+      <details><summary>¿Necesito instalar alguna aplicación?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>No. Ni tú ni tus clientes. Se abre en el navegador de cualquier celular o computadora.</p></details>
+      <details><summary>¿Puedo compartirla por WhatsApp?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>Sí. Envías el enlace como cualquier mensaje, en chats, grupos o estados, y tu cliente la abre con un toque.</p></details>
+      <details><summary>¿Puedo tener mi propio enlace?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>Sí. Tu tarjeta tiene una dirección personalizada con el nombre de tu negocio. Si quieres un dominio propio (por ejemplo, tunegocio.com), te ayudamos a configurarlo.</p></details>
+      <details><summary>¿Puedo cambiar la información posteriormente?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>Sí. Nos pides el cambio y actualizamos tu tarjeta; el enlace y el código QR siguen siendo los mismos, así que no tienes que volver a compartirlos. Las condiciones de actualización se detallan en la cotización.</p></details>
+      <details><summary>¿Puedo incluir fotografías y videos?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>Sí. Puedes mostrar fotos de tu local o productos y enlazar videos (por ejemplo, de YouTube o TikTok). La galería de fotografías está incluida en el plan Empresarial.</p></details>
+      <details><summary>¿Funciona en Android y iPhone?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>Sí. Funciona en cualquier celular con navegador, sea Android o iPhone, y también en computadoras y tablets.</p></details>
+      <details><summary>¿Puedo tener un código QR?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>Sí. Te entregamos un código QR listo para imprimir que lleva directo a tu tarjeta. Está incluido desde el plan Profesional.</p></details>
+      <details><summary>¿Puedo utilizarla para mi empresa?<svg class="ic"><use href="#i-chevron"/></svg></summary><p>Sí. Sirve tanto para negocios pequeños como para empresas. En el plan Empresarial agregamos secciones y funciones según lo que necesites.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 11. CONTACTO / CTA ================= -->
+<section class="cta" id="contacto">
+  <div class="container cta-inner">
+    <div class="cta-copy">
+      <h2>Haz que tu negocio tenga su propia tarjeta digital.</h2>
+      <p>Comienza a presentar tu negocio de una manera moderna y profesional. Nosotros nos encargamos de crear una tarjeta digital adaptada a tus necesidades.</p>
+      <a class="btn btn-primary btn-lg js-contact" data-msg="Hola, quiero solicitar mi tarjeta digital para mi negocio." href="#contacto">Solicitar mi tarjeta digital <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
+    <ul class="contact-links" id="contactLinks"><!-- generado desde assets/js/config.js --></ul>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© <span id="year"></span> <span id="ownerName">Tarjetas Digitales</span>. Los negocios mostrados en las demostraciones son ficticios.</p>
+    <a href="privacidad.html">Política de privacidad</a>
+  </div>
+</footer>
+
+<!-- ================= MODAL DE DEMOSTRACIÓN ================= -->
+<div class="modal" id="demoModal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" type="button" data-close aria-label="Cerrar demostración"><svg class="ic"><use href="#i-x"/></svg></button>
+    <div class="modal-phone">
+      <div class="phone" id="modalPhone"><div class="phone-screen"></div></div>
+    </div>
+    <div class="modal-info">
+      <span class="kicker">Demostración interactiva</span>
+      <h3 id="modalTitle">Ejemplo</h3>
+      <p id="modalDesc" class="muted"></p>
+      <ul class="try-list">
+        <li><svg class="ic"><use href="#i-grid"/></svg><span>Cambia entre <strong>Inicio, Catálogo y Horarios</strong>.</span></li>
+        <li><svg class="ic"><use href="#i-user-plus"/></svg><span><strong>Guardar contacto</strong> descarga un contacto real a tu celular.</span></li>
+        <li><svg class="ic"><use href="#i-qr"/></svg><span><strong>Compartir</strong> muestra el código QR y el enlace.</span></li>
+        <li><svg class="ic"><use href="#i-whatsapp"/></svg><span>WhatsApp, llamada y mapa te explican qué harían en tu tarjeta real.</span></li>
+      </ul>
+      <div class="modal-switch" id="modalSwitch" aria-label="Otros ejemplos"></div>
+      <a class="btn btn-primary btn-block js-contact" id="modalCta" data-msg="Hola, quiero una tarjeta digital para mi negocio." href="#contacto">Quiero una tarjeta así</a>
+      <p class="note">Ejemplo con datos ficticios.</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" defer></script>
+<script src="assets/js/config.js" defer></script>
+<script src="assets/js/tarjetas-landing.js" defer></script>
+</body>
+</html>

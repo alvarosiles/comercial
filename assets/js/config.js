@@ -29,7 +29,8 @@ window.SITE_CONFIG = {
     linkedin: "",
     github: "",
     instagram: "",
-    facebook: ""
+    facebook: "",
+    tiktok: ""
   },
 
   /* Precios de los planes (texto libre, ej: "Bs 800", "Desde $150").
