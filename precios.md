@@ -182,3 +182,6 @@ plans: {
   // portafolios y sistemas: pendientes de definir
 }
 ```
+
+
+https://mx.pinterest.com/pin/1131459106412056403/
